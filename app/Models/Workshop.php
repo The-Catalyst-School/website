@@ -10,6 +10,8 @@ use App\Models\Topic;
 class Workshop extends Model
 {
     use HasFactory;
+    use Sluggable;
+    use SluggableScopeHelpers;
 
     public function topics()
     {
