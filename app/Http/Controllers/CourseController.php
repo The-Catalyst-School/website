@@ -15,7 +15,7 @@ class CourseController extends Controller
 
     public function show($slug)
     {
-      $course = Course::findBySlugOrFail($slug);
+      $course = Course::with('lessons')->whereSlug($slug)->firstOrFail();
       return inertia('Course/Show', compact('course'));
     }
 
