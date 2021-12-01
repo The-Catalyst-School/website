@@ -13,4 +13,6 @@ class Page extends Model
     use Sluggable;
     use SluggableScopeHelpers;
     use \App\Traits\Seo;
+
+    protected $fillable = ['title'];
 }
