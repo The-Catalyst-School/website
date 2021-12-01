@@ -9,6 +9,7 @@
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    @routes
     @inertia
     <script src="{{ mix('/js/app.js') }}" defer></script>
 </body>

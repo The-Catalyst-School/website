@@ -4,6 +4,8 @@ import { InertiaProgress } from '@inertiajs/progress'
 
 InertiaProgress.init()
 
+Vue.prototype.$route = route
+
 createInertiaApp({
   resolve: name => require(`./Pages/${name}`),
   setup({ el, App, props }) {

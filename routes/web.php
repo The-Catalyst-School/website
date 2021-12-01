@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,7 @@ Route::get('/', function () {
     return view('app');
 });
 
-Route::get('/home', function () {
-    return inertia('Home');
-});
+  Route::get('/courses', [CourseController::class, 'index'])
+    ->name('web.course.index');
+  Route::get('/courses/{slug}', [CourseController::class, 'show'])
+    ->name('web.course.show');

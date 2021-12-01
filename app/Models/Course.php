@@ -17,6 +17,8 @@ class Course extends Model
     use SluggableScopeHelpers;
     use \App\Traits\Seo;
 
+    protected $fillable = ['title'];
+
     public function lessons()
     {
         return $this->hasMany(Lesson::class);
