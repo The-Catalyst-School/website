@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\WorkshopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,11 @@ Route::get('/courses', [CourseController::class, 'index'])
   ->name('web.course.index');
 Route::get('/courses/{slug}', [CourseController::class, 'show'])
   ->name('web.course.show');
+
+Route::get('/workshops', [WorkshopController::class, 'index'])
+  ->name('web.workshop.index');
+Route::get('/workshops/{slug}', [WorkshopController::class, 'show'])
+  ->name('web.workshop.show');
 
 Route::get('/courses/{c_slug}/lessons/{s_slug}', [LessonController::class, 'show'])
   ->name('web.lesson.show');
