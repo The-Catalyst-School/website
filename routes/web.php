@@ -5,6 +5,8 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\WorkshopController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,23 @@ use App\Http\Controllers\WorkshopController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// Auth
+
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+    ->name('web.login')
+    ->middleware('guest');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+    ->name('web.login.store')
+    ->middleware('guest');
+Route::delete('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('web.logout');
+Route::post('/register', [RegisterController::class, 'store'])
+    ->name('web.register.store')
+    ->middleware('guest');
+Route::get('/register', [RegisterController::class, 'create'])
+    ->name('web.register.create')
+    ->middleware('guest');
 
 Route::get('/courses', [CourseController::class, 'index'])
   ->name('web.course.index');
