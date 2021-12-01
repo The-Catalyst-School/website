@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\LessonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,9 @@ Route::get('/courses', [CourseController::class, 'index'])
   ->name('web.course.index');
 Route::get('/courses/{slug}', [CourseController::class, 'show'])
   ->name('web.course.show');
+
+Route::get('/courses/{c_slug}/lessons/{s_slug}', [LessonController::class, 'show'])
+  ->name('web.lesson.show');
 
 
 Route::get('/{slug}', [PageController::class, 'show'])->name('web.page.show');

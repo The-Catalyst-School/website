@@ -18,6 +18,7 @@ class Lesson extends Model
     use SluggableScopeHelpers;
     use \App\Traits\Seo;
 
+    protected $fillable = ['title', 'course_id'];
     // Relationships
     public function course()
     {
