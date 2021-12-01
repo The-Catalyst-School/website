@@ -19,6 +19,9 @@ class CreateLessonsTable extends Migration
             $table->string('slug');
             $table->string('title')->nullable();
             $table->string('subtitle')->nullable();
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('course_id')
+              ->references('id')->on('courses')->onDelete('cascade');
             $table->text('content')->nullable();
         });
     }
