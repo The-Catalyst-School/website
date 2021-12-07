@@ -3,6 +3,7 @@
     <h1>{{lesson.title}}</h1>
     <h2>This is the lesson page.</h2>
     <h3>Course: {{lesson.course.title}}</h3>
+    <div class="content" v-html="lesson.content" />
   </div>
 </template>
 

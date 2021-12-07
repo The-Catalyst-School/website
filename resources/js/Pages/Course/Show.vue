@@ -2,6 +2,7 @@
   <div>
     <h1>{{course.title}}</h1>
     <h2>This is the course page.</h2>
+    <div class="content" v-html="course.content" />
     <div class="lessons-list" v-if="course.lessons">
       <div v-for="(lesson, index) in course.lessons" class="single-lesson">
         <Link :href="$route('web.lesson.show', [course.slug, lesson.slug])">
