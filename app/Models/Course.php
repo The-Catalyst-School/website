@@ -16,8 +16,9 @@ class Course extends Model
     use Sluggable;
     use SluggableScopeHelpers;
     use \App\Traits\Seo;
+    use \App\Traits\FromGit;
 
-    protected $fillable = ['title'];
+    protected $fillable = ['title', 'content', 'sha', 'github_path'];
 
     public function lessons()
     {
