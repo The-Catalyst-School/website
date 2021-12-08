@@ -9,6 +9,9 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 use App\Models\Lesson;
 use App\Models\Topic;
+use App\Models\Attachment;
+use App\Models\Embed;
+use App\Models\Image;
 
 class Course extends Model
 {
@@ -28,5 +31,20 @@ class Course extends Model
     public function topics()
     {
         return $this->belongsTo(Topic::class);
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
+
+    public function embeds()
+    {
+        return $this->hasMany(Embed::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
     }
 }

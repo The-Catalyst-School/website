@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Course;
+use App\Models\Attachment;
 use Illuminate\Support\HtmlString;
 use Parsedown;
 
@@ -50,7 +51,7 @@ trait FromGit
 
         // Complete file detection
         $files = [];
-        preg_match(
+        preg_match_all(
           '/{% file src="(.+)" %}([\S\s]+){% endfile %}/mU',
           $content,
           $files
@@ -62,7 +63,7 @@ trait FromGit
         );
         // Light file detection
         $lightFiles = [];
-        preg_match(
+        preg_match_all(
           '/{% file src="(.+)" %}/mU',
           $content,
           $lightFiles
@@ -94,18 +95,28 @@ trait FromGit
         return [
           'content' => $content,
           'embeds' => array_merge($embeds, $lightEmbeds),
-          'files' => array_merge($files, $lightFiles)
+          'files' => $files
         ];
     }
 
     public function parseContent($content) {
-      $content = $content['content'];
-      $decoded = base64_decode($content);
+      $files = [];
+      $decoded = base64_decode($content['content']);
       $parsed = $this->parseGitbookAdvSyntax($decoded);
       foreach($parsed['embeds'] as $embed) {
         // Create and link model Embed
       }
-      foreach($parsed['files'] as $file) {
+      foreach($parsed['files'][1] as $file) {
+        $original_path = $file;
+        if (substr($original_path, 0, 4 ) !== "http") {
+          $original_path = env('GITHUB_REPO_PUBLIC_URL')
+            . dirname($content['path']) . '/' . $original_path;
+        }
+        $attachment = Attachment::create([
+          'title' => $file,
+          'file' => $original_path
+        ]);
+        array_push($files, $attachment);
         // Create and link model File
         // Update links in HTML
       }
@@ -113,37 +124,54 @@ trait FromGit
       $html = new HtmlString(
         app(Parsedown::class)->setSafeMode(false)->text($parsed['content'])
       );
-      return $html;
+      return [
+        'html' => $html,
+        'files' => $files
+      ];
     }
 
     public function createFromGit($content, $title, $parent) {
+      $parsed = $this->parseContent($content);
       $args = [
         'title' => $title,
         'github_path' => $content['path'],
         'sha' => $content['sha'],
-        'content' => $this->parseContent($content)
+        'content' => $parsed['html']
       ];
 
       if ($parent) {
         $args['course_id'] = $parent->id;
       }
 
-      return $this->create($args);
+      $entity = $this->create($args);
+
+      foreach($parsed['files'] as $file) {
+        $file->course()->associate($entity);
+        $file->save();
+      }
+      return $entity;
     }
 
     public function updateFromGit($content, $entity, $title, $parent) {
       echo 'Update';
+      $parsed = $this->parseContent($content);
       $args = [
         'title' => $title,
         'github_path' => $content['path'],
         'sha' => $content['sha'],
-        'content' => $this->parseContent($content)
+        'content' => $parsed['html']
       ];
 
       if ($parent) {
         $args['course_id'] = $parent->id;
       }
-      return $entity->update($args);
+      $entity = $entity->update($args);
+
+      foreach($parsed['files'] as $file) {
+        $file->course()->associate($entity);
+        $file->save();
+      }
+      return $entity;
     }
 
     public function actionFromGit($content, $title, $parent) {

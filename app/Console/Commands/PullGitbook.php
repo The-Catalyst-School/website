@@ -64,6 +64,8 @@ class PullGitbook extends Command
           $this->createLesson($child, $course);
         }
       }
+      // Collect all old courses and lessons and delete them
+      // if not present anymore.
     }
 
     public function exploreFile($path)

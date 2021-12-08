@@ -10,6 +10,9 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use App\Models\Course;
 use App\Models\Topic;
 use App\Models\Quiz;
+use App\Models\Attachment;
+use App\Models\Embed;
+use App\Models\Image;
 
 class Lesson extends Model
 {
@@ -34,5 +37,20 @@ class Lesson extends Model
     public function quizzes()
     {
         return $this->belongsTo(Quiz::class);
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
+
+    public function embeds()
+    {
+        return $this->hasMany(Embed::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
     }
 }
