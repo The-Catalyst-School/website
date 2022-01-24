@@ -1,9 +1,11 @@
 <template>
   <main>
     <c-header />
-    <article>
-      <slot />
-    </article>
+    <div class="main-wrapper">
+      <article>
+        <slot />
+      </article>
+    </div>
     <c-footer />
   </main>
 </template>
@@ -19,3 +21,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import '../../sass/_mixins';
+.main-wrapper {
+  min-height: 100vh;
+  @include r('padding-top', 110px);
+  @include r('padding-bottom', 220px);
+  @include r('padding-left', 30px);
+  @include r('padding-right', 30px);
+}
+</style>

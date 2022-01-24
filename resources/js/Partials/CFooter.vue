@@ -15,3 +15,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  @import '../../sass/_variables';
+  @import '../../sass/_mixins';
+  footer {
+    background: $black;
+    color: $yellow;
+    @include r('padding', 20px 30px);
+    @include m-font-size(12, 15);
+    a, a:visited {
+      color: $yellow;
+    }
+  }
+</style>

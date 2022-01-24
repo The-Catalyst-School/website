@@ -1,0 +1,175 @@
+@mixin disable-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+$max-width: 1280px;
+
+@mixin pagewidth {
+  width: 100%;
+  padding: 0 40px;
+  max-width: $max-width;
+  margin: 0px auto;
+  @include mobile-tablet {
+    padding: 0 20px;
+  }
+}
+
+$base-font-size: 1440;
+$base-measure-size: 1440;
+
+@mixin m-font-size($size, $line-height, $weight: 300) {
+  $font-size: ($size * 100) / $base-font-size;
+  $l-height: ($line-height * 100) / $base-font-size;
+  font-size: $font-size * 1vw;
+  line-height: ($l-height * 1vw);
+  font-weight: $weight;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin font-size($size, $line-height, $weight: 400) {
+  font-weight: $weight;
+  font-size: $size * 1px;
+  line-height: $line-height * 1px;
+}
+
+@mixin col($args) {
+  width: (100% / nth($args, 3) * nth($args, 1));
+}
+
+@mixin col-vw($args) {
+  width: (100 / nth($args, 3) * nth($args, 1)) * 1.72vh;
+  @include r('padding-left', 7);
+  @include r('padding-right', 7);
+  @include tablet {
+    width: (100 / nth($args, 3) * nth($args, 1)) * 0.7vh;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  @include mobile {
+    width: (100 / nth($args, 3) * nth($args, 1)) * 0.5338vh;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+}
+@mixin col-vw-after($args) {
+  margin-right: (100 / nth($args, 3) * nth($args, 1)) * 1.72vh;
+  @include tablet {
+    margin-right: (100 / nth($args, 3) * nth($args, 1)) * 0.7vh;
+  }
+  @include mobile {
+    margin-right: (100 / nth($args, 3) * nth($args, 1)) * 0.5338vh;
+  }
+}
+@mixin col-vw-before($args) {
+  margin-left: (100 / nth($args, 3) * nth($args, 1)) * 1.72vh;
+  @include tablet {
+    margin-left: (100 / nth($args, 3) * nth($args, 1)) * 0.7vh;
+  }
+  @include mobile {
+    margin-left: (100 / nth($args, 3) * nth($args, 1)) * 0.5338vh;
+  }
+}
+
+
+$big-desktop: "(min-width: 1921px)";
+@mixin big-desktop {
+  @media #{$big-desktop} {
+    @content;
+  }
+}
+
+$tablet: "(min-width: 768px) and (max-width: 1024px)";
+@mixin tablet {
+  @media #{$tablet} {
+    @content;
+  }
+}
+
+$mobile: "(max-width: 767px)";
+@mixin mobile {
+  @media #{$mobile} {
+    @content;
+  }
+}
+
+$small-mobile: "(max-width: 480px)";
+@mixin small-mobile {
+  @media #{$small-mobile} {
+    @content;
+  }
+}
+
+$mobile-tablet: "(max-width: 1024px)";
+@mixin mobile-tablet {
+  @media #{$mobile-tablet} {
+    @content;
+  }
+}
+
+$desk: "(min-width: 1025px)";
+@mixin desk {
+  @media #{$desk} {
+    @content;
+  }
+}
+
+$small-desktop: "(min-width: 1024px) and (max-width: 1440px)";
+@mixin small-desktop {
+  @media #{$small-desktop} {
+    @content;
+  }
+}
+
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}
+
+@mixin r($property, $sizes, $important: '') {
+  $val: '';
+  $mval: '';
+  @each $size in $sizes {
+    $val: #{$val relative-size($size)} #{$important};
+    $mval: #{$mval relative-max-size($size)} #{$important};
+  }
+  #{$property}: $val;
+}
+
+@mixin column-before($percentage) {
+  $single: nth($percentage, 1);
+  $full: nth($percentage, 3);
+
+  margin-left: percentage($single / $full);
+}
+
+@mixin column-after($percentage) {
+  $single: nth($percentage, 1);
+  $full: nth($percentage, 3);
+
+  margin-right: percentage($single / $full);
+}
+
+@function relative-size($size) {
+  $rsize: (strip-unit($size) * 100) / $base-measure-size;
+  @return $rsize * 1vw;
+}
+
+@function relative-max-size($size) {
+  $rsize: (strip-unit($size) * 100) / $base-measure-size;
+  @return $rsize * (($base-measure-size * 1px) / 100);
+}
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

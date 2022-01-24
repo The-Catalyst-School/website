@@ -117,7 +117,6 @@ trait FromGit
           'file' => $original_path
         ]);
         array_push($files, $attachment);
-        // Create and link model File
         // Update links in HTML
       }
       // Save and link Images
