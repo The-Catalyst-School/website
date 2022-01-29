@@ -1,0 +1,7 @@
+.tag {
+  border: 1px solid $black;
+  text-transform: uppercase;
+  @include r('padding', 4.5px 9px);
+  @include r('border-radius', 12px);
+  @include r('margin-right', 6px);
+}

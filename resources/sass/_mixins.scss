@@ -1,3 +1,6 @@
+@use 'sass:math';
+@import 'variables';
+
 @mixin disable-scrollbar {
   &::-webkit-scrollbar {
     display: none;
@@ -21,9 +24,14 @@ $max-width: 1280px;
 $base-font-size: 1440;
 $base-measure-size: 1440;
 
+@mixin transition($property, $time: 0.3s) {
+  transition: all ease-in-out #{$time};
+  transition-property: #{$property};
+}
+
 @mixin m-font-size($size, $line-height, $weight: 300) {
-  $font-size: ($size * 100) / $base-font-size;
-  $l-height: ($line-height * 100) / $base-font-size;
+  $font-size: math.div(($size * 100), $base-font-size);
+  $l-height: math.div(($line-height * 100), $base-font-size);
   font-size: $font-size * 1vw;
   line-height: ($l-height * 1vw);
   font-weight: $weight;
@@ -37,44 +45,68 @@ $base-measure-size: 1440;
   line-height: $line-height * 1px;
 }
 
-@mixin col($args) {
-  width: (100% / nth($args, 3) * nth($args, 1));
+@mixin col($args, $gutter: $default-gutter) {
+  width: (math.div(100%, nth($args, 3)) * nth($args, 1));
+  @include r('padding-left', math.div($gutter, 2));
+  @include r('padding-right', math.div($gutter, 2));
 }
 
 @mixin col-vw($args) {
-  width: (100 / nth($args, 3) * nth($args, 1)) * 1.72vh;
+  width: (math.div(100, nth($args, 3)) * nth($args, 1)) * 1vw;
   @include r('padding-left', 7);
   @include r('padding-right', 7);
   @include tablet {
-    width: (100 / nth($args, 3) * nth($args, 1)) * 0.7vh;
+    width: (math.div(100, nth($args, 3)) * nth($args, 1)) * 1vw;
     padding-left: 6px;
     padding-right: 6px;
   }
   @include mobile {
-    width: (100 / nth($args, 3) * nth($args, 1)) * 0.5338vh;
+    width: (math.div(100, nth($args, 3)) * nth($args, 1)) * 1vw;
     padding-left: 6px;
     padding-right: 6px;
-  }
-}
-@mixin col-vw-after($args) {
-  margin-right: (100 / nth($args, 3) * nth($args, 1)) * 1.72vh;
-  @include tablet {
-    margin-right: (100 / nth($args, 3) * nth($args, 1)) * 0.7vh;
-  }
-  @include mobile {
-    margin-right: (100 / nth($args, 3) * nth($args, 1)) * 0.5338vh;
-  }
-}
-@mixin col-vw-before($args) {
-  margin-left: (100 / nth($args, 3) * nth($args, 1)) * 1.72vh;
-  @include tablet {
-    margin-left: (100 / nth($args, 3) * nth($args, 1)) * 0.7vh;
-  }
-  @include mobile {
-    margin-left: (100 / nth($args, 3) * nth($args, 1)) * 0.5338vh;
   }
 }
 
+@mixin col-after($args) {
+  margin-right: (math.div(100%, nth($args, 3)) * nth($args, 1));
+  @include tablet {
+    margin-right: (math.div(100%, nth($args, 3)) * nth($args, 1));
+  }
+  @include mobile {
+    margin-right: (math.div(100%, nth($args, 3)) * nth($args, 1));
+  }
+}
+@mixin col-before($args) {
+  margin-left: (math.div(100%, nth($args, 3)) * nth($args, 1));
+  @include tablet {
+    margin-left: (math.div(100%, nth($args, 3)) * nth($args, 1));
+  }
+  @include mobile {
+    margin-left: (math.div(100%, nth($args, 3)) * nth($args, 1));
+  }
+}
+@mixin col-vw-after($args) {
+  margin-right: (math.div(100, nth($args, 3)) * nth($args, 1)) * 1vw;
+  @include tablet {
+    margin-right: (math.div(100, nth($args, 3)) * nth($args, 1)) * 1vw;
+  }
+  @include mobile {
+    margin-right: (math.div(100, nth($args, 3)) * nth($args, 1)) * 1vw;
+  }
+}
+@mixin col-vw-before($args) {
+  margin-left: (math.div(100, nth($args, 3)) * nth($args, 1)) * 1vw;
+  @include tablet {
+    margin-left: (math.div(100, nth($args, 3)) * nth($args, 1)) * 1vw;
+  }
+  @include mobile {
+    margin-left: (math.div(100, nth($args, 3)) * nth($args, 1)) * 1vw;
+  }
+}
+
+@mixin default-spacing {
+  @include r('padding', math.div($default-gutter, 2));
+}
 
 $big-desktop: "(min-width: 1921px)";
 @mixin big-desktop {
@@ -127,7 +159,7 @@ $small-desktop: "(min-width: 1024px) and (max-width: 1440px)";
 
 @function strip-unit($number) {
   @if type-of($number) == 'number' and not unitless($number) {
-    @return $number / ($number * 0 + 1);
+    @return math.div($number, ($number * 0 + 1));
   }
   @return $number;
 }
@@ -146,24 +178,24 @@ $small-desktop: "(min-width: 1024px) and (max-width: 1440px)";
   $single: nth($percentage, 1);
   $full: nth($percentage, 3);
 
-  margin-left: percentage($single / $full);
+  margin-left: percentage(math.div($single, $full));
 }
 
 @mixin column-after($percentage) {
   $single: nth($percentage, 1);
   $full: nth($percentage, 3);
 
-  margin-right: percentage($single / $full);
+  margin-right: percentage(math.div($single, $full));
 }
 
 @function relative-size($size) {
-  $rsize: (strip-unit($size) * 100) / $base-measure-size;
+  $rsize: math.div((strip-unit($size) * 100), $base-measure-size);
   @return $rsize * 1vw;
 }
 
 @function relative-max-size($size) {
-  $rsize: (strip-unit($size) * 100) / $base-measure-size;
-  @return $rsize * (($base-measure-size * 1px) / 100);
+  $rsize: math.div((strip-unit($size) * 100), $base-measure-size);
+  @return $rsize * math.div(($base-measure-size * 1px), 100);
 }
 
 @mixin clearfix {

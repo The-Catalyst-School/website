@@ -15,3 +15,17 @@
     font-style: normal;
     font-display: swap;
 }
+
+h1 {
+  @include m-font-size(30, 35);
+  text-transform: uppercase;
+}
+
+h2 {
+  @include m-font-size(20, 26);
+  text-transform: uppercase;
+}
+
+h4 {
+  @include m-font-size(12, 15);
+}
