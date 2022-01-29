@@ -1,7 +1,7 @@
 <template>
   <div class="modal" v-if="modal" @close="close">
     <div class="bkg" @click="close"></div>
-    <div class="wrapper">
+    <div class="wrapper" :class="col">
       <component v-if="modal" :is="modal.component" v-bind="modal.page.props" />
     </div>
   </div>
@@ -20,9 +20,17 @@ export default {
       modal: false,
     };
   },
+  computed: {
+    col() {
+      if (this.modal.col) {
+        return `col-${this.modal.col}`
+      }
+      return ''
+    }
+  },
   beforeMount() {
-    this.$inertia.visitInModal = (url, onSuccess) => {
-      this.visitInModal(url, onSuccess)
+    this.$inertia.visitInModal = (url, onSuccess, col) => {
+      this.visitInModal(url, onSuccess, col)
     }
     this.$inertia.on("success", (event) => {
       if (this.modal) {
@@ -41,7 +49,7 @@ export default {
       }
       this.modal = false
     },
-    visitInModal(url, onSuccess) {
+    visitInModal(url, onSuccess, col) {
       let data = {};
       [url, data] = mergeDataIntoQueryString("get", hrefToUrl(url), {});
       Axios({
@@ -79,6 +87,7 @@ export default {
               onSuccess,
               removeBeforeEventListener,
               page: clone,
+              col: col
             };
           }
         );
@@ -109,7 +118,7 @@ export default {
     cursor: pointer;
   }
   .wrapper {
-    @include col(10 of 14, 0);
+    @include col(4 of 14, 0);
     position: fixed;
     top: 50%;
     left: 50%;
@@ -117,6 +126,11 @@ export default {
     background: $white;
     border: 1px solid $black;
     z-index: 1;
+    @for $i from 1 through 14 {
+      &.col-#{$i} {
+        @include col($i of 14, 0);
+      }
+    }
   }
 }
 </style>

@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     login(route) {
-      this.$inertia.visitInModal(route)
+      this.$inertia.visitInModal(route, false)
     }
   }
 }
