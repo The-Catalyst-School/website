@@ -1,10 +1,13 @@
 <template>
   <header class="site-header">
-    <div class="logo">The Catalyst School</div>
+    <div class="logo">
+      <Link href="/">
+        The Catalyst School
+      </Link>
+    </div>
     <div class="nav-wrapper">
       <nav role="navigation">
         <ul>
-          <li><Link href="/">Home</Link></li>
           <li><Link :href="$route('web.course.index')">Courses</Link></li>
           <li><Link :href="$route('web.workshop.index')">Workshops</Link></li>
           <li><Link href="/about">About</Link></li>
@@ -46,23 +49,28 @@ export default {
     display: flex;
     justify-content: space-between;
     @include r('padding', 20px 30px);
+    .logo {
+      @include col(6 of 14);
+    }
     .nav-wrapper {
       flex-grow: 1;
+      @include col(6 of 14);
       @include m-font-size(12, 15);
       nav {
         ul {
           display: flex;
-          justify-content: flex-end;
           li {
-            @include r('padding', 0px 19px);
+            @include r('padding', 0px 38px 0 0);
             text-transform: uppercase;
           }
         }
       }
     }
     .login-wrapper {
+      @include col(2 of 14);
       @include m-font-size(12, 15);
       text-transform: uppercase;
+      text-align: right;
     }
   }
 </style>

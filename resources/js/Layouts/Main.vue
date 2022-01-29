@@ -28,7 +28,5 @@ export default {
   min-height: 100vh;
   @include r('padding-top', 110px);
   @include r('padding-bottom', 220px);
-  @include r('padding-left', 30px);
-  @include r('padding-right', 30px);
 }
 </style>
