@@ -19,7 +19,8 @@
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.44.0",
         "sass-loader": "^12.1.0",
-        "vue-loader": "^15.9.7"
+        "vue-loader": "^15.9.7",
+        "dayjs": "^1.10.7"
     },
     "dependencies": {
         "@inertiajs/inertia": "^0.10.1",
