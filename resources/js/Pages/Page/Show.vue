@@ -1,12 +1,19 @@
 <template>
   <div>
-    <h1>{{page.title}}</h1>
-    <h2>This is the page.</h2>
+    <home :page="page" :courses="courses" v-if="page.template === 'home'" />
+    <std :page="page" v-if="page.template === 'std'" />
   </div>
 </template>
 
 <script>
+
+import Home from './Home';
+import Std from './Std';
 export default {
-  props: ['page']
+  props: ['page', 'courses'],
+  components: {
+    Home,
+    Std
+  }
 };
 </script>

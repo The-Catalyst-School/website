@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -10,7 +11,11 @@ class PageController extends Controller
     public function show($slug)
     {
       $page = Page::findBySlugOrFail($slug);
-      return inertia('Page/Show', compact('page'));
+      $courses = [];
+      if ($page->template === 'home') {
+        $courses = Course::all();
+      }
+      return inertia('Page/Show', compact('page', 'courses'));
     }
 
     public function home()
