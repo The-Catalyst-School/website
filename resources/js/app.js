@@ -6,7 +6,8 @@ import dateFormat from './filters/dateFormat'
 import Layout from './Layouts/Main'
 
 InertiaProgress.init({
-  delay: 25
+  delay: 25,
+  color: '#000',
 })
 
 Vue.prototype.$route = route
