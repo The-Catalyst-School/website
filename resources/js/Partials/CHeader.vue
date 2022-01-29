@@ -17,7 +17,7 @@
       </nav>
     </div>
     <div class="login-wrapper">
-      <Link :href="$route('web.login')" v-if="!user">Login</Link>
+      <a class="login" @click="login($route('web.login'))" v-if="!user">Login</a>
       <Link method="delete" as="button" :href="$route('web.logout')" v-if="user">Logout {{user.name}}</Link>
     </div>
   </header>
@@ -34,6 +34,11 @@ export default {
   computed: {
     user() {
       return this.$page.props.auth.user
+    }
+  },
+  methods: {
+    login(route) {
+      this.$inertia.visitInModal(route)
     }
   }
 }
@@ -71,6 +76,9 @@ export default {
       @include m-font-size(12, 15);
       text-transform: uppercase;
       text-align: right;
+      .login {
+        cursor: pointer;
+      }
     }
   }
 </style>

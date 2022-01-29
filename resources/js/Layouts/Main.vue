@@ -7,17 +7,20 @@
       </article>
     </div>
     <c-footer />
+    <modal />
   </main>
 </template>
 
 <script>
 import CHeader from '../Partials/CHeader'
 import CFooter from '../Partials/CFooter'
+import Modal from '../Partials/Modal'
 
 export default {
   components: {
     CHeader,
-    CFooter
+    CFooter,
+    Modal
   }
 }
 </script>

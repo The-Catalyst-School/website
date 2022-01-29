@@ -15,10 +15,13 @@
         <div class="px-10 py-4 bg-gray-100 border-t border-gray-100 flex">
           <button :loading="form.processing" class="ml-auto btn-indigo" type="submit">Login</button>
         </div>
-        <Link :href="$route('web.register.create')">Register</Link>
+        <a @click="$inertia.visitInModal($route('web.register.create'))">Register</a>
       </form>
       <div class="errors" v-if="errors">
         {{errors.email}}
+      </div>
+      <div class="errors" v-if="cErrors">
+        {{cErrors.email}}
       </div>
     </div>
   </div>
@@ -35,16 +38,22 @@ export default {
   },
   data() {
     return {
+      cErrors: false,
       form: this.$inertia.form({
         email: 'aaa@aaa.com',
-        password: 'ciao',
+        password: 'ciaociao',
         remember: false,
       }),
     }
   },
   methods: {
     login() {
-      this.form.post(this.$route('web.login.store'))
+      this.form.post(
+        this.$route('web.login.store'),
+        {
+          onError: (errors) => this.cErrors = errors
+        }
+      )
     },
   },
 }

@@ -10,6 +10,9 @@
     <div class="errors" v-if="errors">
       {{errors.email}}
     </div>
+      <div class="errors" v-if="cErrors">
+        {{cErrors.email}}
+      </div>
   </div>
 </template>
 
@@ -20,6 +23,7 @@ export default {
   },
   data() {
     return {
+      cErrors: false,
       form: this.$inertia.form({
         name: '',
         email: '',
@@ -29,7 +33,12 @@ export default {
   },
   methods: {
     register() {
-      this.form.post(this.$route('web.register.store'))
+      this.form.post(
+        this.$route('web.register.store'),
+        {
+          onError: (errors) => this.cErrors = errors
+        }
+      )
     },
   },
 }
