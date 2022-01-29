@@ -85,6 +85,7 @@ export default {
 @import '../../sass/_variables';
 .course-preview {
   @include col(4 of 14);
+  @include r('margin-bottom', 20);
   .main-body {
     .topics-wrapper {
       display: flex;
@@ -148,6 +149,9 @@ export default {
       position: absolute;
       bottom: 100%;
       left: 0;
+      display: flex;
+      flex-wrap: wrap;
+      @include r('margin-bottom', 6px);
       .tag {
         background: $white;
       }
