@@ -7,7 +7,7 @@ use GrahamCampbell\GitHub\GitHubManager;
 use App\Models\Course;
 use App\Models\Lesson;
 use voku\helper\HtmlDomParser;
-use Parsedown;
+use Erusev\Parsedown\Parsedown;
 
 class PullGitbook extends Command
 {
@@ -42,9 +42,10 @@ class PullGitbook extends Command
     }
 
     public function parseContent($content) {
+      $parsedown = new Parsedown();
       $content = $content['content'];
       $decoded = base64_decode($content);
-      $html = app(Parsedown::class)->setSafeMode(true)->text($decoded);
+      $html = $parsedown->toHtml($decoded);
       return $html;
     }
 
@@ -77,13 +78,31 @@ class PullGitbook extends Command
         return $resource;
     }
 
-    public function parseEntry($entry)
+    public function baseParseEntry($entry)
     {
       $parsedEntry = false;
       if (is_a($entry, 'voku\helper\SimpleHtmlDom')) {
         if ($entry->tagName == 'li') {
           $link = $entry->findOneOrFalse('a');
           //print_r($link);
+          if ($link) {
+            $parsedEntry = [
+              'title' => $link->text(),
+              'path' => $link->getAttribute('href')
+            ];
+          }
+        }
+      }
+      return $parsedEntry;
+
+    }
+
+    public function parseEntry($entry)
+    {
+      $parsedEntry = false;
+      if (is_a($entry, 'voku\helper\SimpleHtmlDom')) {
+        if ($entry->tagName == 'li') {
+          $link = $entry->findOneOrFalse('a');
           if ($link) {
             $parsedEntry = [
               'title' => $link->text(),
@@ -121,11 +140,35 @@ class PullGitbook extends Command
           }
         }
         if ($websiteTree) {
-          $courses = $websiteTree->childNodes();
-          foreach($courses as $course) {
-            $parsedCourse = $this->parseEntry($course);
-            if ($parsedCourse) {
-              array_push($parsedCourses, $parsedCourse);
+          $sections = $websiteTree->childNodes();
+          foreach($sections as $section) {
+            $parsedSection = $this->baseParseEntry($section);
+            if ($parsedSection['title'] == 'About') {
+              echo 'About';
+            }
+            if ($parsedSection['title'] == 'Workshops') {
+              echo 'Workshops';
+            }
+            if ($parsedSection['title'] == 'Courses') {
+              echo 'Courses';
+              $childrenList = $section->findOneOrFalse('ul');
+              if ($childrenList) {
+                $children = $childrenList->find('li');
+                foreach($children as $child) {
+                  $parsedCourse = $this->parseEntry($child);
+                  if ($parsedCourse) {
+                    if (count($parsedCourse['children']) > 0) {
+                      array_push($parsedCourses, $parsedCourse);
+                    }
+                  }
+                }
+              }
+            }
+            if ($parsedSection['title'] == 'FAQ') {
+              echo 'FAQ';
+            }
+            if ($parsedSection['title'] == 'Events') {
+              echo 'Events';
             }
           }
         }

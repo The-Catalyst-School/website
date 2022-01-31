@@ -4,8 +4,10 @@ namespace App\Traits;
 
 use App\Models\Course;
 use App\Models\Attachment;
+use App\Models\Topic;
 use Illuminate\Support\HtmlString;
-use Parsedown;
+use voku\helper\HtmlDomParser;
+use Erusev\Parsedown\Parsedown;
 
 trait FromGit
 {
@@ -99,7 +101,29 @@ trait FromGit
         ];
     }
 
+    public function parseCustomFields($table) {
+      $custom_fields = [];
+      // check if first
+      if ($table) {
+        $previous = $table->previousNonWhitespaceSibling();
+        if ($previous->getTag() == 'h1') {
+          $rows = $table->find('tr');
+          foreach($rows as $row) {
+            $key = $row->find('td', 0)->text();
+            if ($key != '') {
+              $value = $row->find('td', 1)->innerHtml();
+              $custom_fields[$key] = $value;
+            }
+          }
+          return $custom_fields;
+        }
+      }
+      return false;
+    }
+
     public function parseContent($content) {
+      $parsedown = new Parsedown();
+      $params = [];
       $files = [];
       $decoded = base64_decode($content['content']);
       $parsed = $this->parseGitbookAdvSyntax($decoded);
@@ -120,13 +144,23 @@ trait FromGit
         // Update links in HTML
       }
       // Save and link Images
-      $html = new HtmlString(
-        app(Parsedown::class)->setSafeMode(false)->text($parsed['content'])
+      $draft_html = $parsedown->toHtml($parsed['content']);
+      $dom = HtmlDomParser::str_get_html($draft_html);
+      $custom_fields = $this->parseCustomFields(
+        $dom->findOneOrFalse('table')
       );
-      return [
-        'html' => $html,
-        'files' => $files
-      ];
+
+      if ($custom_fields) {
+        $dom->findOneOrFalse('table')->delete();
+        foreach($custom_fields as $key => $value) {
+          $params[$key] = $value;
+        }
+      }
+
+      $html = new HtmlString($dom->html());
+      $params['html'] = $html;
+      $params['files'] = $files;
+      return $params;
     }
 
     public function createFromGit($content, $title, $parent) {
@@ -138,11 +172,15 @@ trait FromGit
         'content' => $parsed['html']
       ];
 
+      $args = $this->setCustomFieldsAsArgs($args, $parsed);
+
       if ($parent) {
         $args['course_id'] = $parent->id;
       }
 
       $entity = $this->create($args);
+
+      $this->setTags($entity, $parsed);
 
       foreach($parsed['files'] as $file) {
         $file->course()->associate($entity);
@@ -158,19 +196,47 @@ trait FromGit
         'title' => $title,
         'github_path' => $content['path'],
         'sha' => $content['sha'],
-        'content' => $parsed['html']
+        'content' => $parsed['html'],
       ];
+
+      $args = $this->setCustomFieldsAsArgs($args, $parsed);
 
       if ($parent) {
         $args['course_id'] = $parent->id;
       }
-      $entity = $entity->update($args);
+      $entity->update($args);
+      $this->setTags($entity, $parsed);
 
       foreach($parsed['files'] as $file) {
         $file->course()->associate($entity);
         $file->save();
       }
       return $entity;
+    }
+
+    public function setCustomFieldsAsArgs($args, $parsed) {
+      $available_custom_fields = ['teacher', 'estimated_time', 'difficulty', 'featured'];
+      foreach($available_custom_fields as $cf) {
+        if (array_key_exists($cf, $parsed)) {
+          $args[$cf] = $parsed[$cf];
+        }
+      }
+      return $args;
+    }
+
+    public function setTags($entity, $parsed) {
+      $tagModels = [];
+      if (array_key_exists('topics', $parsed)) {
+        $tags = explode($parsed['topics'], ',');
+        foreach($tags as $tag) {
+          $t = Topic::firstOrCreate(['title' => $tag]);
+          if ($t) {
+            $tagModels[] = $t->id;
+          }
+        }
+        $entity->topics()->syncWithoutDetaching($tagModels);
+      }
+
     }
 
     public function actionFromGit($content, $title, $parent) {
