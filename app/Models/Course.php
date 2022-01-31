@@ -23,7 +23,7 @@ class Course extends Model
 
     protected $fillable = [
       'title', 'content', 'sha', 'github_path', 'teacher',
-      'estimated_time', 'difficulty', 'featured'
+      'estimated_time', 'difficulty', 'featured', 'subtitle'
     ];
 
     public function lessons()

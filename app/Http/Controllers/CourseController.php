@@ -9,13 +9,14 @@ class CourseController extends Controller
 {
     public function index()
     {
-      $courses = Course::all();
+      $courses = Course::with('topics')->get();
       return inertia('Course/List', compact('courses'));
     }
 
     public function show($slug)
     {
-      $course = Course::with('lessons')->whereSlug($slug)->firstOrFail();
+      $course = Course::with('lessons', 'topics')
+        ->whereSlug($slug)->firstOrFail();
       return inertia('Course/Show', compact('course'));
     }
 

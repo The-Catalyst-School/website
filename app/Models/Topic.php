@@ -21,6 +21,7 @@ class Topic extends Model
     protected $fillable = [
       'slug', 'title'
     ];
+    protected $hidden = ['pivot', 'slug', 'created_at', 'updated_at'];
 
     // Relationships
     public function courses()

@@ -13,7 +13,7 @@ class PageController extends Controller
       $page = Page::findBySlugOrFail($slug);
       $courses = [];
       if ($page->template === 'home') {
-        $courses = Course::all();
+        $courses = Course::with('topics')->get();
       }
       return inertia('Page/Show', compact('page', 'courses'));
     }

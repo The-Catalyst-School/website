@@ -215,7 +215,9 @@ trait FromGit
     }
 
     public function setCustomFieldsAsArgs($args, $parsed) {
-      $available_custom_fields = ['teacher', 'estimated_time', 'difficulty', 'featured'];
+      $available_custom_fields = [
+        'teacher', 'estimated_time', 'difficulty', 'featured', 'subtitle'
+      ];
       foreach($available_custom_fields as $cf) {
         if (array_key_exists($cf, $parsed)) {
           $args[$cf] = $parsed[$cf];
@@ -227,9 +229,9 @@ trait FromGit
     public function setTags($entity, $parsed) {
       $tagModels = [];
       if (array_key_exists('topics', $parsed)) {
-        $tags = explode($parsed['topics'], ',');
+        $tags = explode(',', $parsed['topics']);
         foreach($tags as $tag) {
-          $t = Topic::firstOrCreate(['title' => $tag]);
+          $t = Topic::firstOrCreate(['title' => trim($tag)]);
           if ($t) {
             $tagModels[] = $t->id;
           }

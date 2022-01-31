@@ -2,26 +2,31 @@
   <div class="course-preview">
     <div class="main-body">
       <div class="topics-wrapper">
-        <div class="tag">Topic</div>
-        <div class="tag">Beginner level</div>
-        <div class="tag">4 lessons</div>
+        <div class="tag" :key="`topic-${topic.id}`" v-for="topic in course.topics">
+          {{topic.title}}
+        </div>
       </div>
       <div class="preview-body">
         <Link :href="$route('web.course.show', course.slug)">
           <div class="heading">
             <div class="date">{{ course.updated_at | dateFormat('DD.MM.YYYY') }}</div>
-            <div class="estimated">Estimated time: 3h 25m</div>
+            <div class="estimated" v-if="course.estimated_time">
+              Estimated time: {{course.estimated_time}}
+            </div>
           </div>
           <div class="title">
-            <h2>
-                {{course.title}}
-            </h2>
+            <h2>{{course.title}}</h2>
+          </div>
+          <div class="subtitle" v-if="course.subtitle">
+            <h2>{{course.subtitle}}</h2>
           </div>
           <div class="image-wrapper">
 
           </div>
           <div class="footer">
-            With Teacher Name
+            <span v-if="course.teacher">
+              With {{course.teacher}}
+            </span>
           </div>
         </Link>
       </div>
@@ -32,15 +37,17 @@
     <popup v-if="popupVisible" @close="popupVisible = false">
       <template v-slot:fixed-header>
         <div class="topics-wrapper">
-          <div class="tag">Topic</div>
-          <div class="tag">Beginner level</div>
-          <div class="tag">4 lessons</div>
+          <div class="tag" :key="`topic-${topic.id}`" v-for="topic in course.topics">
+            {{topic.title}}
+          </div>
         </div>
         <div class="intro-heading">
           <div class="heading">
             <div class="date">{{ course.updated_at | dateFormat('DD.MM.YYYY') }}</div>
-            <div class="teacher">With Teacher Name</div>
-            <div class="estimated">Estimated time: 3h 25m</div>
+            <div class="teacher" v-if="course.teacher">With {{course.teacher}}</div>
+            <div class="estimated" v-if="course.estimated_time">
+              Estimated time: {{course.estimated_time}}
+            </div>
           </div>
           <div class="title">
             <h1>
@@ -86,7 +93,12 @@ export default {
 .course-preview {
   @include col(4 of 14);
   @include r('margin-bottom', 20);
+  display: flex;
+  flex-direction: column;
   .main-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
     .topics-wrapper {
       display: flex;
       flex-wrap: wrap;
@@ -97,9 +109,13 @@ export default {
     }
     .preview-body {
       border: 1px solid $black;
+      flex-grow: 1;
       @include default-spacing;
       @include transition('background');
       a, a:visited {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
         @include transition('color');
       }
       .heading {
@@ -112,6 +128,11 @@ export default {
       .image-wrapper {
         width: 100%;
         padding-top: 73%;
+      }
+      .footer {
+        flex-grow: 1;
+        display: flex;
+        align-items: flex-end;
       }
     }
     &:hover {
