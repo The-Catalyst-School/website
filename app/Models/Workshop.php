@@ -20,6 +20,6 @@ class Workshop extends Model
 
     public function topics()
     {
-        return $this->belongsTo(Topic::class);
+        return $this->belongsToMany(Topic::class);
     }
 }

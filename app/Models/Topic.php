@@ -18,19 +18,23 @@ class Topic extends Model
     use SluggableScopeHelpers;
     use \App\Traits\Seo;
 
+    protected $fillable = [
+      'slug', 'title'
+    ];
+
     // Relationships
     public function courses()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsToMany(Course::class);
     }
 
     public function lessons()
     {
-        return $this->belongsTo(Lesson::class);
+        return $this->belongsToMany(Lesson::class);
     }
 
     public function workshops()
     {
-        return $this->belongsTo(Workshop::class);
+        return $this->belongsToMany(Workshop::class);
     }
 }
