@@ -21,7 +21,10 @@ class Course extends Model
     use \App\Traits\Seo;
     use \App\Traits\FromGit;
 
-    protected $fillable = ['title', 'content', 'sha', 'github_path'];
+    protected $fillable = [
+      'title', 'content', 'sha', 'github_path', 'teacher',
+      'estimated_time', 'difficulty', 'featured'
+    ];
 
     public function lessons()
     {
@@ -30,7 +33,7 @@ class Course extends Model
 
     public function topics()
     {
-        return $this->belongsTo(Topic::class);
+        return $this->belongsToMany(Topic::class);
     }
 
     public function attachments()
