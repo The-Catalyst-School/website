@@ -1,5 +1,9 @@
 <template>
   <div>
+    <section class="intro">
+      <h4 class="section-title">About us</h4>
+      <sentence-slider />
+    </section>
     <section class="courses">
       <h4 class="section-title">Our last Courses</h4>
       <horizontal-slider>
@@ -27,12 +31,14 @@
 
 import CoursePreview from '../../Components/CoursePreview'
 import HorizontalSlider from '../../Components/HorizontalSlider'
+import SentenceSlider from '../../Components/SentenceSlider'
 import { Link } from '@inertiajs/inertia-vue'
 export default {
   props: ['page', 'courses'],
   components: {
     CoursePreview,
     HorizontalSlider,
+    SentenceSlider,
     Link
   }
 };
@@ -43,10 +49,16 @@ export default {
 @import '../../../sass/_mixins';
 @import '../../../sass/_variables';
 section {
+  @include r('padding', 20px 30px);
+  @include r('margin-bottom', 130px);
   .section-title {
-    @include col(12 of 14, math.div($default-gutter, 2));
-    @include col-before(2 of 14);
+    @include col(12 of 14);
     @include r('margin-bottom', 20px);
+  }
+  &.courses {
+    .section-title {
+      @include col-before(2 of 14);
+    }
   }
 }
 </style>
