@@ -8,6 +8,7 @@ use App\Models\Topic;
 use Illuminate\Support\HtmlString;
 use voku\helper\HtmlDomParser;
 use Erusev\Parsedown\Parsedown;
+use Carbon\Carbon;
 
 trait FromGit
 {
@@ -216,10 +217,15 @@ trait FromGit
 
     public function setCustomFieldsAsArgs($args, $parsed) {
       $available_custom_fields = [
-        'teacher', 'estimated_time', 'difficulty', 'featured', 'subtitle'
+        'teacher', 'estimated_time', 'difficulty', 'featured',
+        'subtitle', 'intro', 'scheduled_at'
       ];
+      $dates = ['scheduled_at'];
       foreach($available_custom_fields as $cf) {
         if (array_key_exists($cf, $parsed)) {
+          if (in_array($cf, $dates)) {
+            $parsed[$cf] = Carbon::createFromTimestamp(strtotime($parsed[$cf]))->toDateTimeString();
+          }
           $args[$cf] = $parsed[$cf];
         }
       }

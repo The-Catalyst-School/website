@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use GrahamCampbell\GitHub\GitHubManager;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\Workshop;
 use voku\helper\HtmlDomParser;
 use Erusev\Parsedown\Parsedown;
 
@@ -64,6 +65,17 @@ class PullGitbook extends Command
         foreach ($entry['children'] as $child) {
           $this->createLesson($child, $course);
         }
+      }
+      // Collect all old courses and lessons and delete them
+      // if not present anymore.
+    }
+
+    public function createWorkshops($tree) {
+      foreach ($tree as $entry) {
+        $workshop = new Workshop;
+        $resource = $this->exploreFile($entry['path']);
+        $workshop = $workshop->actionFromGit($resource, $entry['title'], false);
+
       }
       // Collect all old courses and lessons and delete them
       // if not present anymore.
@@ -129,6 +141,7 @@ class PullGitbook extends Command
     public function getWebsiteTree()
     {
         $parsedCourses = [];
+        $parsedWorkshops = [];
         $summary = $this->exploreFile('SUMMARY.md');
         $html_summary = $this->parseContent($summary);
         $dom = HtmlDomParser::str_get_html($html_summary);
@@ -148,6 +161,18 @@ class PullGitbook extends Command
             }
             if ($parsedSection['title'] == 'Workshops') {
               echo 'Workshops';
+              $childrenList = $section->findOneOrFalse('ul');
+              if ($childrenList) {
+                $children = $childrenList->find('li');
+                foreach($children as $child) {
+                  $parsedWorkshop = $this->parseEntry($child);
+                  if ($parsedWorkshop) {
+                    if (count($parsedWorkshop['children']) == 0) {
+                      array_push($parsedWorkshops, $parsedWorkshop);
+                    }
+                  }
+                }
+              }
             }
             if ($parsedSection['title'] == 'Courses') {
               echo 'Courses';
@@ -173,6 +198,7 @@ class PullGitbook extends Command
           }
         }
         $this->createCourses($parsedCourses);
+        $this->createWorkshops($parsedWorkshops);
     }
 
     /**
