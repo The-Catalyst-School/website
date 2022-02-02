@@ -122,7 +122,36 @@ trait FromGit
       return false;
     }
 
-    public function parseContent($content) {
+    public function parseJsonCustomFields($table) {
+      $custom_fields = [];
+      // check if first
+      if ($table) {
+        $previous = $table->previousNonWhitespaceSibling();
+        if ($previous->getTag() == 'h1') {
+          $keys = [];
+          $headers = $table->find('th');
+          foreach($headers as $header) {
+            $keys[] = $header->text();
+          }
+          $rows = $table->find('tr');
+          foreach($rows as $row_idx => $row) {
+            $test = $row->find('td', 0)->text();
+            if ($test != '') {
+              $tmp = [];
+              $tmp['idx'] = $row_idx;
+              foreach($keys as $idx => $key) {
+                $tmp[$key] = $row->find('td', $idx)->text();
+              }
+              $custom_fields[] = $tmp;
+            }
+          }
+          return $custom_fields;
+        }
+      }
+      return false;
+    }
+
+    public function parseContent($content, $title) {
       $parsedown = new Parsedown();
       $params = [];
       $files = [];
@@ -147,16 +176,25 @@ trait FromGit
       // Save and link Images
       $draft_html = $parsedown->toHtml($parsed['content']);
       $dom = HtmlDomParser::str_get_html($draft_html);
-      $custom_fields = $this->parseCustomFields(
-        $dom->findOneOrFalse('table')
-      );
-
+      if ($title == 'About') {
+        $sentences = $this->parseJsonCustomFields(
+          $dom->findOneOrFalse('table')
+        );
+        if ($sentences) {
+          $custom_fields['sentences'] = $sentences;
+        }
+      } else {
+        $custom_fields = $this->parseCustomFields(
+          $dom->findOneOrFalse('table')
+        );
+      }
       if ($custom_fields) {
         $dom->findOneOrFalse('table')->delete();
         foreach($custom_fields as $key => $value) {
           $params[$key] = $value;
         }
       }
+
 
       $html = new HtmlString($dom->html());
       $params['html'] = $html;
@@ -165,7 +203,7 @@ trait FromGit
     }
 
     public function createFromGit($content, $title, $parent) {
-      $parsed = $this->parseContent($content);
+      $parsed = $this->parseContent($content, $title);
       $args = [
         'title' => $title,
         'github_path' => $content['path'],
@@ -192,7 +230,7 @@ trait FromGit
 
     public function updateFromGit($content, $entity, $title, $parent) {
       echo 'Update';
-      $parsed = $this->parseContent($content);
+      $parsed = $this->parseContent($content, $title);
       $args = [
         'title' => $title,
         'github_path' => $content['path'],
@@ -218,7 +256,7 @@ trait FromGit
     public function setCustomFieldsAsArgs($args, $parsed) {
       $available_custom_fields = [
         'teacher', 'estimated_time', 'difficulty', 'featured',
-        'subtitle', 'intro', 'scheduled_at'
+        'subtitle', 'intro', 'scheduled_at', 'sentences'
       ];
       $dates = ['scheduled_at'];
       foreach($available_custom_fields as $cf) {

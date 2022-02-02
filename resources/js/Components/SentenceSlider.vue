@@ -24,28 +24,11 @@
 import { Link } from '@inertiajs/inertia-vue'
 
 export default {
-  //props: ['sentences'],
+  props: ['sentences'],
   data() {
     return {
       current: 0,
-      interval: false,
-      sentences: [
-        {
-          "idx": 0,
-          "text": "1Catalyst School is a learning hub that aims to accelerate the adoption of Cardano’s Project Catalyst and to ensure that it thrives and reaches its full potential, faster. 1Catalyst School is a learning hub that aims to accelerate the adoption of Cardano’s Project Catalyst and to ensure that it thrives and reaches its full potential, faster.",
-          "link": "/about"
-        },
-        {
-          "idx": 1,
-          "text": "2Catalyst School is a learning hub that aims to accelerate the adoption of Cardano’s Project Catalyst and to ensure that it thrives and reaches its full potential, faster.",
-          "link": "/about"
-        },
-        {
-          "idx": 2,
-          "text": "3Catalyst School is a learning hub that aims to accelerate the adoption of Cardano’s Project Catalyst and to ensure that it thrives and reaches its full potential, faster.",
-          "link": "/about"
-        }
-      ]
+      interval: false
     }
   },
   components: {
@@ -88,6 +71,7 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+    @include col(1 of 1);
     .internal-wrapper {
       position: relative;
       h1 {
@@ -103,6 +87,7 @@ export default {
     &.placeholder {
       position: relative;
       opacity: 0;
+      padding: 0;
     }
   }
   .fade-enter-active, .fade-leave-active {

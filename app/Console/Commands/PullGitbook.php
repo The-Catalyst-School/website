@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use GrahamCampbell\GitHub\GitHubManager;
+use App\Models\Page;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Workshop;
@@ -81,6 +82,17 @@ class PullGitbook extends Command
       // if not present anymore.
     }
 
+    public function createPages($tree) {
+      foreach ($tree as $entry) {
+        $page = new Page;
+        $resource = $this->exploreFile($entry['path']);
+        $page = $page->actionFromGit($resource, $entry['title'], false);
+
+      }
+      // Collect all old courses and lessons and delete them
+      // if not present anymore.
+    }
+
     public function exploreFile($path)
     {
         $resource = $this->github->repository()
@@ -140,6 +152,7 @@ class PullGitbook extends Command
 
     public function getWebsiteTree()
     {
+        $parsedPages = [];
         $parsedCourses = [];
         $parsedWorkshops = [];
         $summary = $this->exploreFile('SUMMARY.md');
@@ -158,6 +171,8 @@ class PullGitbook extends Command
             $parsedSection = $this->baseParseEntry($section);
             if ($parsedSection['title'] == 'About') {
               echo 'About';
+              $parsedAbout = $this->parseEntry($section);
+              array_push($parsedPages, $parsedAbout);
             }
             if ($parsedSection['title'] == 'Workshops') {
               echo 'Workshops';
@@ -199,6 +214,7 @@ class PullGitbook extends Command
         }
         $this->createCourses($parsedCourses);
         $this->createWorkshops($parsedWorkshops);
+        $this->createPages($parsedPages);
     }
 
     /**

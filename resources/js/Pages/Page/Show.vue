@@ -3,6 +3,7 @@
     <home :page="page"
       :courses="courses"
       :workshops="workshops"
+      :sentences="sentences"
       v-if="page.template === 'home'" />
     <std :page="page" v-if="page.template === 'std'" />
   </div>
@@ -13,7 +14,7 @@
 import Home from './Home';
 import Std from './Std';
 export default {
-  props: ['page', 'courses', 'workshops'],
+  props: ['page', 'courses', 'workshops', 'sentences'],
   components: {
     Home,
     Std

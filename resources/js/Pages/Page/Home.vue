@@ -2,7 +2,7 @@
   <div>
     <section class="intro">
       <h4 class="section-title">About us</h4>
-      <sentence-slider />
+      <sentence-slider v-if="sentences" :sentences="sentences" />
     </section>
     <section class="courses">
       <h4 class="section-title">Our last Courses</h4>
@@ -51,7 +51,7 @@ import HorizontalSlider from '../../Components/HorizontalSlider'
 import SentenceSlider from '../../Components/SentenceSlider'
 import { Link } from '@inertiajs/inertia-vue'
 export default {
-  props: ['page', 'courses', 'workshops'],
+  props: ['page', 'courses', 'workshops', 'sentences'],
   components: {
     CoursePreview,
     WorkshopPreview,

@@ -12,13 +12,18 @@ class PageController extends Controller
     public function show($slug)
     {
       $page = Page::findBySlugOrFail($slug);
+      $sentences = [];
       $courses = [];
       $workshops = [];
       if ($page->template === 'home') {
+        $about = Page::findBySlugOrFail('about');
         $courses = Course::with('topics')->get();
         $workshops = Workshop::with('topics')->get();
+        if ($about) {
+          $sentences = $about->sentences;
+        }
       }
-      return inertia('Page/Show', compact('page', 'courses', 'workshops'));
+      return inertia('Page/Show', compact('page', 'courses', 'workshops', 'sentences'));
     }
 
     public function home()
