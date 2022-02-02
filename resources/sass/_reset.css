@@ -29,7 +29,12 @@ img {
 }
 
 ul, ol {
-  list-style: none;
+  list-style-position: inside;
+}
+
+ul li::before, ol li::before {
+  content: '';
+  margin-left: -12px;
 }
 
 a, a:visited {

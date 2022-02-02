@@ -64,6 +64,7 @@ export default {
       nav {
         ul {
           display: flex;
+          list-style: none;
           li {
             @include r('padding', 0px 38px 0 0);
             text-transform: uppercase;

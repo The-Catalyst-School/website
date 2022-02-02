@@ -24,19 +24,41 @@
         </template>
       </horizontal-slider>
     </section>
+    <section class="courses">
+      <h4 class="section-title">Our last Workshops</h4>
+      <horizontal-slider>
+        <template v-slot:track>
+          <workshop-preview
+            :workshop="workshop"
+            :key="`workshops-preview-${index}`"
+            v-for="(workshop, index) in workshops"
+            class="workshops-preview" />
+          <workshop-preview
+            :workshop="workshop"
+            :key="`workshop-preview-${index}`"
+            v-for="(workshop, index) in workshops"
+            class="workshops-preview" />
+        </template>
+        <template v-slot:more>
+          <Link :href="$route('web.workshop.index')">See all workshops</Link>
+        </template>
+      </horizontal-slider>
+    </section>
   </div>
 </template>
 
 <script>
 
 import CoursePreview from '../../Components/CoursePreview'
+import WorkshopPreview from '../../Components/WorkshopPreview'
 import HorizontalSlider from '../../Components/HorizontalSlider'
 import SentenceSlider from '../../Components/SentenceSlider'
 import { Link } from '@inertiajs/inertia-vue'
 export default {
-  props: ['page', 'courses'],
+  props: ['page', 'courses', 'workshops'],
   components: {
     CoursePreview,
+    WorkshopPreview,
     HorizontalSlider,
     SentenceSlider,
     Link
@@ -55,7 +77,7 @@ section {
     @include col(12 of 14);
     @include r('margin-bottom', 20px);
   }
-  &.courses {
+  &.courses, &.workshops {
     .section-title {
       @include col-before(2 of 14);
     }
