@@ -28,6 +28,9 @@
       display: flex;
       & > div {
         @include col-vw(4 of 14);
+        &.featured {
+          @include col-vw(6 of 14);
+        }
       }
     }
     .more {

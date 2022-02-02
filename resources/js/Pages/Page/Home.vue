@@ -11,13 +11,11 @@
           <course-preview
             :course="course"
             :key="`cours-preview-${index}`"
-            v-for="(course, index) in courses"
-            class="course-preview" />
+            v-for="(course, index) in courses" />
           <course-preview
             :course="course"
             :key="`course-preview-${index}`"
-            v-for="(course, index) in courses"
-            class="course-preview" />
+            v-for="(course, index) in courses" />
         </template>
         <template v-slot:more>
           <Link :href="$route('web.course.index')">See all courses</Link>
@@ -31,13 +29,11 @@
           <workshop-preview
             :workshop="workshop"
             :key="`workshops-preview-${index}`"
-            v-for="(workshop, index) in workshops"
-            class="workshops-preview" />
+            v-for="(workshop, index) in workshops" />
           <workshop-preview
             :workshop="workshop"
             :key="`workshop-preview-${index}`"
-            v-for="(workshop, index) in workshops"
-            class="workshops-preview" />
+            v-for="(workshop, index) in workshops" />
         </template>
         <template v-slot:more>
           <Link :href="$route('web.workshop.index')">See all workshops</Link>
@@ -80,6 +76,11 @@ section {
   &.courses, &.workshops {
     .section-title {
       @include col-before(2 of 14);
+      transform: translateX(#{relative-size(-25px)});
+    }
+    .slider {
+      width: calc(100% + #{relative-size(60px)});
+      @include r('margin-left', -30px);
     }
   }
 }

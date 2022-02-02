@@ -1,5 +1,5 @@
 <template>
-  <div class="workshop-preview">
+  <div class="workshop-preview" :class="{'featured': (workshop.featured === 'yes')}">
     <div class="main-body">
       <div class="topics-wrapper">
         <div class="tag" :key="`topic-${topic.id}`" v-for="topic in workshop.topics">

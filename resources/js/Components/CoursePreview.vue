@@ -1,5 +1,5 @@
 <template>
-  <div class="course-preview">
+  <div class="course-preview" :class="{'featured': (course.featured === 'yes')}">
     <div class="main-body">
       <div class="topics-wrapper">
         <div class="tag" :key="`topic-${topic.id}`" v-for="topic in course.topics">
@@ -190,6 +190,11 @@ export default {
           @include col(4 of 8);
         }
       }
+    }
+  }
+  &.featured {
+    .main-body .preview-body .image-wrapper {
+      padding-top: 50%;
     }
   }
 }
