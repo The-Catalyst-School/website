@@ -62,6 +62,9 @@ export default {
   @include r('margin-bottom', 20);
   display: flex;
   flex-direction: column;
+  &.featured {
+    @include col(6 of 14);
+  }
   .main-body {
     flex-grow: 1;
     display: flex;

@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <h1>This is the workshop archive.</h1>
+  <div class="workshops-list">
     <div class="list">
-      <div v-for="(workshop, index) in workshops" class="workshop-preview">
-        <Link :href="$route('web.workshop.show', workshop.slug)">
-          {{workshop.title}}
-        </Link>
-      </div>
+      <workshop-preview
+        :workshop="workshop"
+        :key="`cours-preview-${index}`"
+        v-for="(workshop, index) in workshops" />
     </div>
   </div>
 </template>
@@ -14,11 +12,28 @@
 <script>
 
 import { Link } from '@inertiajs/inertia-vue'
+import WorkshopPreview from '../../Components/WorkshopPreview'
 
 export default {
   props: ['workshops'],
   components: {
-    Link
+    Link,
+    WorkshopPreview
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import '../../../sass/_mixins';
+.workshops-list {
+  @include r('padding-top', 150px);
+  @include r('padding-right', 30px);
+  @include r('padding-left', 30px);
+  width: 100%;
+  .list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+</style>

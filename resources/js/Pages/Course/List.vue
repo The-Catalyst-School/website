@@ -4,8 +4,7 @@
       <course-preview
         :course="course"
         :key="`cours-preview-${index}`"
-        v-for="(course, index) in courses"
-        class="course-preview" />
+        v-for="(course, index) in courses" />
     </div>
   </div>
 </template>
