@@ -183,6 +183,13 @@ trait FromGit
         if ($sentences) {
           $custom_fields['sentences'] = $sentences;
         }
+      } elseif ($title == 'FAQ') {
+        $faqs = $this->parseJsonCustomFields(
+          $dom->findOneOrFalse('table')
+        );
+        if ($faqs) {
+          $custom_fields['sentences'] = $faqs;
+        }
       } else {
         $custom_fields = $this->parseCustomFields(
           $dom->findOneOrFalse('table')

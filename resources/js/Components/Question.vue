@@ -1,0 +1,66 @@
+<template>
+  <div class="internal-faq">
+    <div class="question">
+      <div class="counter">{{faq.idx}}</div>
+      <div class="q"><h2>{{faq.question}}</h2></div>
+      <div class="btn" @click="$emit('toggle', faq.idx)">{{msg}}</div>
+    </div>
+    <slide-up-down
+      class="answer" :active="active" :duration="500">
+      <div class="wrapper">
+        {{faq.answer}}
+      </div>
+    </slide-up-down>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ['current', 'faq'],
+  computed: {
+    active() {
+      return (this.faq.idx === this.current)
+    },
+    msg() {
+      return (this.active) ? 'close' : 'Learn more about'
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+@use 'sass:math';
+@import '../../sass/_mixins';
+@import '../../sass/_variables';
+.internal-faq {
+  .question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .counter {
+      @include r('width', 24px);
+      @include r('height', 24px);
+      border-radius: 100%;
+      background: $black;
+      color: $yellow;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .q {
+      flex-grow: 1;
+      @include r('padding-left', 10px);
+      h2 {
+        text-transform: initial;
+      }
+    }
+  }
+  .answer {
+    @include m-font-size(20, 26);
+    .wrapper {
+      @include r('padding-left', 34px);
+      @include r('padding-top', 20px);
+    }
+  }
+}
+</style>

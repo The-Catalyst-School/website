@@ -206,9 +206,13 @@ class PullGitbook extends Command
             }
             if ($parsedSection['title'] == 'FAQ') {
               echo 'FAQ';
+              $parsedFaq = $this->parseEntry($section);
+              array_push($parsedPages, $parsedFaq);
             }
             if ($parsedSection['title'] == 'Events') {
               echo 'Events';
+              $parsedEvents = $this->parseEntry($section);
+              array_push($parsedPages, $parsedEvents);
             }
           }
         }

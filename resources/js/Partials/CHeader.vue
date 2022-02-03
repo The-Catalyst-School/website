@@ -11,6 +11,7 @@
           <li><Link :href="$route('web.course.index')">Courses</Link></li>
           <li><Link :href="$route('web.workshop.index')">Workshops</Link></li>
           <li><Link href="/about">About</Link></li>
+          <li><Link href="/faq">FAQ</Link></li>
           <li><Link href="/calendar">Calendar</Link></li>
           <li><Link href="/1-to-1">1-to-1 / Group Support</Link></li>
         </ul>
@@ -59,7 +60,7 @@ export default {
     }
     .nav-wrapper {
       flex-grow: 1;
-      @include col(6 of 14);
+      @include col(7 of 14);
       @include m-font-size(12, 15);
       nav {
         ul {
@@ -73,7 +74,7 @@ export default {
       }
     }
     .login-wrapper {
-      @include col(2 of 14);
+      @include col(1 of 14);
       @include m-font-size(12, 15);
       text-transform: uppercase;
       text-align: right;
