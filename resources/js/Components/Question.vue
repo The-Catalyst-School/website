@@ -3,7 +3,7 @@
     <div class="question">
       <div class="counter">{{faq.idx}}</div>
       <div class="q"><h2>{{faq.question}}</h2></div>
-      <div class="btn" @click="$emit('toggle', faq.idx)">{{msg}}</div>
+      <div v-if="closable" class="btn" @click="$emit('toggle', faq.idx)">{{msg}}</div>
     </div>
     <slide-up-down
       class="answer" :active="active" :duration="500">
@@ -16,10 +16,13 @@
 
 <script>
 export default {
-  props: ['current', 'faq'],
+  props: ['current', 'faq', 'closable'],
   computed: {
     active() {
-      return (this.faq.idx === this.current)
+      if (this.closable) {
+        return (this.faq.idx === this.current)
+      }
+      return true
     },
     msg() {
       return (this.active) ? 'close' : 'Learn more about'

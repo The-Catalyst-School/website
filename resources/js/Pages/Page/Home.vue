@@ -40,6 +40,13 @@
         </template>
       </horizontal-slider>
     </section>
+    <section class="faqs">
+      <h4 class="section-title">Frequently Asked Questions</h4>
+      <faqs :faqs="faqs" :closable="false" />
+      <div class="see-more">
+        <Link href="/faq">See all</Link>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -49,14 +56,16 @@ import CoursePreview from '../../Components/CoursePreview'
 import WorkshopPreview from '../../Components/WorkshopPreview'
 import HorizontalSlider from '../../Components/HorizontalSlider'
 import SentenceSlider from '../../Components/SentenceSlider'
+import Faqs from '../../Components/Faqs'
 import { Link } from '@inertiajs/inertia-vue'
 export default {
-  props: ['page', 'courses', 'workshops', 'sentences'],
+  props: ['page', 'courses', 'workshops', 'sentences', 'faqs'],
   components: {
     CoursePreview,
     WorkshopPreview,
     HorizontalSlider,
     SentenceSlider,
+    Faqs,
     Link
   }
 };
@@ -82,6 +91,19 @@ section {
       width: calc(100% + #{relative-size(60px)});
       @include r('margin-left', -30px);
     }
+  }
+  &.faqs {
+    .section-title {
+      @include col-before(2 of 14);
+    }
+    .see-more {
+      @include col(10 of 14);
+      @include col-before(2 of 14);
+      text-align: right;
+      text-transform: uppercase;
+      @include r('margin-top', 18px);
+    }
+
   }
 }
 </style>

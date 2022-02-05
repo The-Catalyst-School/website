@@ -15,15 +15,22 @@ class PageController extends Controller
       $sentences = [];
       $courses = [];
       $workshops = [];
+      $faqs = [];
       if ($page->template === 'home') {
         $about = Page::findBySlugOrFail('about');
+        $faq = Page::findBySlugOrFail('faq');
         $courses = Course::with('topics')->get();
         $workshops = Workshop::with('topics')->get();
         if ($about) {
           $sentences = $about->sentences;
         }
+        if ($faq) {
+          $faqs = $faq->sentences;
+        }
       }
-      return inertia('Page/Show', compact('page', 'courses', 'workshops', 'sentences'));
+      return inertia('Page/Show', compact(
+        'page', 'courses', 'workshops', 'sentences', 'faqs'
+      ));
     }
 
     public function home()
