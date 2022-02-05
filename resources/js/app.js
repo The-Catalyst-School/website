@@ -2,6 +2,7 @@ import Vue from 'vue'
 import { createInertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress'
 import DayjsPlugin from './plugins/dayjs'
+import Embed from 'v-video-embed'
 import dateFormat from './filters/dateFormat'
 import SlideUpDown from 'vue-slide-up-down'
 import Layout from './Layouts/Main'
@@ -13,6 +14,7 @@ InertiaProgress.init({
 
 Vue.prototype.$route = route
 Vue.use(DayjsPlugin)
+Vue.use(Embed);
 Vue.component('slide-up-down', SlideUpDown)
 
 createInertiaApp({

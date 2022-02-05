@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\Course;
 use App\Models\Attachment;
 use App\Models\Topic;
+use App\Models\Embed;
 use Illuminate\Support\HtmlString;
 use voku\helper\HtmlDomParser;
 use Erusev\Parsedown\Parsedown;
@@ -29,35 +30,44 @@ trait FromGit
         );
         // Complete embed detection
         $embeds = [];
-        preg_match(
+        preg_match_all(
           '/{% embed url="(.+)" %}([\S\s]+){% endembed %}/mU',
           $content,
-          $embeds
+          $embeds,
+          PREG_SET_ORDER
         );
         $content = preg_replace(
-          '/{% embed url="(.+)" %}([\S\s]+){% endembed %}/mU',
-          '<div class="embed" alt="$2" src="$1"></div>',
+          '/{% embed url="(.+)" %}\n([\S\s]+)\n{% endembed %}/mU',
+          '<div data-embed alt="$2" src="$1"></div>',
           $content
         );
-        // Light embed detection
+
+        $content = preg_replace(
+          '/<div data-embed alt="(.+)" src=".+[\?\&]v=([^\?\&]+)"><\/div>/mU',
+          '<div class="embed-responsive video is-16by9"><iframe src="//www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe><div class="caption">$1</div></div>',
+          $content
+        );
         $lightEmbeds = [];
-        preg_match(
+        /*
+        // Light embed detection
+        preg_match_all(
           '/{% embed url="(.+)" %}/mU',
           $content,
-          $lightEmbeds
+          $lightEmbeds,
+          PREG_SET_ORDER
         );
         $content = preg_replace(
           '/{% embed url="(.+)" %}/mU',
           '<div class="embed" src="$1"></div>',
           $content
         );
-
+        */
         // Complete file detection
         $files = [];
         preg_match_all(
           '/{% file src="(.+)" %}([\S\s]+){% endfile %}/mU',
           $content,
-          $files
+          $files,
         );
         $content = preg_replace(
           '/{% file src="(.+)" %}([\S\s]+){% endfile %}/mU',
@@ -93,7 +103,6 @@ trait FromGit
           '<div class="tab" title="$1">$2</div>',
           $content
         );
-
 
         return [
           'content' => $content,
@@ -155,10 +164,18 @@ trait FromGit
       $parsedown = new Parsedown();
       $params = [];
       $files = [];
+      $embeds = [];
       $decoded = base64_decode($content['content']);
       $parsed = $this->parseGitbookAdvSyntax($decoded);
       foreach($parsed['embeds'] as $embed) {
-        // Create and link model Embed
+        $e_args = [
+          'url' => $embed[1]
+        ];
+        if (array_key_exists(2, $embed)) {
+          $e_args['title'] = trim($embed[2]);
+        }
+        $embed = Embed::create($e_args);
+        array_push($embeds, $embed);
       }
       foreach($parsed['files'][1] as $file) {
         $original_path = $file;
@@ -206,6 +223,7 @@ trait FromGit
       $html = new HtmlString($dom->html());
       $params['html'] = $html;
       $params['files'] = $files;
+      $params['embeds'] = $embeds;
       return $params;
     }
 
@@ -232,6 +250,7 @@ trait FromGit
         $file->course()->associate($entity);
         $file->save();
       }
+      $this->setEmbeds($entity, $parsed);
       return $entity;
     }
 
@@ -257,6 +276,8 @@ trait FromGit
         $file->course()->associate($entity);
         $file->save();
       }
+
+      $this->setEmbeds($entity, $parsed);
       return $entity;
     }
 
@@ -288,6 +309,19 @@ trait FromGit
           }
         }
         $entity->topics()->syncWithoutDetaching($tagModels);
+      }
+    }
+
+    public function setEmbeds($entity, $parsed) {
+      $entity->embeds()->delete();
+      $embedsIds = [];
+      if (array_key_exists('embeds', $parsed)) {
+        foreach($parsed['embeds'] as $embed) {
+          $className = get_class($entity);
+          $baseClass = strtolower(class_basename($className));
+          $embed->$baseClass()->associate($entity);
+          $embed->save();
+        }
       }
 
     }

@@ -32,7 +32,7 @@ ul, ol {
   list-style-position: inside;
 }
 
-ul li::before, ol li::before {
+ul li::before {
   content: '';
   margin-left: -12px;
 }

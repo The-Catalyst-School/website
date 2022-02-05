@@ -16,7 +16,8 @@ class WorkshopController extends Controller
 
     public function show($slug)
     {
-      $workshop = Workshop::findBySlugOrFail($slug);
+      $workshop = Workshop::with('embeds')
+        ->whereSlug($slug)->firstOrFail();
       return inertia('Workshop/Show', compact('workshop'));
     }
 }

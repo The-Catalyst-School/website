@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\Workshop;
 
 class Embed extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+      'title', 'url'
+    ];
 
     public function course()
     {
@@ -20,5 +25,10 @@ class Embed extends Model
     public function lesson()
     {
         return $this->belongsTo(Lesson::class);
+    }
+
+    public function workshop()
+    {
+        return $this->belongsTo(Workshop::class);
     }
 }
