@@ -54,6 +54,7 @@ export default {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    z-index: 1000;
     @include r('padding', 20px 30px);
     .logo {
       @include col(6 of 14);
