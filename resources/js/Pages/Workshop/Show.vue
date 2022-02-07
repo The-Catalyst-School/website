@@ -1,19 +1,12 @@
 <template>
   <div class="single-workshop">
     <div class="side">
-      <ul class="internal-nav">
-        <li>Video</li>
-        <li>Introduction</li>
-        <li>Resources</li>
-        <li>Quiz</li>
-        <li>Comments</li>
-        <li>Related workshops</li>
-      </ul>
+      <side :workshop="workshop" v-sticky sticky-side="both" />
     </div>
     <div class="main">
       <h4>{{workshop.title}}</h4>
       <h1>{{workshop.subtitle}}</h1>
-      <div class="main-embed" v-if="workshop.embeds">
+      <div id="main-embed" class="main-embed" v-if="workshop.embeds">
         <video-embed :params="getVideoParams(workshop.embeds[0].url)"
           css="video is-16by9" :src="workshop.embeds[0].url"></video-embed>
       </div>
@@ -26,7 +19,11 @@
           Estimated time: {{workshop.estimated_time}}
         </div>
       </div>
-      <div class="html-content" v-html="workshop.content"></div>
+      <div id="content" class="html-content" v-html="workshop.content"></div>
+      <div id="resources" v-if="workshop.resources"></div>
+      <div id="quiz" v-if="workshop.quiz"></div>
+      <div id="comments" v-if="workshop.comments"></div>
+      <div id="related" v-if="workshop.related"></div>
     </div>
     <div class="side">
     </div>
@@ -34,8 +31,12 @@
 </template>
 
 <script>
+import Side from './Side'
 export default {
   props: ['workshop'],
+  components: {
+    Side
+  },
   methods: {
     parseUrlQuery(value) {
       var urlParams = new URL(value).searchParams
@@ -71,6 +72,7 @@ export default {
     display: flex;
     .side {
       @include col(2 of 14);
+      @include r('margin-top', -70px);
     }
     .main {
       @include col(10 of 14, 0);

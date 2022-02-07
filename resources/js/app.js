@@ -3,9 +3,11 @@ import { createInertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress'
 import DayjsPlugin from './plugins/dayjs'
 import Embed from 'v-video-embed'
+import VueScrollTo from 'vue-scrollto'
 import dateFormat from './filters/dateFormat'
 import SlideUpDown from 'vue-slide-up-down'
 import Layout from './Layouts/Main'
+import Sticky from 'vue-sticky-directive/src/sticky'
 
 InertiaProgress.init({
   delay: 25,
@@ -14,7 +16,11 @@ InertiaProgress.init({
 
 Vue.prototype.$route = route
 Vue.use(DayjsPlugin)
-Vue.use(Embed);
+Vue.use(Embed)
+Vue.use(VueScrollTo, {
+  offset: -70,
+})
+Vue.directive('Sticky', Sticky);
 Vue.component('slide-up-down', SlideUpDown)
 
 createInertiaApp({
