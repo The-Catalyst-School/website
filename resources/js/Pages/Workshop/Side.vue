@@ -17,7 +17,7 @@
       <li v-if="workshop.comments">
         <a class="btn" href="#" v-scroll-to="'#comments'">Comments</a>
       </li>
-      <li v-if="workshop.related">
+      <li v-if="related">
         <a class="btn" href="#" v-scroll-to="'#related'">Related Workshops</a>
       </li>
     </ul>
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  props: ['workshop']
+  props: ['workshop', 'related']
 }
 </script>
 

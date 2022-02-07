@@ -1,7 +1,9 @@
 <template>
   <div class="single-workshop">
     <div class="side">
-      <side :workshop="workshop" v-sticky sticky-side="both" />
+      <side :workshop="workshop"
+        :related="related"
+        v-sticky sticky-side="both" />
     </div>
     <div class="main">
       <h4>{{workshop.title}}</h4>
@@ -23,7 +25,15 @@
       <div id="resources" v-if="workshop.resources"></div>
       <div id="quiz" v-if="workshop.quiz"></div>
       <div id="comments" v-if="workshop.comments"></div>
-      <div id="related" v-if="workshop.related"></div>
+      <div id="related" class="related" v-if="related">
+        <h4>Related workshops</h4>
+        <div class="list">
+          <workshop-preview
+            :workshop="workshop"
+            :key="`cours-preview-${index}`"
+            v-for="(workshop, index) in related" />
+        </div>
+      </div>
     </div>
     <div class="side">
     </div>
@@ -32,10 +42,12 @@
 
 <script>
 import Side from './Side'
+import WorkshopPreview from '../../Components/WorkshopPreview'
 export default {
-  props: ['workshop'],
+  props: ['workshop', 'related'],
   components: {
-    Side
+    Side,
+    WorkshopPreview
   },
   methods: {
     parseUrlQuery(value) {
@@ -85,9 +97,12 @@ export default {
       }
       .main-embed {
         @include col(1 of 1);
+        float: left;
         @include r('margin-bottom', 15);
       }
       .workshop-info {
+        width: 100%;
+        float: left;
         display: flex;
         @include r('margin-bottom', 70);
         .date {
@@ -99,6 +114,35 @@ export default {
         .estimated {
           @include col(2 of 10);
           text-align: right;
+        }
+      }
+      .html-content {
+        width: 100%;
+        float: left;
+        &:not(:last-child) {
+          @include r('margin-bottom', 120);
+        }
+      }
+      .related {
+        width: 100%;
+        float: left;
+        &:not(:last-child) {
+          @include r('margin-bottom', 120);
+        }
+        h4 {
+          @include col(1 of 1);
+          @include r('margin-bottom', 15);
+        }
+        .list {
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+          .workshop-preview {
+            @include col(4 of 10);
+            &.featured {
+              @include col(6 of 10);
+            }
+          }
         }
       }
     }
