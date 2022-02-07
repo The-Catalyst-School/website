@@ -8,6 +8,7 @@ import dateFormat from './filters/dateFormat'
 import SlideUpDown from 'vue-slide-up-down'
 import Layout from './Layouts/Main'
 import Sticky from 'vue-sticky-directive/src/sticky'
+import VueDragscroll from 'vue-dragscroll'
 
 InertiaProgress.init({
   delay: 25,
@@ -20,6 +21,7 @@ Vue.use(Embed)
 Vue.use(VueScrollTo, {
   offset: -70,
 })
+Vue.use(VueDragscroll)
 Vue.directive('Sticky', Sticky);
 Vue.component('slide-up-down', SlideUpDown)
 

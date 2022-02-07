@@ -28,6 +28,7 @@
         "@inertiajs/progress": "^0.2.6",
         "v-video-embed": "^1.0.8",
         "vue": "^2.6.14",
+        "vue-dragscroll": "^3.0.1",
         "vue-scrollto": "^2.20.0",
         "vue-slide-up-down": "^2.0.1",
         "vue-sticky-directive": "^0.0.10",

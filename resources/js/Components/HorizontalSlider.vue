@@ -1,6 +1,9 @@
 <template>
   <div class="slider">
-    <div class="track">
+    <div class="track"
+      v-dragscroll
+      @dragscrollstart="onDragStart"
+      @click.capture="onDragClick">
       <div class="track-content">
         <slot name="track"></slot>
       </div>
@@ -12,6 +15,30 @@
   </div>
 </template>
 
+<script>
+export default {
+  data: () => ({
+    dragged: false,
+    dragTimeout: null,
+  }),
+  methods: {
+    onDragStart() {
+      clearTimeout(this.dragTimeout);
+
+      this.dragged = false;
+      this.dragTimeout = setTimeout(() => { this.dragged = true; }, 100); // Minimal delay to be regarded as drag instead of click
+    },
+    onDragClick(e) {
+      if (this.dragged) {
+        e.preventDefault();
+      }
+
+      this.dragged = false;
+    },
+  },
+};
+</script>
+
 <style lang="scss" scoped>
 @use 'sass:math';
 @import '../../sass/_mixins';
@@ -21,7 +48,7 @@
   .track {
     @include col(14 of 14);
     padding-left: math.div(100%, 14) * 2;
-    overflow: auto;
+    overflow: hidden;
     display: flex;
     align-items: stretch;
     .track-content {
