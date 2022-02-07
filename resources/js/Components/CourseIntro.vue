@@ -4,13 +4,13 @@
       <div class="image-wrapper">
       </div>
       <div class="content" v-html="course.content"></div>
-      <section class="lessons-list">
-        <h3 class="section">Lessons overview</h3>
+      <section class="lessons-list" v-if="course.lessons">
+        <lessons :course="course" :lessons="course.lessons"></lessons>
       </section>
-      <section class="students-list">
+      <section class="students-list" v-if="course.students">
         <h3 class="section">Students of this course</h3>
       </section>
-      <section class="comments-list">
+      <section class="comments-list" v-if="course.comments">
         <h3 class="section">Some comments about</h3>
       </section>
     </div>
@@ -20,11 +20,13 @@
 <script>
 
 import { Link } from '@inertiajs/inertia-vue'
+import Lessons from './Lessons';
 
 export default {
   props: ['course'],
   components: {
     Link,
+    Lessons
   }
 };
 </script>
@@ -72,6 +74,7 @@ export default {
       @include r('margin-bottom', 70px);
       h3 {
         @include m-font-size(12, 15);
+        @include r('margin-bottom', 15px);
       }
     }
   }

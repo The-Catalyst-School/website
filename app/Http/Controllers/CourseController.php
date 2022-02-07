@@ -9,7 +9,7 @@ class CourseController extends Controller
 {
     public function index()
     {
-      $courses = Course::with('topics')->get();
+      $courses = Course::with('lessons', 'topics')->get();
       return inertia('Course/List', compact('courses'));
     }
 
