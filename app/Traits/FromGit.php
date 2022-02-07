@@ -25,7 +25,7 @@ trait FromGit
         // Hint detection
         $content = preg_replace(
           '/{% hint( style="(.*)")? %}([\S\s]+){% endhint %}/mU',
-          '<div class="hint is-$2">$3</div>',
+          '<div class="hint is-$2"><p>$3</p></div>',
           $content
         );
         // Complete embed detection
@@ -235,7 +235,6 @@ trait FromGit
         },
         $html
       );
-      echo $html;
 
       $params['html'] = $html;
       $params['files'] = $files;

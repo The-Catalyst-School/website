@@ -93,9 +93,39 @@
       @include col-before(2 of 10);
     }
   }
-  blockquote {
+  blockquote, .hint {
     p {
+      width: 100%;
       border-left: 4px solid $black;
+    }
+    &.hint {
+      p:before {
+        content: ' ';
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background: $black;
+      }
+      &.is-success {
+        p:before {
+          background: green;
+        }
+      }
+      &.is-info {
+        p:before {
+          background: black;
+        }
+      }
+      &.is-warning {
+        p:before {
+          background: yellow;
+        }
+      }
+      &.is-danger {
+        p:before {
+          background: red;
+        }
+      }
     }
   }
   .embed-responsive {
@@ -103,8 +133,8 @@
       padding-top: 37.25%
     }
     iframe {
-      width: calc(100% - #{$default-gutter});
-      margin-left: math.div($default-gutter, 2);
+      width: calc(100% - #{relative-size($default-gutter)});
+      margin-left: math.div(relative-size($default-gutter), 2);
     }
     .caption {
       position: absolute;
@@ -125,8 +155,8 @@
   }
   table {
     border-collapse: collapse;
-    width: calc(60% - #{$default-gutter});
-    transform: translateX(math.div($default-gutter, 2));
+    width: calc(60% - #{relative-size($default-gutter)});
+    transform: translateX(math.div(relative-size($default-gutter), 2));
     th, td {
       @include m-font-size(12, 15);
       border-bottom: 1px solid $black;
