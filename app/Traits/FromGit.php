@@ -68,6 +68,7 @@ trait FromGit
           '/{% file src="(.+)" %}([\S\s]+){% endfile %}/mU',
           $content,
           $files,
+          PREG_SET_ORDER
         );
         $content = preg_replace(
           '/{% file src="(.+)" %}([\S\s]+){% endfile %}/mU',
@@ -177,17 +178,22 @@ trait FromGit
         $embed = Embed::create($e_args);
         array_push($embeds, $embed);
       }
-      foreach($parsed['files'][1] as $file) {
-        $original_path = $file;
+      foreach($parsed['files'] as $file) {
+        $original_path = $file[1];
         if (substr($original_path, 0, 4 ) !== "http") {
           $original_path = env('GITHUB_REPO_PUBLIC_URL')
             . dirname($content['path']) . '/' . $original_path;
         }
         $attachment = Attachment::create([
-          'title' => $file,
+          'title' => $file[2],
           'file' => $original_path
         ]);
         array_push($files, $attachment);
+        $parsed['content'] = str_replace(
+          '<div class="file" alt="' . $file[2] . '" src="' . $file[1] . '"></div>',
+          '<div class="file"><a target="_blank" href="' . $attachment->file . '" download>'. $file[2] .'</a></div>',
+          $parsed['content']
+        );
         // Update links in HTML
       }
       // Save and link Images
@@ -221,6 +227,16 @@ trait FromGit
 
 
       $html = new HtmlString($dom->html());
+
+      $html = preg_replace_callback(
+        '/<img src="(.+)"/mU',
+        function($m) {
+          return '<img src="' . env('GITHUB_REPO_PUBLIC_URL') . '.gitbook/assets/' . basename($m[1]). '"';
+        },
+        $html
+      );
+      echo $html;
+
       $params['html'] = $html;
       $params['files'] = $files;
       $params['embeds'] = $embeds;
