@@ -13,4 +13,6 @@ class Event extends Model
     use Sluggable;
     use SluggableScopeHelpers;
     use \App\Traits\Seo;
+
+    protected $fillable = ['title', 'slug', 'link', 'description', 'scheduled_at'];
 }

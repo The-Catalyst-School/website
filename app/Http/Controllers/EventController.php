@@ -10,8 +10,8 @@ class EventController extends Controller
 {
     public function index()
     {
-      $events = Event::get();
-      return inertia('Event/List', compact('events'));
+      $events = Event::all();
+      return inertia('Event/Calendar', compact('events'));
     }
 
 }

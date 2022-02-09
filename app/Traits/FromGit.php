@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Attachment;
 use App\Models\Topic;
 use App\Models\Embed;
+use App\Models\Event;
 use Illuminate\Support\HtmlString;
 use voku\helper\HtmlDomParser;
 use Erusev\Parsedown\Parsedown;
@@ -166,6 +167,7 @@ trait FromGit
       $params = [];
       $files = [];
       $embeds = [];
+      $custom_fields = false;
       $decoded = base64_decode($content['content']);
       $parsed = $this->parseGitbookAdvSyntax($decoded);
       foreach($parsed['embeds'] as $embed) {
@@ -212,6 +214,21 @@ trait FromGit
         );
         if ($faqs) {
           $custom_fields['sentences'] = $faqs;
+        }
+      } elseif ($title == 'Events') {
+        $events = $this->parseJsonCustomFields(
+          $dom->findOneOrFalse('table')
+        );
+        if ($events) {
+          Event::whereNotNull('id')->delete();
+          foreach($events as $event) {
+            $event = Event::create([
+              'title' => $event['title'],
+              'link' => $event['link'],
+              'description' => $event['description'],
+              'scheduled_at' => Carbon::createFromTimestamp(strtotime($event['datetime']))->toDateTimeString()
+            ]);
+          }
         }
       } else {
         $custom_fields = $this->parseCustomFields(
@@ -281,7 +298,7 @@ trait FromGit
         $args['course_id'] = $parent->id;
       }
       $entity->update($args);
-      
+
       $this->setTags($entity, $parsed);
       $this->attachAttachments($entity, $parsed);
       $this->setEmbeds($entity, $parsed);
@@ -320,26 +337,30 @@ trait FromGit
     }
 
     public function attachAttachments($entity, $parsed) {
-      $entity->attachments()->delete();
-      if (array_key_exists('files', $parsed)) {
-        foreach($parsed['files'] as $embed) {
-          $className = get_class($entity);
-          $baseClass = strtolower(class_basename($className));
-          $embed->$baseClass()->associate($entity);
-          $embed->save();
+      if (method_exists($entity, 'attachments')) {
+        $entity->attachments()->delete();
+        if (array_key_exists('files', $parsed)) {
+          foreach($parsed['files'] as $embed) {
+            $className = get_class($entity);
+            $baseClass = strtolower(class_basename($className));
+            $embed->$baseClass()->associate($entity);
+            $embed->save();
+          }
         }
       }
     }
 
     public function setEmbeds($entity, $parsed) {
-      $entity->embeds()->delete();
-      $embedsIds = [];
-      if (array_key_exists('embeds', $parsed)) {
-        foreach($parsed['embeds'] as $embed) {
-          $className = get_class($entity);
-          $baseClass = strtolower(class_basename($className));
-          $embed->$baseClass()->associate($entity);
-          $embed->save();
+      if (method_exists($entity, 'embeds')) {
+        $entity->embeds()->delete();
+        $embedsIds = [];
+        if (array_key_exists('embeds', $parsed)) {
+          foreach($parsed['embeds'] as $embed) {
+            $className = get_class($entity);
+            $baseClass = strtolower(class_basename($className));
+            $embed->$baseClass()->associate($entity);
+            $embed->save();
+          }
         }
       }
 
