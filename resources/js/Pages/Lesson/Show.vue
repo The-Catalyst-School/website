@@ -2,6 +2,7 @@
   <div class="single-lesson">
     <div class="side affix">
       <side :lesson="lesson"
+        :related="related"
         v-sticky sticky-side="both" />
     </div>
     <div class="main">
@@ -24,6 +25,15 @@
       <div id="resources" v-if="lesson.resources"></div>
       <div id="quiz" v-if="lesson.quiz"></div>
       <div id="comments" v-if="lesson.comments"></div>
+      <div id="related" class="related" v-if="related">
+        <h4>Related courses</h4>
+        <div class="list">
+          <course-preview
+            :course="course"
+            :key="`cours-preview-${index}`"
+            v-for="(course, index) in related" />
+        </div>
+      </div>
     </div>
     <div class="side next-prev">
       <div class="side-wrapper" v-sticky sticky-side="both">
@@ -47,11 +57,13 @@
 <script>
 import { Link } from '@inertiajs/inertia-vue'
 import Side from './Side'
+import CoursePreview from '../../Components/CoursePreview'
 export default {
-  props: ['lesson', 'next', 'prev'],
+  props: ['lesson', 'next', 'prev', 'related'],
   components: {
     Link,
-    Side
+    Side,
+    CoursePreview
   },
   methods: {
     parseUrlQuery(value) {

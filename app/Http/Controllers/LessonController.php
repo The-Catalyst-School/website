@@ -20,6 +20,7 @@ class LessonController extends Controller
         ->firstOrFail()->lessons()
         ->where('slug', '!=', $l_slug)
         ->where('id', '<', $lesson->id)->first();
-      return inertia('Lesson/Show', compact('lesson', 'next', 'prev'));
+      $related = Course::where('slug', '!=', $c_slug)->take(3)->get();
+      return inertia('Lesson/Show', compact('lesson', 'next', 'prev', 'related'));
     }
 }

@@ -133,17 +133,6 @@ export default {
           @include col(1 of 1);
           @include r('margin-bottom', 15);
         }
-        .list {
-          width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          .workshop-preview {
-            @include col(4 of 10);
-            &.featured {
-              @include col(6 of 10);
-            }
-          }
-        }
       }
     }
   }

@@ -19,7 +19,7 @@ class PageController extends Controller
       if ($page->template === 'home') {
         $about = Page::findBySlugOrFail('about');
         $faq = Page::findBySlugOrFail('faq');
-        $courses = Course::with('topics')->get();
+        $courses = Course::with('topics', 'lessons')->get();
         $workshops = Workshop::with('topics')->get();
         if ($about) {
           $sentences = $about->sentences;

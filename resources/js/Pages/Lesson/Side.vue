@@ -17,6 +17,9 @@
       <li v-if="lesson.comments">
         <a class="btn" href="#" v-scroll-to="'#comments'">Comments</a>
       </li>
+      <li v-if="related">
+        <a class="btn" href="#" v-scroll-to="'#related'">Related Courses</a>
+      </li>
     </ul>
   </div>
 </template>
@@ -24,7 +27,7 @@
 
 <script>
 export default {
-  props: ['lesson']
+  props: ['lesson', 'related']
 }
 </script>
 

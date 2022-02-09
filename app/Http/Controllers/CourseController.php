@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class CourseController extends Controller
 {
@@ -17,6 +18,8 @@ class CourseController extends Controller
     {
       $course = Course::with('lessons', 'topics')
         ->whereSlug($slug)->firstOrFail();
+      $lesson = $course->lessons()->firstOrFail();
+      return Redirect::route('web.lesson.show', [$slug, $lesson->slug]);
       return inertia('Course/Show', compact('course'));
     }
 
