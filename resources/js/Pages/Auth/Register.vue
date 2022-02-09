@@ -1,24 +1,53 @@
 <template>
-  <div>
-    <h1>Register</h1>
-    <form class="" @submit.prevent="register">
-      <input v-model="form.name" :error="form.errors.name" class="" label="Name" type="text" autofocus autocapitalize="off" />
-      <input v-model="form.email" :error="form.errors.email" class="" label="Email" type="email" autofocus autocapitalize="off" />
-      <input v-model="form.password" :error="form.errors.password" class="" label="Password" type="password" />
-      <button :loading="form.processing" class="" type="submit">Login</button>
-    </form>
-    <div class="errors" v-if="errors">
-      {{errors.email}}
+  <div class="register">
+    <div>
+      <form class="login-register" @submit.prevent="register">
+        <h2>Register</h2>
+        <input
+          v-model="form.name"
+          :error="form.errors.name"
+          placeholder="Name"
+          label="Name"
+          type="text" autofocus autocapitalize="off" />
+        <input
+          v-model="form.email"
+          :error="form.errors.email"
+          placeholder="Email"
+          label="Email" type="email" autofocus autocapitalize="off" />
+        <input
+          v-model="form.password"
+          :error="form.errors.password"
+          placeholder="Password"
+          class="" label="Password" type="password" />
+        <input
+          v-model="form.password_confirmation"
+          :error="form.errors.password_confirmation"
+          placeholder="Confirm Password"
+          class="" label="Confirm Password" type="password" />
+        <div class="send-wrapper">
+          <button
+            class="btn"
+            :loading="form.processing"
+            type="submit">Register</button>
+        </div>
+        <div class="errors" v-if="errors || cErrors">
+          {{errors.email}}
+          {{cErrors.email}}
+        </div>
+        <div class="success" v-if="success">
+          {{success}}
+        </div>
+        <div class="terms">
+          By clicking “Register” I am confirming I am 16 or older and I accept the Terms of Use, the Privacy Policy, the Cookies Policy, and agree to receive news.
+        </div>
+      </form>
     </div>
-      <div class="errors" v-if="cErrors">
-        {{cErrors.email}}
-      </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['errors'],
+  props: ['errors', 'success'],
   components: {
   },
   data() {
@@ -28,6 +57,7 @@ export default {
         name: '',
         email: '',
         password: '',
+        password_confirmation: '',
       }),
     }
   },
@@ -36,10 +66,32 @@ export default {
       this.form.post(
         this.$route('web.register.store'),
         {
-          onError: (errors) => this.cErrors = errors
+          onError: (errors) => this.cErrors = errors,
+          onSuccess: (page) => {
+            this.$inertia.visitInModal(this.$route('web.login', {
+              _query: {
+                success: "Your account is created! Login into the website."
+              }
+            }), false)
+          }
         }
       )
     },
   },
 }
 </script>
+<style lang="scss" scoped>
+@import '../../../sass/_mixins';
+.register {
+  @include r('padding', 5px 10px);
+  h2 {
+    &:not(.register) {
+      @include r('margin-bottom', 15px);
+    }
+    &.register {
+      @include r('margin-top', 20px);
+      @include r('margin-bottom', 5px);
+    }
+  }
+}
+</style>

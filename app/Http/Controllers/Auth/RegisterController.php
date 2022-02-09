@@ -50,6 +50,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+          'name' => ['required', 'string', 'max:255'],
+          'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+          'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
     }
 
@@ -67,12 +70,13 @@ class RegisterController extends Controller
           'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
 
-        return User::create([
+        $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password'))
         ]);
-        return Redirect::back()->with('success', 'User created.');
+        return Redirect::route('web.index')
+          ->with('success', 'User created.');
     }
 
     public function create()

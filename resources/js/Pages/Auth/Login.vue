@@ -1,27 +1,34 @@
 <template>
   <div class="login">
     <div>
-      <form @submit.prevent="login">
-        <div>
-          <h2>Login in your account</h2>
-          <input v-model="form.email" :error="form.errors.email" class="mt-10" label="Email" type="email" autofocus autocapitalize="off" />
-          <input v-model="form.password" :error="form.errors.password" class="mt-6" label="Password" type="password" />
-          <label class="mt-6 select-none flex items-center" for="remember">
-            <input id="remember" v-model="form.remember" class="mr-1" type="checkbox" />
-            <span class="text-sm">Remember Me</span>
-          </label>
+      <form class="login-register" @submit.prevent="login">
+        <h2>Login in your account</h2>
+        <div class="success" v-if="success">
+          {{success}}
         </div>
-        <div>
-          <button :loading="form.processing" class="ml-auto btn-indigo" type="submit">Login</button>
+        <input
+          v-model="form.email" :error="form.errors.email"
+          label="Email"
+          type="email"
+          placeholder="Email"
+          autofocus
+          autocapitalize="off" />
+        <div class="send-wrapper">
+          <input
+            v-model="form.password"
+            :error="form.errors.password"
+            placehodler="Password"
+            label="Password"
+            type="password" />
+          <button :loading="form.processing" class="btn" type="submit">Login</button>
         </div>
-        <a @click="$inertia.visitInModal($route('web.register.create'))">Register</a>
+        <div class="errors" v-if="errors || cErrors">
+          {{errors.email}}
+          {{cErrors.email}}
+        </div>
+        <h2 class="register">Don't have one?</h2>
+        <a class="link" @click="$inertia.visitInModal($route('web.register.create'))">Click here to register</a>
       </form>
-      <div class="errors" v-if="errors">
-        {{errors.email}}
-      </div>
-      <div class="errors" v-if="cErrors">
-        {{cErrors.email}}
-      </div>
     </div>
   </div>
 </template>
@@ -31,7 +38,7 @@ import { Link } from '@inertiajs/inertia-vue'
 
 export default {
   metaInfo: { title: 'Login' },
-  props: ['errors'],
+  props: ['errors', 'success'],
   components: {
     Link
   },
@@ -39,8 +46,8 @@ export default {
     return {
       cErrors: false,
       form: this.$inertia.form({
-        email: 'aaa@aaa.com',
-        password: 'ciaociao',
+        email: '',
+        password: '',
         remember: false,
       }),
     }
@@ -61,5 +68,17 @@ export default {
 @import '../../../sass/_mixins';
 .login {
   @include r('padding', 5px 10px);
+  h2 {
+    &:not(.register) {
+      @include r('margin-bottom', 15px);
+    }
+    &.register {
+      @include r('margin-top', 20px);
+      @include r('margin-bottom', 5px);
+    }
+  }
+  .success {
+    @include r('margin-bottom', 15px);
+  }
 }
 </style>

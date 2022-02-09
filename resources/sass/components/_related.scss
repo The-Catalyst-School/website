@@ -1,0 +1,13 @@
+.related {
+  .list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    .workshop-preview, .course-preview {
+      @include col(4 of 10);
+      &.featured {
+        @include col(6 of 10);
+      }
+    }
+  }
+}

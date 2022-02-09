@@ -71,7 +71,6 @@ export default {
           (component) => {
             const clone = page
             // const clone = JSON.parse(JSON.stringify(page));
-            console.log(clone);
             // clone.props = Inertia.transformProps(clone.props);
             const removeBeforeEventListener = Inertia.on("before", (event) => {
               // make sure the backend knows we're requesting from within a modal

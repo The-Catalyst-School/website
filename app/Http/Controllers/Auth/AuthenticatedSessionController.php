@@ -16,9 +16,12 @@ class AuthenticatedSessionController extends Controller
      *
      * @return \Inertia\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('Auth/Login');
+        $success = $request->input('success');
+        return Inertia::render('Auth/Login', [
+          'success' => $success
+        ]);
     }
 
     /**
