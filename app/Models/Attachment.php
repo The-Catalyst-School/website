@@ -47,4 +47,9 @@ class Attachment extends Model
     {
         return $this->belongsTo(Lesson::class);
     }
+
+    public function workshop()
+    {
+        return $this->belongsTo(Lesson::class);
+    }
 }

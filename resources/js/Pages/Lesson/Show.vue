@@ -22,7 +22,9 @@
         </div>
       </div>
       <div id="content" class="html-content" v-html="lesson.content"></div>
-      <div id="resources" v-if="lesson.resources"></div>
+      <div id="resources" class="resources" v-if="lesson.attachments.length > 0">
+        <attachments :attachments="lesson.attachments" />
+      </div>
       <div id="quiz" v-if="lesson.quiz"></div>
       <div id="comments" v-if="lesson.comments"></div>
       <div id="related" class="related" v-if="related">
@@ -58,12 +60,14 @@
 import { Link } from '@inertiajs/inertia-vue'
 import Side from './Side'
 import CoursePreview from '../../Components/CoursePreview'
+import Attachments from '../../Components/Attachments'
 export default {
   props: ['lesson', 'next', 'prev', 'related'],
   components: {
     Link,
     Side,
-    CoursePreview
+    CoursePreview,
+    Attachments
   },
   methods: {
     parseUrlQuery(value) {
@@ -139,33 +143,11 @@ export default {
           text-align: right;
         }
       }
-      .html-content {
+      .html-content, .resources {
         width: 100%;
         float: left;
         &:not(:last-child) {
           @include r('margin-bottom', 120);
-        }
-      }
-      .related {
-        width: 100%;
-        float: left;
-        &:not(:last-child) {
-          @include r('margin-bottom', 120);
-        }
-        h4 {
-          @include col(1 of 1);
-          @include r('margin-bottom', 15);
-        }
-        .list {
-          width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          .workshop-preview {
-            @include col(4 of 10);
-            &.featured {
-              @include col(6 of 10);
-            }
-          }
         }
       }
     }

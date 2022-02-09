@@ -7,7 +7,7 @@
       <li>
         <a class="btn" href="#" v-scroll-to="'#content'">Introduction</a>
       </li>
-      <li v-if="lesson.resources">
+      <li v-if="lesson.attachments">
         <a class="btn" href="#" v-scroll-to="'#resources'">Resources</a>
       </li>
       <li v-if="lesson.quiz">

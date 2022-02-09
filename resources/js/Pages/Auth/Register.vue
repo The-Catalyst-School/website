@@ -2,7 +2,7 @@
   <div class="register">
     <div>
       <form class="login-register" @submit.prevent="register">
-        <h2>Register</h2>
+        <h2>Create an account</h2>
         <input
           v-model="form.name"
           :error="form.errors.name"

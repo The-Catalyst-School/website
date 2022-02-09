@@ -10,7 +10,7 @@ class LessonController extends Controller
     public function show($c_slug, $l_slug)
     {
       $lesson = Course::whereSlug($c_slug)
-        ->firstOrFail()->lessons()->with('course', 'embeds')
+        ->firstOrFail()->lessons()->with('course', 'embeds', 'attachments')
         ->whereSlug($l_slug)->firstOrFail();
       $next = Course::whereSlug($c_slug)
         ->firstOrFail()->lessons()

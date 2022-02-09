@@ -8,7 +8,7 @@
     <div class="main">
       <h4>{{workshop.title}}</h4>
       <h1>{{workshop.subtitle}}</h1>
-      <div id="main-embed" class="main-embed" v-if="workshop.embeds">
+      <div id="main-embed" class="main-embed" v-if="workshop.embeds.length > 0">
         <video-embed :params="getVideoParams(workshop.embeds[0].url)"
           css="video is-16by9" :src="workshop.embeds[0].url"></video-embed>
       </div>
@@ -22,7 +22,9 @@
         </div>
       </div>
       <div id="content" class="html-content" v-html="workshop.content"></div>
-      <div id="resources" v-if="workshop.resources"></div>
+      <div id="resources" class="resources" v-if="workshop.attachments.length > 0">
+        <attachments :attachments="workshop.attachments" />
+      </div>
       <div id="quiz" v-if="workshop.quiz"></div>
       <div id="comments" v-if="workshop.comments"></div>
       <div id="related" class="related" v-if="related">
@@ -43,11 +45,13 @@
 <script>
 import Side from './Side'
 import WorkshopPreview from '../../Components/WorkshopPreview'
+import Attachments from '../../Components/Attachments'
 export default {
   props: ['workshop', 'related'],
   components: {
     Side,
-    WorkshopPreview
+    WorkshopPreview,
+    Attachments
   },
   methods: {
     parseUrlQuery(value) {
@@ -116,22 +120,11 @@ export default {
           text-align: right;
         }
       }
-      .html-content {
+      .html-content, .resources {
         width: 100%;
         float: left;
         &:not(:last-child) {
           @include r('margin-bottom', 120);
-        }
-      }
-      .related {
-        width: 100%;
-        float: left;
-        &:not(:last-child) {
-          @include r('margin-bottom', 120);
-        }
-        h4 {
-          @include col(1 of 1);
-          @include r('margin-bottom', 15);
         }
       }
     }

@@ -16,7 +16,7 @@ class WorkshopController extends Controller
 
     public function show($slug)
     {
-      $workshop = Workshop::with('embeds')
+      $workshop = Workshop::with('embeds', 'attachments')
         ->whereSlug($slug)->firstOrFail();
       $related = Workshop::where('id', '!=', $workshop->id)->take(3)->get();
       return inertia('Workshop/Show', compact('workshop', 'related'));

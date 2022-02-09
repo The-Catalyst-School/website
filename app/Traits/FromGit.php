@@ -260,11 +260,7 @@ trait FromGit
       $entity = $this->create($args);
 
       $this->setTags($entity, $parsed);
-
-      foreach($parsed['files'] as $file) {
-        $file->course()->associate($entity);
-        $file->save();
-      }
+      $this->attachAttachments($entity, $parsed);
       $this->setEmbeds($entity, $parsed);
       return $entity;
     }
@@ -285,13 +281,9 @@ trait FromGit
         $args['course_id'] = $parent->id;
       }
       $entity->update($args);
+      
       $this->setTags($entity, $parsed);
-
-      foreach($parsed['files'] as $file) {
-        $file->course()->associate($entity);
-        $file->save();
-      }
-
+      $this->attachAttachments($entity, $parsed);
       $this->setEmbeds($entity, $parsed);
       return $entity;
     }
@@ -324,6 +316,18 @@ trait FromGit
           }
         }
         $entity->topics()->syncWithoutDetaching($tagModels);
+      }
+    }
+
+    public function attachAttachments($entity, $parsed) {
+      $entity->attachments()->delete();
+      if (array_key_exists('files', $parsed)) {
+        foreach($parsed['files'] as $embed) {
+          $className = get_class($entity);
+          $baseClass = strtolower(class_basename($className));
+          $embed->$baseClass()->associate($entity);
+          $embed->save();
+        }
       }
     }
 

@@ -1,4 +1,13 @@
 .related {
+  width: 100%;
+  float: left;
+  &:not(:last-child) {
+    @include r('margin-bottom', 120);
+  }
+  h4 {
+    @include col(1 of 1);
+    @include r('margin-bottom', 15);
+  }
   .list {
     width: 100%;
     display: flex;

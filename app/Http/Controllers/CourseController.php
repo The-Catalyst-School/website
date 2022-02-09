@@ -20,7 +20,6 @@ class CourseController extends Controller
         ->whereSlug($slug)->firstOrFail();
       $lesson = $course->lessons()->firstOrFail();
       return Redirect::route('web.lesson.show', [$slug, $lesson->slug]);
-      return inertia('Course/Show', compact('course'));
     }
 
 }
