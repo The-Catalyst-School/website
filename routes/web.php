@@ -5,6 +5,8 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\WorkshopController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -49,6 +51,10 @@ Route::get('/workshops/{slug}', [WorkshopController::class, 'show'])
 Route::get('/courses/{c_slug}/lessons/{s_slug}', [LessonController::class, 'show'])
   ->name('web.lesson.show');
 
+Route::get('/events', [EventController::class, 'index'])
+  ->name('web.event.index');
+
+Route::get('/profile', [ProfileController::class, 'show'])->name('web.profile');
 
 Route::get('/{slug}', [PageController::class, 'show'])->name('web.page.show');
 Route::get('/', [PageController::class, 'home'])->name('web.index');

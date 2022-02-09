@@ -8,18 +8,54 @@
     <div class="nav-wrapper">
       <nav role="navigation">
         <ul>
-          <li><Link :href="$route('web.course.index')">Courses</Link></li>
-          <li><Link :href="$route('web.workshop.index')">Workshops</Link></li>
-          <li><Link href="/about">About</Link></li>
-          <li><Link href="/faq">FAQ</Link></li>
-          <li><Link href="/calendar">Calendar</Link></li>
-          <li><Link href="/1-to-1">1-to-1 / Group Support</Link></li>
+          <li>
+            <Link :class="{'active': $page.component.startsWith('Course') || $page.component.startsWith('Lesson')}"
+              :href="$route('web.course.index')">
+              Courses
+            </Link>
+          </li>
+          <li>
+            <Link
+              :class="{'active': $page.component.startsWith('Workshop')}"
+              :href="$route('web.workshop.index')">
+              Workshops
+            </Link>
+          </li>
+          <li>
+            <Link
+              :class="{'active': $page.url === '/about'}"
+              :href="$route('web.page.show', 'about')">
+              About
+            </Link>
+          </li>
+          <li>
+            <Link
+              :class="{'active': $page.url === '/faq'}"
+              :href="$route('web.page.show', 'faq')">
+              FAQ
+            </Link>
+          </li>
+          <li>
+            <Link
+              :class="{'active': $page.component.startsWith('Event')}"
+              :href="$route('web.event.index')">
+              Calendar
+            </Link>
+          </li>
+          <li>
+            <Link
+              :class="{'active': $page.url === '/1-to-1'}"
+              :href="$route('web.page.show', '1-to-1')">
+              1-to-1 / Group Support
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>
     <div class="login-wrapper">
       <a class="login" @click="login($route('web.login'))" v-if="!user">Login</a>
-      <Link method="delete" as="button" :href="$route('web.logout')" v-if="user">Logout {{user.name}}</Link>
+      <Link method="delete" as="button" :href="$route('web.logout')" v-if="user">Logout</Link>
+      <Link :href="$route('web.profile')" v-if="user">{{user.name}}</Link>
     </div>
   </header>
 </template>
@@ -61,7 +97,7 @@ export default {
     }
     .nav-wrapper {
       flex-grow: 1;
-      @include col(7 of 14);
+      @include col(6.5 of 14);
       @include m-font-size(12, 15);
       nav {
         ul {
@@ -70,16 +106,30 @@ export default {
           li {
             @include r('padding', 0px 38px 0 0);
             text-transform: uppercase;
+            a, a:visited {
+              &.active, &:hover {
+                text-decoration: underline;
+              }
+            }
           }
         }
       }
     }
     .login-wrapper {
-      @include col(1 of 14);
+      @include col(1.5 of 14);
       @include m-font-size(12, 15);
       text-transform: uppercase;
       text-align: right;
       .login {
+        cursor: pointer;
+      }
+      button {
+        font-family: 'Neue Montreal';
+        @include m-font-size(12, 15);
+        text-transform: uppercase;
+        -webkit-appearance: initial;
+        border: none;
+        background: transparent;
         cursor: pointer;
       }
     }
