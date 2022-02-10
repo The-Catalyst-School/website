@@ -1,6 +1,8 @@
 <template>
-  <div class="event-preview">
-    <div class="label">Event</div>
+  <div class="event-preview"
+    v-click-outside="onClickOutside"
+    :class="[eventType, active ? 'active' : '']">
+    <div class="label" @click="active = !active">{{label}}</div>
     <div class="info">
       <div class="heading">
         <div class="date">{{event.scheduled_at | dateFormat('DD.MM.YYYY')}}</div>
@@ -14,7 +16,7 @@
         <p class="text">{{event.description}}</p>
       </div>
       <div class="link">
-        <a :href="event.link" target="_blank">Link</a>
+        <a :href="event.link" target="_blank">Link to event</a>
       </div>
     </div>
   </div>
@@ -23,9 +25,28 @@
 <script>
 export default {
   props: ['event'],
+  data() {
+    return {
+      active: false
+    }
+  },
   computed: {
-    active() {
-      return true
+    label() {
+      if (this.eventType === 'workshop') {
+        return 'w'
+      }
+      return 'Event'
+    },
+    eventType() {
+      if (!this.event.type) {
+        return 'generic'
+      }
+      return this.event.type
+    }
+  },
+  methods: {
+    onClickOutside() {
+      this.active = false
     }
   }
 };
@@ -37,19 +58,27 @@ export default {
 @import '../../sass/_variables';
 .event-preview {
   position: relative;
+  @include r('margin-right', 6px);
+  &.workshop {
+    @include r('width', 24px);
+    @include r('height', 24px);
+    .label {
+      @include r('padding', 4.5px 0);
+    }
+  }
   .label {
     background: $black;
     color: $yellow;
     text-transform: uppercase;
     @include r('padding', 4.5px 9px);
     @include r('border-radius', 12px);
-    @include r('margin-right', 6px);
     cursor: pointer;
+    text-align: center;
   }
   .info {
     position: absolute;
     top: 0;
-    left: 100%;
+    left: calc(100% + #{relative-size(6)});
     background: $black;
     color: $yellow;
     @include r('padding', 9px 15px);
@@ -78,7 +107,7 @@ export default {
       }
     }
   }
-  &:hover {
+  &.active {
     .info {
       opacity: 1;
       pointer-events: initial;

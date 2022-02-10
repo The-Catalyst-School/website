@@ -10,6 +10,7 @@ import SlideUpDown from 'vue-slide-up-down'
 import Layout from './Layouts/Main'
 import Sticky from 'vue-sticky-directive/src/sticky'
 import VueDragscroll from 'vue-dragscroll'
+import vClickOutside from 'v-click-outside'
 
 InertiaProgress.init({
   delay: 25,
@@ -23,6 +24,7 @@ Vue.use(VueScrollTo, {
   offset: -70,
 })
 Vue.use(VueDragscroll)
+Vue.use(vClickOutside)
 Vue.directive('Sticky', Sticky);
 Vue.component('slide-up-down', SlideUpDown)
 

@@ -1,6 +1,20 @@
 <template>
   <div class="calendar-wrapper">
     <div class="side">
+      <div class="view-type">
+        <Link class="btn"
+          :class="{'active': $page.component.startsWith('Event/Calendar')}"
+          :href="$route('web.event.index', [initialDate.format('YYYY-MM')])">
+          Month view
+        </Link>
+      </div>
+      <div class="view-type">
+        <Link class="btn"
+          :class="{'active': $page.component.startsWith('Event/Day')}"
+          :href="$route('web.event.index', [initialDate.format('YYYY-MM')])">
+          Day view
+        </Link>
+      </div>
     </div>
     <div class="month">
       <div class="header">
@@ -31,7 +45,14 @@
         </div>
       </div>
     </div>
-    <div class="side">
+    <div class="side months">
+      <div class="single-month" v-for="month in months">
+        <a class="btn"
+          :class="{'active': (month.format('MMYYYY')) === initialDate.format('MMYYYY')}"
+          :href="$route('web.event.index', [month.format('YYYY-MM')])">
+          {{month | dateFormat('MMMM YYYY')}}
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -50,7 +71,7 @@ import { Link } from '@inertiajs/inertia-vue'
 import EventPreview from '../../Components/EventPreview'
 
 export default {
-  props: ['events'],
+  props: ['date','events', 'workshops'],
   components: {
     Link,
     EventPreview
@@ -58,10 +79,21 @@ export default {
   data() {
     return {
       weekdays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      initialDate: "2022-02-09 16:32:31"
     }
   },
   computed: {
+    initialDate() {
+      if (this.date) {
+        return dayjs(this.date)
+      }
+      return dayjs()
+    },
+    localWorkshops() {
+      return this.workshops.map((w) => {
+        w.type = 'workshop'
+        return w
+      })
+    },
     initialYear() {
       return dayjs(this.initialDate).format("YYYY")
     },
@@ -80,9 +112,31 @@ export default {
     days() {
       let days = [...this.previousMonthDays, ...this.currentMonthDays, ...this.nextMonthDays]
       days.forEach((day) => {
-        day.events = this.events.filter((e) => e.scheduled_at === day.date)
+        let events = this.events.filter((e) => e.scheduled_at === day.date)
+        let workshops = this.localWorkshops.filter((e) => e.scheduled_at === day.date)
+        day.events = [...events, ...workshops]
       })
       return days
+    },
+    months() {
+      let months = []
+      let cache = this.initialDate.startOf('month')
+      let previous = Array.from({length: 6}).map((el, i) => {
+        let newDate = cache.subtract(
+          dayjs.duration({'days': 1})
+        ).startOf('month')
+        cache = newDate
+        return newDate
+      }).reverse()
+      cache = this.initialDate.endOf('month')
+      let next = Array.from({length: 6}).map((el, i) => {
+        let newDate = cache.add(
+          dayjs.duration({'days' : 1})
+        ).endOf('month')
+        cache = newDate
+        return newDate
+      })
+      return [...previous,...[this.initialDate.startOf('month')],...next]
     }
   },
   methods: {
@@ -149,6 +203,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
 @import '../../../sass/_mixins';
 .calendar-wrapper {
   @include r('padding-right', 30px);
@@ -156,6 +211,19 @@ export default {
   display: flex;
   .side {
     @include col(2 of 14);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    @include r('padding-top', 36px);
+    .single-month, .view-type {
+      @include r('margin-bottom', 10px);
+      a, a:visited {
+        display: block;
+      }
+    }
+    &.months {
+      align-items: flex-end;
+    }
   }
   .month {
     @include col(10 of 14, 0);
@@ -167,7 +235,7 @@ export default {
       justify-content: space-between;
       flex-wrap: wrap;
       .weekday, .single-day {
-        width: (100%/7);
+        width: math.div(100%, 7);
         border-bottom: 1px solid $black;
         @include r('padding', 10);
       }

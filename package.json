@@ -26,6 +26,7 @@
         "@inertiajs/inertia": "^0.10.1",
         "@inertiajs/inertia-vue": "^0.7.2",
         "@inertiajs/progress": "^0.2.6",
+        "v-click-outside": "^3.1.2",
         "v-video-embed": "^1.0.8",
         "vue": "^2.6.14",
         "vue-dragscroll": "^3.0.1",
