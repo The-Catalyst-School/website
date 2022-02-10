@@ -4,19 +4,21 @@
     :class="[eventType, active ? 'active' : '']">
     <div class="label" @click="active = !active">{{label}}</div>
     <div class="info">
-      <div class="heading">
-        <div class="date">{{event.scheduled_at | dateFormat('DD.MM.YYYY')}}</div>
-        <div class="time">{{event.scheduled_at | dateFormat('HH:mm')}}</div>
-      </div>
-      <div class="title">
-        <h2>{{event.title}}</h2>
-      </div>
-      <div class="description">
-        <p>About</p>
-        <p class="text">{{event.description}}</p>
-      </div>
-      <div class="link">
-        <a :href="event.link" target="_blank">Link to event</a>
+      <div class="internal">
+        <div class="heading">
+          <div class="date">{{event.scheduled_at | dateFormat('DD.MM.YYYY')}}</div>
+          <div class="time">{{event.scheduled_at | dateFormat('HH:mm')}}</div>
+        </div>
+        <div class="title">
+          <h2>{{event.title}}</h2>
+        </div>
+        <div class="description">
+          <p>About</p>
+          <p class="text">{{event.description}}</p>
+        </div>
+        <div class="link">
+          <a :href="event.link" target="_blank">Link to event</a>
+        </div>
       </div>
     </div>
   </div>
@@ -81,14 +83,18 @@ export default {
     left: calc(100% + #{relative-size(6)});
     background: $black;
     color: $yellow;
-    @include r('padding', 9px 15px);
     @include r('border-radius', 12px);
     display: flex;
     flex-direction: column;
-    @include col-vw(2.5 of 14);
-    opacity: 0;
+    width: 0;
     pointer-events: none;
     z-index: 2;
+    @include transition('width, opacity');
+    overflow: hidden;
+    .internal {
+      @include col-vw(2.5 of 14);
+      @include r('padding', 9px 15px);
+    }
     a, a:visited {
       color: $yellow;
     }
@@ -110,6 +116,9 @@ export default {
   &.active {
     .info {
       opacity: 1;
+      @include col-vw(2.5 of 14);
+      padding-left: 0;
+      padding-right: 0;
       pointer-events: initial;
     }
   }
