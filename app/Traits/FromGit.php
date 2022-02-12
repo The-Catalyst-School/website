@@ -224,6 +224,8 @@ trait FromGit
           foreach($events as $event) {
             $event = Event::create([
               'title' => $event['title'],
+              'short_title' => $event['short_title'],
+              'special' => ($event['special'] == 'yes'),
               'link' => $event['link'],
               'description' => $event['description'],
               'scheduled_at' => Carbon::createFromTimestamp(strtotime($event['datetime']))->toDateTimeString()

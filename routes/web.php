@@ -51,8 +51,10 @@ Route::get('/workshops/{slug}', [WorkshopController::class, 'show'])
 Route::get('/courses/{c_slug}/lessons/{s_slug}', [LessonController::class, 'show'])
   ->name('web.lesson.show');
 
-Route::get('/events/{date?}', [EventController::class, 'index'])
+Route::get('/events/calendar/{date?}', [EventController::class, 'index'])
   ->name('web.event.index');
+Route::get('/events/list/{date?}', [EventController::class, 'list'])
+  ->name('web.event.list');
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('web.profile');
 

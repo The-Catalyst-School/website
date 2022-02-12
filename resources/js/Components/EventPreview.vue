@@ -1,7 +1,7 @@
 <template>
   <div class="event-preview"
     v-click-outside="onClickOutside"
-    :class="[eventType, active ? 'active' : '']">
+    :class="[eventType, active ? 'active' : '', event.special ? 'special' : '']">
     <div class="label" @click="active = !active">{{label}}</div>
     <div class="info">
       <div class="internal">
@@ -37,6 +37,12 @@ export default {
       if (this.eventType === 'workshop') {
         return 'w'
       }
+      if (this.event.special) {
+        return '!'
+      }
+      if (this.event.short_title) {
+        return this.event.short_title
+      }
       return 'Event'
     },
     eventType() {
@@ -61,7 +67,7 @@ export default {
 .event-preview {
   position: relative;
   @include r('margin-right', 6px);
-  &.workshop {
+  &.workshop, &.special {
     @include r('width', 24px);
     @include r('height', 24px);
     .label {

@@ -10,8 +10,8 @@
       </div>
       <div class="view-type">
         <Link class="btn"
-          :class="{'active': $page.component.startsWith('Event/Day')}"
-          :href="$route('web.event.index', [initialDate.format('YYYY-MM')])">
+          :class="{'active': $page.component.startsWith('Event/List')}"
+          :href="$route('web.event.list', [initialDate.format('YYYY-MM')])">
           Day view
         </Link>
       </div>
@@ -47,11 +47,11 @@
     </div>
     <div class="side months">
       <div class="single-month" v-for="month in months">
-        <a class="btn"
+        <Link class="btn"
           :class="{'active': (month.format('MMYYYY')) === initialDate.format('MMYYYY')}"
           :href="$route('web.event.index', [month.format('YYYY-MM')])">
           {{month | dateFormat('MMMM YYYY')}}
-        </a>
+        </Link>
       </div>
     </div>
   </div>
@@ -112,8 +112,8 @@ export default {
     days() {
       let days = [...this.previousMonthDays, ...this.currentMonthDays, ...this.nextMonthDays]
       days.forEach((day) => {
-        let events = this.events.filter((e) => e.scheduled_at === day.date)
-        let workshops = this.localWorkshops.filter((e) => e.scheduled_at === day.date)
+        let events = this.events.filter((e) => dayjs(e.scheduled_at).format('YYYY-MM-DD') === day.date)
+        let workshops = this.localWorkshops.filter((e) => dayjs(e.scheduled_at).format('YYYY-MM-DD') === day.date)
         day.events = [...events, ...workshops]
       })
       return days
