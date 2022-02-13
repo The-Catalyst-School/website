@@ -13,6 +13,7 @@ use App\Models\Quiz;
 use App\Models\Attachment;
 use App\Models\Embed;
 use App\Models\Image;
+use App\Models\Comment;
 
 class Lesson extends Model
 {
@@ -52,5 +53,10 @@ class Lesson extends Model
     public function images()
     {
         return $this->hasMany(Image::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

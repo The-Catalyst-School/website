@@ -11,6 +11,7 @@ use App\Models\Topic;
 use App\Models\Attachment;
 use App\Models\Embed;
 use App\Models\Image;
+use App\Models\Comment;
 
 class Workshop extends Model
 {
@@ -44,5 +45,10 @@ class Workshop extends Model
     public function images()
     {
         return $this->hasMany(Image::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

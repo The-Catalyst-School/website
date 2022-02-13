@@ -11,7 +11,7 @@ class CourseController extends Controller
 {
     public function index(Request $request)
     {
-      $courses = Course::with('lessons', 'topics');
+      $courses = Course::with('lessons', 'topics', 'comments');
       $filter_topics = $request->input('topics');
       if ($filter_topics) {
         $courses = $courses->whereHas('topics', function($query) use ($filter_topics) {
@@ -31,7 +31,7 @@ class CourseController extends Controller
 
     public function show($slug)
     {
-      $course = Course::with('lessons', 'topics')
+      $course = Course::with('lessons')
         ->whereSlug($slug)->firstOrFail();
       $lesson = $course->lessons()->firstOrFail();
       return Redirect::route('web.lesson.show', [$slug, $lesson->slug]);

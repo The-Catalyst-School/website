@@ -26,7 +26,12 @@
         <attachments :attachments="lesson.attachments" />
       </div>
       <div id="quiz" v-if="lesson.quiz"></div>
-      <div id="comments" v-if="lesson.comments"></div>
+      <div id="comments" class="comments">
+        <comments
+          :comments="lesson.comments"
+          :entity="{'type': 'Lesson', 'id': lesson.id}"
+          />
+      </div>
       <div id="related" class="related" v-if="related">
         <h4>Related courses</h4>
         <div class="list">
@@ -61,13 +66,15 @@ import { Link } from '@inertiajs/inertia-vue'
 import Side from './Side'
 import CoursePreview from '../../Components/CoursePreview'
 import Attachments from '../../Components/Attachments'
+import Comments from '../../Components/Comments'
 export default {
-  props: ['lesson', 'next', 'prev', 'related'],
+  props: ['lesson', 'next', 'prev', 'related', 'comments'],
   components: {
     Link,
     Side,
     CoursePreview,
-    Attachments
+    Attachments,
+    Comments
   },
   methods: {
     parseUrlQuery(value) {

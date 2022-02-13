@@ -7,6 +7,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\WorkshopController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -55,6 +56,14 @@ Route::get('/events/calendar/{date?}', [EventController::class, 'index'])
   ->name('web.event.index');
 Route::get('/events/list/{date?}', [EventController::class, 'list'])
   ->name('web.event.list');
+
+Route::get('/comment/create/{entity}/{id}', [CommentController::class, 'create'])
+    ->name('web.comment.create')
+    ->middleware('auth');
+
+Route::post('/comment', [CommentController::class, 'store'])
+    ->name('web.comment.store')
+    ->middleware('auth');
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('web.profile');
 
