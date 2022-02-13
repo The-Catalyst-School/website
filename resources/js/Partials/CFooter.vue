@@ -57,9 +57,18 @@ export default {
     align-items: flex-end;
     a, a:visited {
       color: $yellow;
+      &:hover {
+        text-decoration: underline;
+      }
     }
     .basic-info, .social, nav {
       @include col(2 of 14);
+      ul {
+        list-style: none;
+        li:before {
+          display: none;
+        }
+      }
     }
     .counter {
       flex-grow: 1;
