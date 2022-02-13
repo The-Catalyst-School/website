@@ -6,6 +6,10 @@
         :key="`cours-preview-${index}`"
         v-for="(course, index) in courses" />
     </div>
+    <c-filter
+      :topics="topics"
+      :filter-topics="filter_topics"
+       />
   </div>
 </template>
 
@@ -13,12 +17,14 @@
 
 import { Link } from '@inertiajs/inertia-vue'
 import CoursePreview from '../../Components/CoursePreview'
+import CFilter from './Filter'
 
 export default {
-  props: ['courses'],
+  props: ['courses', 'topics', 'filter_topics'],
   components: {
     Link,
-    CoursePreview
+    CoursePreview,
+    CFilter
   }
 };
 </script>
