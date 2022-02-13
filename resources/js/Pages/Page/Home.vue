@@ -22,6 +22,17 @@
         </template>
       </horizontal-slider>
     </section>
+    <section class="next-events">
+      <h4 class="section-title">Next appointments</h4>
+      <div class="events-list">
+        <div class="event-row" v-for="event in allEvents">
+          <row-event-preview :event="event" />
+        </div>
+      </div>
+      <div class="see-more">
+        <Link :href="$route('web.event.index')">Check our calendar</Link>
+      </div>
+    </section>
     <section class="courses">
       <h4 class="section-title">Our last Workshops</h4>
       <horizontal-slider>
@@ -44,7 +55,7 @@
       <h4 class="section-title">Frequently Asked Questions</h4>
       <faqs :faqs="faqs" :closable="false" />
       <div class="see-more">
-        <Link href="/faq">See all</Link>
+        <Link :href="$route('web.page.show', 'faq')">See all</Link>
       </div>
     </section>
   </div>
@@ -52,21 +63,46 @@
 
 <script>
 
+import dayjs from 'dayjs'
+import weekday from 'dayjs/plugin/weekday'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+ 
+dayjs.extend(weekday)
+dayjs.extend(weekOfYear)
+
 import CoursePreview from '../../Components/CoursePreview'
 import WorkshopPreview from '../../Components/WorkshopPreview'
 import HorizontalSlider from '../../Components/HorizontalSlider'
 import SentenceSlider from '../../Components/SentenceSlider'
+import RowEventPreview from '../../Components/RowEventPreview'
 import Faqs from '../../Components/Faqs'
 import { Link } from '@inertiajs/inertia-vue'
 export default {
-  props: ['page', 'courses', 'workshops', 'sentences', 'faqs'],
+  props: [
+    'page', 'courses', 'workshops', 'sentences',
+    'faqs', 'events', 'e_workshops'
+  ],
   components: {
     CoursePreview,
     WorkshopPreview,
     HorizontalSlider,
     SentenceSlider,
     Faqs,
+    RowEventPreview,
     Link
+  },
+  computed: {
+    eWorkshops() {
+      return this.e_workshops.map((w) => {
+        w.type = 'workshop'
+        return w
+      })
+    },
+    allEvents() {
+      return [...this.eWorkshops,...this.events].sort((a, b) => {
+        return dayjs(a.scheduled_at).unix() - dayjs(b.scheduled_at).unix()
+      })
+    },
   }
 };
 </script>
@@ -92,7 +128,7 @@ section {
       @include r('margin-left', -30px);
     }
   }
-  &.faqs {
+  &.faqs, &.next-events {
     .section-title {
       @include col-before(2 of 14);
     }
@@ -103,7 +139,10 @@ section {
       text-transform: uppercase;
       @include r('margin-top', 18px);
     }
-
+    .events-list {
+      @include col(10 of 14);
+      @include col-before(2 of 14);
+    }
   }
 }
 </style>
