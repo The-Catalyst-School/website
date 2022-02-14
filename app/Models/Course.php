@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -27,6 +28,35 @@ class Course extends Model
       'title', 'content', 'sha', 'github_path', 'teacher',
       'estimated_time', 'difficulty', 'featured', 'subtitle'
     ];
+
+    protected $appends = ['current_lesson', 'countLessons', 'tot_lessons'];
+
+    public function getCountLessonsAttribute()
+    {
+        $user = Auth::user();
+        if ($user) {
+          return $user->courses()->where('courses.id', $this->id)->count();
+        }
+        return 0;
+    }
+
+    public function getTotLessonsAttribute()
+    {
+        return $this->lessons->count();
+    }
+
+    public function getCurrentLessonAttribute()
+    {
+        $user = Auth::user();
+        if ($user) {
+          $res = $user->courses()->where('courses.id', $this->id)
+            ->orderBy('course_user.current_lesson', 'desc')->first();
+          if ($res) {
+            return $res->pivot->current_lesson;
+          }
+        }
+        return false;
+    }
 
     public function lessons()
     {
@@ -60,6 +90,7 @@ class Course extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)
+          ->withPivot('current_lesson');
     }
 }

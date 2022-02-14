@@ -55,6 +55,20 @@
               Previous Lesson
             </Link>
           </div>
+          <div class="prev">
+            <div
+              class="btn"
+              v-if="$page.props.auth.user && lesson.course.current_lesson < lesson.id"
+              @click="subscribe"
+              >
+              Mark as completed
+            </div>
+            <div class="btn active"
+              v-if="$page.props.auth.user && lesson.course.current_lesson >= lesson.id"
+              >
+              Lesson Completed!
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -99,6 +113,17 @@ export default {
       }
       return params
     },
+    subscribe() {
+      this.$inertia.post(
+        this.$route('web.course.subscribe', this.lesson.course.id),
+        {
+          'current_lesson': this.lesson.id
+        },
+        {
+          preserveScroll: true
+        }
+      )
+    }
   }
 };
 </script>
@@ -117,6 +142,13 @@ export default {
           display: flex;
           flex-direction: column;
           align-items: flex-end;
+          & > div {
+            @include r('margin-bottom', 6px);
+          }
+          a, a:visited {
+            display: block;
+
+          }
         }
       }
     }

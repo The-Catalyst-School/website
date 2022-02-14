@@ -20,9 +20,6 @@
           <div class="subtitle" v-if="course.subtitle">
             <h2>{{course.subtitle}}</h2>
           </div>
-          <div class="image-wrapper">
-
-          </div>
           <div class="footer">
             <span v-if="course.teacher">
               With {{course.teacher}}
@@ -32,7 +29,10 @@
       </div>
     </div>
     <div class="read-more">
-      Progress
+      <div class="bkg" :style="{width: `${progress}%`}">
+      Progress: {{progress}}%
+      </div>
+      Progress: {{progress}}%
     </div>
   </div>
 </template>
@@ -49,6 +49,11 @@ export default {
   data() {
     return {
     }
+  },
+  computed: {
+    progress() {
+      return parseInt((this.course.countLessons * 100) / this.course.tot_lessons);
+    }
   }
 };
 </script>
@@ -58,13 +63,11 @@ export default {
 @import '../../sass/_mixins';
 @import '../../sass/_variables';
 .course-preview {
-  @include col(4 of 14);
+  @include col(1 of 1);
   @include r('margin-bottom', 20);
   display: flex;
   flex-direction: column;
-  &.featured {
-    @include col(6 of 14);
-  }
+  height: 100%;
   .main-body {
     flex-grow: 1;
     display: flex;
@@ -130,8 +133,17 @@ export default {
     border-right: 1px solid $black;
     cursor: pointer;
     @include transition('background, color');
-    &:hover {
+    position: relative;
+    .bkg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      @include default-spacing;
       background: $black;
+      overflow: hidden;
+      word-break: keep-all;
+      white-space: nowrap;
       color: $yellow;
     }
   }

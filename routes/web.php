@@ -44,6 +44,10 @@ Route::get('/courses', [CourseController::class, 'index'])
 Route::get('/courses/{slug}', [CourseController::class, 'show'])
   ->name('web.course.show');
 
+Route::post('/courses/{event_id}', [CourseController::class, 'subscribe'])
+  ->name('web.course.subscribe')
+  ->middleware('auth');
+
 Route::get('/workshops', [WorkshopController::class, 'index'])
   ->name('web.workshop.index');
 Route::get('/workshops/{slug}', [WorkshopController::class, 'show'])

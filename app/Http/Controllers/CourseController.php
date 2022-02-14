@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Course;
 use App\Models\Topic;
 use Illuminate\Http\Request;
@@ -35,6 +36,16 @@ class CourseController extends Controller
         ->whereSlug($slug)->firstOrFail();
       $lesson = $course->lessons()->firstOrFail();
       return Redirect::route('web.lesson.show', [$slug, $lesson->slug]);
+    }
+
+    public function subscribe(Request $request, $id)
+    {
+        $request->validate([
+          'current_lesson' => ['required'],
+        ]);
+        $lesson = $request->input('current_lesson');
+        Auth::user()->courses()->attach($id, ['current_lesson' => $lesson]);
+        return Redirect::back()->with('success', 'Lesson registered!');
     }
 
 }

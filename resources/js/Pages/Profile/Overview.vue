@@ -16,6 +16,18 @@
       </div>
       <div class="last-courses-workshops"
         v-if="courses.length > 0 || workshops.length > 0">
+        <div class="last-workshop" v-if="workshops.length">
+          <p>Last workshop</p>
+          <light-workshop-preview
+            :workshop="workshops[0]"
+          />
+        </div>
+        <div class="last-course" v-if="courses.length">
+          <p>Last course</p>
+          <light-course-preview
+            :course="courses[0]"
+          />
+        </div>
       </div>
     </div>
     <div class="side">
@@ -26,11 +38,15 @@
 <script>
 
 import { Link } from '@inertiajs/inertia-vue'
+import LightWorkshopPreview from '../../Components/LightWorkshopPreview'
+import LightCoursePreview from '../../Components/LightCoursePreview'
 
 export default {
   props: ['user', 'events', 'courses', 'workshops', 'comments'],
   components: {
-    Link
+    Link,
+    LightWorkshopPreview,
+    LightCoursePreview
   }
 };
 </script>
@@ -75,6 +91,20 @@ export default {
         }
         .single-info {
           @include m-font-size(20, 26);
+        }
+      }
+    }
+    .last-courses-workshops {
+      @include col(12 of 14, 0);
+      @include col-before(1 of 14);
+      display: flex;
+      align-items: stretch;
+      .last-workshop, .last-course {
+        @include col(6 of 12, 0);
+        height: 100%;
+        p {
+          @include col(1 of 1);
+          @include r('margin-bottom', 15px);
         }
       }
     }
