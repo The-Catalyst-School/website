@@ -27,6 +27,7 @@ button.btn {
   -webkit-appearance: none;
   outline: 0;
   font-family: 'Neue Montreal';
+  @include m-font-size(12, 15);
 }
 
 .link {

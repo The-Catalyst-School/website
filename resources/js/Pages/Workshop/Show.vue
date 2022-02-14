@@ -42,12 +42,27 @@
         </div>
       </div>
     </div>
-    <div class="side">
+    <div class="side actions">
+      <div v-sticky sticky-side="both">
+        <div class="internal-side">
+          <div class="internal-nav">
+            <Link
+              class="btn"
+              preserve-scroll
+              v-if="$page.props.auth.user"
+              :method="actionMethod" as="button" type="button"
+              :href="$route(actionRoute, workshop.id)">
+              {{actionText}}
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
 import Side from './Side'
 import WorkshopPreview from '../../Components/WorkshopPreview'
 import Attachments from '../../Components/Attachments'
@@ -58,7 +73,8 @@ export default {
     Side,
     WorkshopPreview,
     Attachments,
-    Comments
+    Comments,
+    Link
   },
   methods: {
     parseUrlQuery(value) {
@@ -83,6 +99,23 @@ export default {
       }
       return params
     },
+  },
+  computed: {
+    actionText() {
+      return (this.workshop.subscribed) ? 'Unsubscribe' : 'Subscribe'
+    },
+    actionMethod() {
+      return (this.workshop.subscribed) ? 'delete' : 'post'
+    },
+    actionRoute() {
+      let route = 'web.workshop'
+      if (this.workshop.subscribed) {
+        route = route + '.unsubscribe'
+      } else {
+        route = route + '.subscribe'
+      }
+      return route
+    }
   }
 };
 </script>
@@ -96,6 +129,19 @@ export default {
     .side {
       @include col(2 of 14);
       @include r('margin-top', -70px);
+      &.actions {
+        .internal-side {
+          width: 100%;
+          @include r('padding-top', 70);
+          .internal-nav {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-end;
+            height: 80vh;
+          }
+        }
+      }
     }
     .main {
       @include col(10 of 14, 0);

@@ -16,7 +16,9 @@
     </div>
     <div class="actions">
       <Link
+        v-if="$page.props.auth.user"
         class="btn"
+        preserve-scroll
         :method="actionMethod" as="button" type="button"
         :href="$route(actionRoute, event.id)">
         {{actionText}}
