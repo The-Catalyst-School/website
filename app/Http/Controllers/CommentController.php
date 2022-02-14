@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 use App\Models\Course;
+use App\Models\Comment;
 use App\Models\Lesson;
 use App\Models\Workshop;
 
@@ -26,6 +27,12 @@ class CommentController extends Controller
           'id' => $entity_id,
         ];
         return Inertia::render('Comment/Create', compact('entity'));
+    }
+
+    public function edit($comment_id)
+    {
+        $comment = Comment::findOrFail($comment_id);
+        return Inertia::render('Comment/Create', compact('comment'));
     }
 
     /**
@@ -48,6 +55,36 @@ class CommentController extends Controller
             'user_id' => Auth::user()->id
           ]);
         return Redirect::back()->with('success', 'Comment posted!');
+    }
+
+    public function update(Request $request, $comment_id)
+    {
+        $request->validate([
+          'content' => ['required']
+        ]);
+        $content = $request->input('content');
+        $comment = Comment::findOrFail($comment_id);
+        if ($comment->user) {
+          if ($comment->user->id === Auth::user()->id) {
+            $comment->update([
+              'content' => $content
+            ]);
+            return Redirect::back()->with('success', 'Comment edited!');
+          }
+        }
+        return Redirect::back()->withErrors(['content' => 'Not authorized!']);
+    }
+
+    public function delete($comment_id)
+    {
+        $comment = Comment::findOrFail($comment_id);
+        if ($comment->user) {
+          if ($comment->user->id === Auth::user()->id) {
+            $comment->delete();
+            return Redirect::back()->with('success', 'Comment deleted!');
+          }
+        }
+        return Redirect::back()->withErrors('comment', 'Not authorized!');
     }
 
     /**

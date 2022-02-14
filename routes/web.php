@@ -61,8 +61,20 @@ Route::get('/comment/create/{entity}/{id}', [CommentController::class, 'create']
     ->name('web.comment.create')
     ->middleware('auth');
 
+Route::get('/comment/create/{comment_id}', [CommentController::class, 'edit'])
+    ->name('web.comment.edit')
+    ->middleware('auth');
+
 Route::post('/comment', [CommentController::class, 'store'])
     ->name('web.comment.store')
+    ->middleware('auth');
+
+Route::post('/comment/{comment_id}/update', [CommentController::class, 'update'])
+    ->name('web.comment.update')
+    ->middleware('auth');
+
+Route::delete('/comment/{comment_id}', [CommentController::class, 'delete'])
+    ->name('web.comment.delete')
     ->middleware('auth');
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('web.profile');

@@ -18,6 +18,9 @@
     background: $black;
     color: $yellow;
   }
+  &:disabled {
+    pointer-events: none;
+  }
 }
 
 .link {

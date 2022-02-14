@@ -1,7 +1,7 @@
 <template>
   <div class="create-comment-wrapper">
     <div>
-      <form class="create-comment" @submit.prevent="login">
+      <form class="create-comment" @submit.prevent="submit">
         <h2>Your opinion is important to us, help the community to grow</h2>
         <div class="success" v-if="success">
           {{success}}
@@ -17,11 +17,11 @@
           {{cErrors.content}}
         </div>
         <div class="send-wrapper">
-          <button class="btn" @click="this.form.reset()">Clear all</button>
+          <button class="btn" @click.prevent="form.reset()">Reset form</button>
           <button
-            :disabled="this.form.content.length === 0"
+            :disabled="form.content.length === 0"
             :loading="form.processing"
-            class="btn" type="submit">Publish</button>
+            class="btn" type="submit">{{submitMsg}}</button>
         </div>
       </form>
     </div>
@@ -32,7 +32,7 @@
 import { Link } from '@inertiajs/inertia-vue'
 
 export default {
-  props: ['errors', 'success', 'entity'],
+  props: ['errors', 'success', 'entity', 'comment'],
   components: {
     Link
   },
@@ -40,15 +40,19 @@ export default {
     return {
       cErrors: false,
       form: this.$inertia.form({
-        content: '',
+        content: (this.comment) ? this.comment.content : '',
         entity: this.entity
       }),
     }
   },
   methods: {
-    login() {
+    reset() {
+      this.form.content = ''
+    },
+    submit() {
+      let route = (this.comment) ? this.$route('web.comment.update', [this.comment.id]) : this.$route('web.comment.store')
       this.form.post(
-        this.$route('web.comment.store'),
+        route,
         {
           onError: (errors) => this.cErrors = errors,
           preserveScroll: true
@@ -57,6 +61,11 @@ export default {
 
     }
   },
+  computed: {
+    submitMsg() {
+      return (this.comment) ? 'Edit' : 'Publish'
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -81,6 +90,8 @@ export default {
   }
   button {
     background: $white;
+    font-family: 'Neue Montreal';
+    @include m-font-size(12, 15);
     &:not(:last-child) {
       @include r('margin-right', 8px);
     }

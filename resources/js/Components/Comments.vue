@@ -19,6 +19,16 @@
           <div class="content">
             {{comment.content}}
           </div>
+          <div class="actions" v-if="comment.user && userId === comment.user.id">
+            <a class="edit"
+              @click="createComment($route('web.comment.edit', [comment.id]))"
+              >
+                Edit
+            </a>
+            <a class="delete"
+              @click="deleteComment($route('web.comment.delete', [comment.id]))"
+              >Delete</a>
+          </div>
         </div>
       </div>
     </div>
@@ -40,11 +50,25 @@ export default {
   methods: {
     createComment(route) {
       this.$inertia.visitInModal(route, false, 8)
+    },
+    deleteComment(route) {
+      this.$inertia.delete(route, {
+        preserveScroll: true,
+        onError(e) {
+          // window.Toast.error(e.comment)
+        }
+      })
     }
   },
   computed: {
     user() {
       return this.$page.props.auth.user
+    },
+    userId() {
+      if (this.user) {
+        return this.user.id
+      }
+      return false
     }
   }
 }
@@ -100,6 +124,25 @@ export default {
     }
     .content {
       @include m-font-size(20, 26);
+    }
+    .actions {
+      display: flex;
+      @include r('margin-top', 6px);
+      a, button {
+        @include r('margin-right', 6px);
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      button {
+        -webkit-appearance: none;
+        background: transparent;
+        outline: 0;
+        font-family: 'Neue Montreal';
+        border: none;
+        @include m-font-size(12, 15);
+      }
     }
   }
 }
