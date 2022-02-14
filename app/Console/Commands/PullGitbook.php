@@ -169,50 +169,52 @@ class PullGitbook extends Command
           $sections = $websiteTree->childNodes();
           foreach($sections as $section) {
             $parsedSection = $this->baseParseEntry($section);
-            if ($parsedSection['title'] == 'About') {
-              echo 'About';
-              $parsedAbout = $this->parseEntry($section);
-              array_push($parsedPages, $parsedAbout);
-            }
-            if ($parsedSection['title'] == 'Workshops') {
-              echo 'Workshops';
-              $childrenList = $section->findOneOrFalse('ul');
-              if ($childrenList) {
-                $children = $childrenList->find('li');
-                foreach($children as $child) {
-                  $parsedWorkshop = $this->parseEntry($child);
-                  if ($parsedWorkshop) {
-                    if (count($parsedWorkshop['children']) == 0) {
-                      array_push($parsedWorkshops, $parsedWorkshop);
+            if ($parsedSection) {
+              if ($parsedSection['title'] == 'About') {
+                echo 'About';
+                $parsedAbout = $this->parseEntry($section);
+                array_push($parsedPages, $parsedAbout);
+              }
+              if ($parsedSection['title'] == 'Workshops') {
+                echo 'Workshops';
+                $childrenList = $section->findOneOrFalse('ul');
+                if ($childrenList) {
+                  $children = $childrenList->find('li');
+                  foreach($children as $child) {
+                    $parsedWorkshop = $this->parseEntry($child);
+                    if ($parsedWorkshop) {
+                      if (count($parsedWorkshop['children']) == 0) {
+                        array_push($parsedWorkshops, $parsedWorkshop);
+                      }
                     }
                   }
                 }
               }
-            }
-            if ($parsedSection['title'] == 'Courses') {
-              echo 'Courses';
-              $childrenList = $section->findOneOrFalse('ul');
-              if ($childrenList) {
-                $children = $childrenList->find('li');
-                foreach($children as $child) {
-                  $parsedCourse = $this->parseEntry($child);
-                  if ($parsedCourse) {
-                    if (count($parsedCourse['children']) > 0) {
-                      array_push($parsedCourses, $parsedCourse);
+              if ($parsedSection['title'] == 'Courses') {
+                echo 'Courses';
+                $childrenList = $section->findOneOrFalse('ul');
+                if ($childrenList) {
+                  $children = $childrenList->find('li');
+                  foreach($children as $child) {
+                    $parsedCourse = $this->parseEntry($child);
+                    if ($parsedCourse) {
+                      if (count($parsedCourse['children']) > 0) {
+                        array_push($parsedCourses, $parsedCourse);
+                      }
                     }
                   }
                 }
               }
-            }
-            if ($parsedSection['title'] == 'FAQ') {
-              echo 'FAQ';
-              $parsedFaq = $this->parseEntry($section);
-              array_push($parsedPages, $parsedFaq);
-            }
-            if ($parsedSection['title'] == 'Events') {
-              echo 'Events';
-              $parsedEvents = $this->parseEntry($section);
-              array_push($parsedPages, $parsedEvents);
+              if ($parsedSection['title'] == 'FAQ') {
+                echo 'FAQ';
+                $parsedFaq = $this->parseEntry($section);
+                array_push($parsedPages, $parsedFaq);
+              }
+              if ($parsedSection['title'] == 'Events') {
+                echo 'Events';
+                $parsedEvents = $this->parseEntry($section);
+                array_push($parsedPages, $parsedEvents);
+              }
             }
           }
         }
