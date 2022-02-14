@@ -13,6 +13,7 @@ use App\Models\Attachment;
 use App\Models\Embed;
 use App\Models\Image;
 use App\Models\Comment;
+use App\Models\User;
 
 class Course extends Model
 {
@@ -55,5 +56,10 @@ class Course extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

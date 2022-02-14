@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Workshop;
 use App\Models\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class WorkshopController extends Controller
@@ -49,5 +51,17 @@ class WorkshopController extends Controller
         ->whereSlug($slug)->firstOrFail();
       $related = Workshop::where('id', '!=', $workshop->id)->take(3)->get();
       return inertia('Workshop/Show', compact('workshop', 'related'));
+    }
+
+    public function subscribe($id)
+    {
+        Auth::user()->workshops()->attach($id);
+        return Redirect::back()->with('success', 'Workshop Subscribed!');
+    }
+
+    public function unsubscribe($id)
+    {
+        Auth::user()->workshops()->detach($id);
+        return Redirect::back()->with('success', 'Workshop Unsubscribed!');
     }
 }

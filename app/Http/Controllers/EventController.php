@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\Workshop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class EventController extends Controller
@@ -38,6 +39,18 @@ class EventController extends Controller
       $events = Event::whereBetween('scheduled_at', [$start, $end])->get();
       $workshops = Workshop::whereBetween('scheduled_at', [$start, $end])->get();
       return inertia('Event/List', compact('date','events', 'workshops'));
+    }
+
+    public function subscribe($id)
+    {
+        Auth::user()->events()->attach($id);
+        return Redirect::back()->with('success', 'Event Subscribed!');
+    }
+
+    public function unsubscribe($id)
+    {
+        Auth::user()->events()->detach($id);
+        return Redirect::back()->with('success', 'Event Unsubscribed!');
     }
 
 }

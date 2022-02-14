@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -12,6 +13,7 @@ use App\Models\Attachment;
 use App\Models\Embed;
 use App\Models\Image;
 use App\Models\Comment;
+use App\Models\User;
 
 class Workshop extends Model
 {
@@ -26,6 +28,20 @@ class Workshop extends Model
       'estimated_time', 'difficulty', 'featured', 'subtitle', 'intro',
       'scheduled_at'
     ];
+
+    protected $appends = ['subscribed'];
+
+    public function getSubscribedAttribute()
+    {
+        $user = Auth::user();
+        if ($user) {
+          $res = (bool) $user->whereHas('workshops', function ($query) {
+            $query->where('workshop_id', $this->id);
+          })->count();
+          return $res;
+        }
+        return false;
+    }
 
     public function topics()
     {
@@ -50,5 +66,10 @@ class Workshop extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

@@ -15,7 +15,12 @@
       </Link>
     </div>
     <div class="actions">
-      <div class="btn">Add</div>
+      <Link
+        class="btn"
+        :method="actionMethod" as="button" type="button"
+        :href="$route(actionRoute, event.id)">
+        {{actionText}}
+      </Link>
     </div>
   </div>
 </template>
@@ -47,6 +52,26 @@ export default {
         return 'generic'
       }
       return this.event.type
+    },
+    actionText() {
+      return (this.event.subscribed) ? 'Unsubscribe' : 'Subscribe'
+    },
+    actionMethod() {
+      return (this.event.subscribed) ? 'delete' : 'post'
+    },
+    actionRoute() {
+      let route = 'web.'
+      if (this.eventType === 'workshop') {
+        route = route + 'workshop'
+      } else {
+        route = route + 'event'
+      }
+      if (this.event.subscribed) {
+        route = route + '.unsubscribe'
+      } else {
+        route = route + '.subscribe'
+      }
+      return route
     }
   },
   methods: {

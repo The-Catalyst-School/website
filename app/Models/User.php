@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\Comment;
+use App\Models\Event;
+use App\Models\Course;
+use App\Models\Workshop;
 
 class User extends Authenticatable
 {
@@ -47,5 +50,20 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class);
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class);
+    }
+
+    public function workshops()
+    {
+        return $this->belongsToMany(Workshop::class);
     }
 }

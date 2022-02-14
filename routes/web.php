@@ -49,6 +49,13 @@ Route::get('/workshops', [WorkshopController::class, 'index'])
 Route::get('/workshops/{slug}', [WorkshopController::class, 'show'])
   ->name('web.workshop.show');
 
+Route::post('/workshops/{event_id}', [WorkshopController::class, 'subscribe'])
+  ->name('web.workshop.subscribe')
+  ->middleware('auth');
+Route::delete('/workshops/{event_id}', [WorkshopController::class, 'unsubscribe'])
+  ->name('web.workshop.unsubscribe')
+  ->middleware('auth');
+
 Route::get('/courses/{c_slug}/lessons/{s_slug}', [LessonController::class, 'show'])
   ->name('web.lesson.show');
 
@@ -56,6 +63,13 @@ Route::get('/events/calendar/{date?}', [EventController::class, 'index'])
   ->name('web.event.index');
 Route::get('/events/list/{date?}', [EventController::class, 'list'])
   ->name('web.event.list');
+
+Route::post('/events/{event_id}', [EventController::class, 'subscribe'])
+  ->name('web.event.subscribe')
+  ->middleware('auth');
+Route::delete('/events/{event_id}', [EventController::class, 'unsubscribe'])
+  ->name('web.event.unsubscribe')
+  ->middleware('auth');
 
 Route::get('/comment/create/{entity}/{id}', [CommentController::class, 'create'])
     ->name('web.comment.create')
@@ -77,7 +91,9 @@ Route::delete('/comment/{comment_id}', [CommentController::class, 'delete'])
     ->name('web.comment.delete')
     ->middleware('auth');
 
-Route::get('/profile', [ProfileController::class, 'show'])->name('web.profile');
+Route::get('/profile', [ProfileController::class, 'overview'])
+    ->name('web.profile')
+    ->middleware('auth');
 
 Route::get('/{slug}', [PageController::class, 'show'])->name('web.page.show');
 Route::get('/', [PageController::class, 'home'])->name('web.index');
