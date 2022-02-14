@@ -26,7 +26,12 @@
         <attachments :attachments="workshop.attachments" />
       </div>
       <div id="quiz" v-if="workshop.quiz"></div>
-      <div id="comments" v-if="workshop.comments"></div>
+      <div id="comments" class="comments">
+        <comments
+          :comments="workshop.comments"
+          :entity="{'type': 'Workshop', 'id': workshop.id}"
+          />
+      </div>
       <div id="related" class="related" v-if="related">
         <h4>Related workshops</h4>
         <div class="list">
@@ -46,12 +51,14 @@
 import Side from './Side'
 import WorkshopPreview from '../../Components/WorkshopPreview'
 import Attachments from '../../Components/Attachments'
+import Comments from '../../Components/Comments'
 export default {
   props: ['workshop', 'related'],
   components: {
     Side,
     WorkshopPreview,
-    Attachments
+    Attachments,
+    Comments
   },
   methods: {
     parseUrlQuery(value) {
