@@ -99,5 +99,17 @@ Route::get('/profile', [ProfileController::class, 'overview'])
     ->name('web.profile')
     ->middleware('auth');
 
+Route::get('/profile/courses', [ProfileController::class, 'courses'])
+    ->name('web.profile.courses')
+    ->middleware('auth');
+
+Route::get('/profile/workshops', [ProfileController::class, 'workshops'])
+    ->name('web.profile.workshops')
+    ->middleware('auth');
+
+Route::get('/profile/comments', [ProfileController::class, 'comments'])
+    ->name('web.profile.comments')
+    ->middleware('auth');
+
 Route::get('/{slug}', [PageController::class, 'show'])->name('web.page.show');
 Route::get('/', [PageController::class, 'home'])->name('web.index');

@@ -1,19 +1,10 @@
 <template>
   <div class="profile-overview">
     <div class="side">
+      <side v-sticky sticky-side="both" />
     </div>
     <div class="content">
-      <div class="profile-recap">
-        <div class="public">
-          <p>Public information</p>
-          <div class="single-info">Username: {{user.name}}</div>
-        </div>
-        <div class="private">
-          <p>Private information</p>
-          <div class="single-info">Email: {{user.email}}</div>
-          <div class="single-info">Reset password</div>
-        </div>
-      </div>
+      <profile-recap :user="user" />
       <div class="last-courses-workshops"
         v-if="courses.length > 0 || workshops.length > 0">
         <div class="last-workshop" v-if="workshops.length">
@@ -29,6 +20,17 @@
           />
         </div>
       </div>
+      <div class="next-appointments">
+        <h4>Next appointments</h4>
+        <div class="events-list">
+          <div class="event-row" v-for="event in allEvents">
+            <row-event-preview :event="event" />
+          </div>
+          <div class="no-events" v-if="allEvents.length === 0">
+            <h2>No events</h2>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="side">
     </div>
@@ -37,16 +39,42 @@
 
 <script>
 
+import dayjs from 'dayjs'
+import weekday from 'dayjs/plugin/weekday'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+ 
+dayjs.extend(weekday)
+dayjs.extend(weekOfYear)
+
 import { Link } from '@inertiajs/inertia-vue'
+import Side from './Side'
+import ProfileRecap from './Info'
 import LightWorkshopPreview from '../../Components/LightWorkshopPreview'
 import LightCoursePreview from '../../Components/LightCoursePreview'
+import RowEventPreview from '../../Components/RowEventPreview'
 
 export default {
-  props: ['user', 'events', 'courses', 'workshops', 'comments'],
+  props: ['user', 'events', 'courses', 'workshops', 'comments', 'e_workshops'],
   components: {
     Link,
     LightWorkshopPreview,
-    LightCoursePreview
+    LightCoursePreview,
+    RowEventPreview,
+    Side,
+    ProfileRecap
+  },
+  computed: {
+    localWorkshops() {
+      return this.e_workshops.map((w) => {
+        w.type = 'workshop'
+        return w
+      })
+    },
+    allEvents() {
+      return [...this.localWorkshops,...this.events].sort((a, b) => {
+        return dayjs(a.scheduled_at).unix() - dayjs(b.scheduled_at).unix()
+      })
+    },
   }
 };
 </script>
@@ -60,51 +88,42 @@ export default {
   display: flex;
   .side {
     @include col(2 of 14);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    @include r('padding-top', 36px);
-    .single-month, .view-type {
-      @include r('margin-bottom', 10px);
-      a, a:visited {
-        display: block;
-      }
-    }
-    &.months {
-      align-items: flex-end;
-    }
   }
   .content {
     @include col(10 of 14, 0);
     display: flex;
     flex-direction: column;
-    .profile-recap {
-      @include col(1 of 1);
-      @include r('padding-bottom', 15px);
-      border-bottom: 1px solid $black;
-      @include r('margin-bottom', 50px);
-      display: flex;
-      .public, .private {
-        @include col(5 of 10, 0);
-        p {
-          @include r('margin-bottom', 6px);
-        }
-        .single-info {
-          @include m-font-size(20, 26);
-        }
-      }
-    }
     .last-courses-workshops {
       @include col(12 of 14, 0);
       @include col-before(1 of 14);
       display: flex;
       align-items: stretch;
+      @include r('margin-bottom', 75px);
       .last-workshop, .last-course {
         @include col(6 of 12, 0);
         height: 100%;
         p {
           @include col(1 of 1);
           @include r('margin-bottom', 15px);
+        }
+      }
+    }
+    .next-appointments {
+      @include col(14 of 14, 0);
+      h4 {
+        @include col(12 of 14);
+        @include col-before(1 of 14);
+        @include r('margin-bottom', 15px);
+      }
+      .events-list {
+        @include col(10 of 10, 0);
+        display: flex;
+        flex-direction: column;
+      }
+      .no-events {
+        text-align: center;
+        h2 {
+          text-transform: initial;
         }
       }
     }

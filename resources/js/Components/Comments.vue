@@ -3,7 +3,7 @@
     <div class="heading">
       <h4>Comments</h4>
       <div class="leave-comment"
-        v-if="user"
+        v-if="user && entity"
         @click="createComment($route('web.comment.create', [entity.type, entity.id]))">
           Leave a comment
         </div>

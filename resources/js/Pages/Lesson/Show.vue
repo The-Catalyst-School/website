@@ -8,7 +8,7 @@
     <div class="main">
       <h4>{{lesson.course.title}}</h4>
       <h1>{{lesson.title}}</h1>
-      <div id="main-embed" class="main-embed" v-if="lesson.embeds">
+      <div id="main-embed" class="main-embed" v-if="lesson.embeds.length > 0">
         <video-embed :params="getVideoParams(lesson.embeds[0].url)"
           css="video is-16by9" :src="lesson.embeds[0].url"></video-embed>
       </div>
