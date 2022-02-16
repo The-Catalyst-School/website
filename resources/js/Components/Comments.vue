@@ -55,7 +55,15 @@ export default {
       this.$inertia.delete(route, {
         preserveScroll: true,
         onError(e) {
-          // window.Toast.error(e.comment)
+          this.$toast.open({
+            message: e.comment,
+            type: 'error'
+          })
+        },
+        onSuccess: (msg) => {
+          this.$toast.open({
+            message: msg.props.success,
+          });
         }
       })
     }

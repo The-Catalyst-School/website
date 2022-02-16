@@ -66,11 +66,18 @@ export default {
       this.form.post(
         this.$route('web.register.store'),
         {
-          onError: (errors) => this.cErrors = errors,
+          onError: (errors) => {
+            let err = Object.values(errors).join('')
+            this.$toast.open({
+              message: err,
+              type: 'error'
+            })
+          },
           onSuccess: (page) => {
+            this.$toast.open(page.props.success);
             this.$inertia.visitInModal(this.$route('web.login', {
               _query: {
-                success: "Your account is created! Login into the website."
+                success: page.props.success
               }
             }), false)
           }

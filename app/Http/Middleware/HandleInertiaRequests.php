@@ -61,7 +61,12 @@ class HandleInertiaRequests extends Middleware
               ? $request->user()->only('id', 'name', 'email')
               : null;
           },
-          'isModal' => (bool) $request->header('X-Inertia-Modal')
+          'isModal' => (bool) $request->header('X-Inertia-Modal'),
+          'success' => function() use ($request) {
+            return $request->session()->get('success')
+              ? $request->session()->get('success')
+              : null;
+          }
         ]);
     }
 }

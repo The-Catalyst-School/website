@@ -46,14 +46,12 @@
       <div v-sticky sticky-side="both">
         <div class="internal-side">
           <div class="internal-nav">
-            <Link
+            <a
               class="btn"
-              preserve-scroll
               v-if="$page.props.auth.user"
-              :method="actionMethod" as="button" type="button"
-              :href="$route(actionRoute, workshop.id)">
+              @click.prevent="subscribe($route(actionRoute, workshop.id))">
               {{actionText}}
-            </Link>
+            </a>
           </div>
         </div>
       </div>
@@ -115,6 +113,24 @@ export default {
         route = route + '.subscribe'
       }
       return route
+    },
+  },
+  methods: {
+    subscribe(route) {
+      this.$inertia.visit(route, {
+        method: this.actionMethod,
+        preserveScroll: true,
+        onError(e) {
+          let err = Object.values(errors).join('')
+          this.$toast.open({
+            message: err,
+            type: 'error'
+          })
+        },
+        onSuccess: (msg) => {
+          this.$toast.open(msg.props.success);
+        }
+      })
     }
   }
 };

@@ -15,14 +15,12 @@
       </Link>
     </div>
     <div class="actions">
-      <Link
+      <button
         v-if="$page.props.auth.user"
         class="btn"
-        preserve-scroll
-        :method="actionMethod" as="button" type="button"
-        :href="$route(actionRoute, event.id)">
+        @click.prevent="subscribe($route(actionRoute, event.id))">
         {{actionText}}
-      </Link>
+      </button>
     </div>
   </div>
 </template>
@@ -77,6 +75,22 @@ export default {
     }
   },
   methods: {
+    subscribe(route) {
+      this.$inertia.visit(route, {
+        method: this.actionMethod,
+        preserveScroll: true,
+        onError(errors) {
+          let err = Object.values(errors).join('')
+          this.$toast.open({
+            message: err,
+            type: 'error'
+          })
+        },
+        onSuccess: (msg) => {
+          this.$toast.open(msg.props.success);
+        }
+      })
+    }
   }
 };
 </script>

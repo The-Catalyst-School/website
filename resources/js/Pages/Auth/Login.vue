@@ -57,7 +57,16 @@ export default {
       this.form.post(
         this.$route('web.login.store'),
         {
-          onError: (errors) => this.cErrors = errors
+          onError: (errors) => {
+            let err = Object.values(errors).join('')
+            this.$toast.open({
+              message: err,
+              type: 'error'
+            })
+          },
+          onSuccess: (msg) => {
+            this.$toast.open(msg.props.success);
+          }
         }
       )
     },

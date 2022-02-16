@@ -1,0 +1,14 @@
+.v-toast__item {
+  border-radius: 0 !important;
+  font-family: 'Neue Montreal' !important;
+  @include m-font-size(12, 15);
+}
+.v-toast__item--success {
+  border: 1px solid $black !important;
+  background: $yellow !important;
+  color: $black !important;
+}
+.v-toast__item--error {
+  background: $black !important;
+  color: $yellow !important;
+}

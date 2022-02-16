@@ -1,8 +1,8 @@
 <template>
   <header class="site-header">
     <div class="logo">
-      <Link href="/">
-        The Catalyst School
+      <Link :href="$route('web.index')">
+        <img src="/images/logo.svg" />
       </Link>
     </div>
     <div class="nav-wrapper">
@@ -54,7 +54,7 @@
     </div>
     <div class="login-wrapper">
       <a class="login" @click="login($route('web.login'))" v-if="!user">Login</a>
-      <Link method="delete" as="button" :href="$route('web.logout')" v-if="user">Logout</Link>
+      <button class="logout" @click.prevent="logout($route('web.logout'))" v-if="user">Logout</button>
       <Link :href="$route('web.profile')" v-if="user">{{user.name}}</Link>
     </div>
   </header>
@@ -76,6 +76,20 @@ export default {
   methods: {
     login(route) {
       this.$inertia.visitInModal(route, false)
+    },
+    logout(route) {
+      this.$inertia.delete(route, {
+        preserveScroll: true,
+        onError(e) {
+          this.$toast.open({
+            msg: e.comment,
+            type: 'error'
+          })
+        },
+        onSuccess: (msg) => {
+          this.$toast.open(msg.props.success);
+        }
+      })
     }
   }
 }
@@ -90,10 +104,19 @@ export default {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     z-index: 1000;
     @include r('padding', 20px 30px);
     .logo {
       @include col(6 of 14);
+      a, a:visited {
+        display: block;
+      }
+      img {
+        float: left;
+        width: auto;
+        @include r('height', 16px);
+      }
     }
     .nav-wrapper {
       flex-grow: 1;

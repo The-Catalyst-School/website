@@ -76,7 +76,7 @@ class RegisterController extends Controller
             'password' => Hash::make($request->input('password'))
         ]);
         return Redirect::route('web.index')
-          ->with('success', 'User created.');
+          ->with('success', 'Your account is created! Login into the website.');
     }
 
     public function create()

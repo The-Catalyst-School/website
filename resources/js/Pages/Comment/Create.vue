@@ -54,7 +54,17 @@ export default {
       this.form.post(
         route,
         {
-          onError: (errors) => this.cErrors = errors,
+          onError: (errors) => {
+            let err = Object.values(errors).join('')
+            this.$toast.open({
+              message: err,
+              type: 'error'
+            })
+            this.cErrors = errors
+          },
+          onSuccess: (msg) => {
+            this.$toast.open(msg.props.success);
+          },
           preserveScroll: true
         }
       )

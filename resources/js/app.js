@@ -10,7 +10,10 @@ import SlideUpDown from 'vue-slide-up-down'
 import Layout from './Layouts/Main'
 import Sticky from 'vue-sticky-directive/src/sticky'
 import VueDragscroll from 'vue-dragscroll'
+import VueToast from 'vue-toast-notification'
 import vClickOutside from 'v-click-outside'
+
+import 'vue-toast-notification/dist/theme-default.css';
 
 InertiaProgress.init({
   delay: 25,
@@ -20,6 +23,7 @@ InertiaProgress.init({
 Vue.prototype.$route = route
 Vue.use(DayjsPlugin)
 Vue.use(Embed)
+Vue.use(VueToast);
 Vue.use(VueScrollTo, {
   offset: -70,
 })
