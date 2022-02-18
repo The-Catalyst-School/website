@@ -20,6 +20,14 @@
           <a :href="event.link" target="_blank">Link to event</a>
         </div>
       </div>
+      <div class="actions">
+        <button
+          v-if="$page.props.auth.user"
+          class="btn active"
+          @click.prevent="subscribe($route(actionRoute, event.id))">
+          {{actionText}}
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -50,11 +58,47 @@ export default {
         return 'generic'
       }
       return this.event.type
+    },
+    actionText() {
+      return (this.event.subscribed) ? 'Unsubscribe' : 'Subscribe'
+    },
+    actionMethod() {
+      return (this.event.subscribed) ? 'delete' : 'post'
+    },
+    actionRoute() {
+      let route = 'web.'
+      if (this.eventType === 'workshop') {
+        route = route + 'workshop'
+      } else {
+        route = route + 'event'
+      }
+      if (this.event.subscribed) {
+        route = route + '.unsubscribe'
+      } else {
+        route = route + '.subscribe'
+      }
+      return route
     }
   },
   methods: {
     onClickOutside() {
       this.active = false
+    },
+    subscribe(route) {
+      this.$inertia.visit(route, {
+        method: this.actionMethod,
+        preserveScroll: true,
+        onError(errors) {
+          let err = Object.values(errors).join('')
+          this.$toast.open({
+            message: err,
+            type: 'error'
+          })
+        },
+        onSuccess: (msg) => {
+          this.$toast.open(msg.props.success);
+        }
+      })
     }
   }
 };
@@ -92,11 +136,10 @@ export default {
     @include r('border-radius', 12px);
     display: flex;
     flex-direction: column;
-    width: 0;
     pointer-events: none;
+    opacity: 0;
     z-index: 2;
     @include transition('width, opacity');
-    overflow: hidden;
     .internal {
       @include col-vw(2.5 of 14);
       @include r('padding', 9px 15px);
@@ -117,6 +160,11 @@ export default {
       .text {
         @include m-font-size(20, 27);
       }
+    }
+    .actions {
+      position: absolute;
+      left: calc(100% + #{relative-size(6)});
+      bottom: 0;
     }
   }
   &.active {

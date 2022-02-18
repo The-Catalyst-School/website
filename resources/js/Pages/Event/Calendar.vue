@@ -273,3 +273,15 @@ export default {
   }
 }
 </style>
+<style lang="scss">
+@use 'sass:math';
+@import '../../../sass/_mixins';
+.calendar-wrapper .month .days .single-day {
+  &:nth-child(7n) {
+    .events .event-preview .info {
+      right: calc(100% + #{relative-size(6)}) !important;
+      left: auto;
+    }
+  }
+}
+</style>

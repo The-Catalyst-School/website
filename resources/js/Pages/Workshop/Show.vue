@@ -97,6 +97,22 @@ export default {
       }
       return params
     },
+    subscribe(route) {
+      this.$inertia.visit(route, {
+        method: this.actionMethod,
+        preserveScroll: true,
+        onError(e) {
+          let err = Object.values(errors).join('')
+          this.$toast.open({
+            message: err,
+            type: 'error'
+          })
+        },
+        onSuccess: (msg) => {
+          this.$toast.open(msg.props.success);
+        }
+      })
+    }
   },
   computed: {
     actionText() {
@@ -114,24 +130,6 @@ export default {
       }
       return route
     },
-  },
-  methods: {
-    subscribe(route) {
-      this.$inertia.visit(route, {
-        method: this.actionMethod,
-        preserveScroll: true,
-        onError(e) {
-          let err = Object.values(errors).join('')
-          this.$toast.open({
-            message: err,
-            type: 'error'
-          })
-        },
-        onSuccess: (msg) => {
-          this.$toast.open(msg.props.success);
-        }
-      })
-    }
   }
 };
 </script>
