@@ -41,6 +41,27 @@ createInertiaApp({
   setup({ el, App, props }) {
     new Vue({
       render: h => h(App, props),
+      methods: {
+        setNight() {
+          let current = JSON.parse(window.localStorage.getItem('night'))
+          if (current) {
+            document.body.classList.add('is-night')
+          } else {
+            document.body.classList.remove('is-night')
+          }
+        }
+      },
+      mounted() {
+        this.$on('toggle-night', () => {
+          let current = JSON.parse(window.localStorage.getItem('night'))
+          window.localStorage.setItem(
+            'night',
+            !current
+          )
+          this.setNight()
+        })
+        this.setNight()
+      }
     }).$mount(el)
   },
 })

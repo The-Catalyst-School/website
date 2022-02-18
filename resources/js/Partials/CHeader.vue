@@ -2,7 +2,8 @@
   <header class="site-header">
     <div class="logo">
       <Link :href="$route('web.index')">
-        <img src="/images/logo.svg" />
+        <img class="logo-black" src="/images/logo.svg" />
+        <img class="logo-white" src="/images/logo-white.svg" />
       </Link>
     </div>
     <div class="nav-wrapper">
@@ -56,6 +57,7 @@
       <a class="login" @click="login($route('web.login'))" v-if="!user">Login</a>
       <button class="logout" @click.prevent="logout($route('web.logout'))" v-if="user">Logout</button>
       <Link :href="$route('web.profile')" v-if="user">{{user.name}}</Link>
+      <div class="night" @click="changeNight">{{nightText}}</div>
     </div>
   </header>
 </template>
@@ -71,6 +73,12 @@ export default {
   computed: {
     user() {
       return this.$page.props.auth.user
+    },
+    nightText() {
+      if (JSON.parse(window.localStorage.getItem('night'))) {
+        return 'Day'
+      }
+      return 'Night'
     }
   },
   methods: {
@@ -90,6 +98,9 @@ export default {
           this.$toast.open(msg.props.success);
         }
       })
+    },
+    changeNight() {
+      this.$root.$emit('toggle-night')
     }
   }
 }
@@ -109,6 +120,7 @@ export default {
     @include r('padding', 20px 30px);
     .logo {
       @include col(6 of 14);
+      position: relative;
       a, a:visited {
         display: block;
       }
@@ -116,6 +128,11 @@ export default {
         float: left;
         width: auto;
         @include r('height', 16px);
+        &.logo-white {
+          position: absolute;
+          top: 0;
+          left: relative-size($default-gutter/2);
+        }
       }
     }
     .nav-wrapper {
@@ -154,6 +171,22 @@ export default {
         border: none;
         background: transparent;
         cursor: pointer;
+        color: $black;
+      }
+    }
+  }
+</style>
+<style lang="scss">
+  body {
+    header.site-header .logo .logo-white {
+      opacity: 0;
+    }
+    &.is-night {
+      header.site-header .logo .logo-white {
+        opacity: 1;
+      }
+      header.site-header .logo .logo-black {
+        opacity: 0;
       }
     }
   }

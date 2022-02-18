@@ -1,10 +1,28 @@
+
 $transition-time: .3s;
-$white: #fff;
-$black: #000;
+$color-white: #fff;
+$color-black: #000;
 
 $bkg: #ffffff;
 $light-gray: #F8F8F8;
-$yellow: #FAFA9C;
+$color-yellow: #FAFA9C;
+$color-light-blue: #163BAF;
+$color-dark-blue: #0E1D4B;
 $default-gutter: 20px;
 $tablet-gutter: 6px;
 $mobile-gutter: 6px;
+
+body {
+  --text-color: #{$color-black};
+  --color-yellow: #{$color-yellow};
+  --color-white: #{$color-white};
+  &.is-night {
+    --text-color: #{$color-white};
+    --color-yellow: #{$color-dark-blue};
+    --color-white: #{$color-black};
+  }
+}
+
+$black: var(--text-color);
+$yellow: var(--color-yellow);
+$white: var(--color-white);

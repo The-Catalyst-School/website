@@ -18,6 +18,13 @@ body {
   color: $black;
   overflow-x: hidden;
   @include m-font-size(12, 15);
+  @include transition('background, color');
+  &.is-night {
+    background: linear-gradient(180deg, $color-black 0%, $color-dark-blue 49%, $color-light-blue 100%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+  }
 }
 
 a, a:visited {
@@ -37,6 +44,11 @@ a, a:visited {
 
 body::-webkit-scrollbar {
   background: linear-gradient(180deg, $light-gray 0%, $yellow 100%);
+}
+body.is-night {
+  &::-webkit-scrollbar {
+    background: linear-gradient(180deg, $color-black 0%, $color-dark-blue 49%, $color-light-blue 100%);
+  }
 }
 
 *::-webkit-scrollbar-track {

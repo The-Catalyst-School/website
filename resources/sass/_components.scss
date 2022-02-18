@@ -14,6 +14,7 @@
   @include r('border-radius', 12px);
   cursor: pointer;
   @include transition('background, color');
+  color: $black;
   &:hover, &.active {
     background: $black;
     color: $yellow;
