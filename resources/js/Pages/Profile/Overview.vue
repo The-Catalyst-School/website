@@ -94,13 +94,13 @@ export default {
     display: flex;
     flex-direction: column;
     .last-courses-workshops {
-      @include col(12 of 14, 0);
-      @include col-before(1 of 14);
+      @include col(8 of 10, 0);
+      @include col-before(1 of 10);
       display: flex;
       align-items: stretch;
       @include r('margin-bottom', 75px);
       .last-workshop, .last-course {
-        @include col(6 of 12, 0);
+        @include col(4 of 8, 0);
         height: 100%;
         p {
           @include col(1 of 1);
@@ -109,10 +109,10 @@ export default {
       }
     }
     .next-appointments {
-      @include col(14 of 14, 0);
+      @include col(10 of 10, 0);
       h4 {
-        @include col(12 of 14);
-        @include col-before(1 of 14);
+        @include col(8 of 10);
+        @include col-before(1 of 10);
         @include r('margin-bottom', 15px);
       }
       .events-list {

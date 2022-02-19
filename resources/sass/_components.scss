@@ -30,6 +30,18 @@
       color: $black !important;
     }
   }
+  &.with-image {
+    @include r('padding', 4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    &:hover {
+      img {
+        filter: invert(1);
+      }
+    }
+  }
 }
 button.btn {
   background: transparent;

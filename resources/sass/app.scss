@@ -49,6 +49,19 @@ body.is-night {
   &::-webkit-scrollbar {
     background: linear-gradient(180deg, $color-black 0%, $color-dark-blue 49%, $color-light-blue 100%);
   }
+  .real-avatar, .single-mouth, .single-eye {
+    filter: invert(1);
+  }
+  .btn.with-image {
+    img {
+      filter: invert(1);
+    }
+    &:hover {
+      img {
+        filter: invert(0);
+      }
+    }
+  }
 }
 
 *::-webkit-scrollbar-track {

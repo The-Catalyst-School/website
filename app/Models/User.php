@@ -26,6 +26,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
+        'avatar_url'
     ];
 
     /**
@@ -46,6 +48,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'avatar' => 'object'
     ];
 
     public function comments()

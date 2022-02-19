@@ -1,5 +1,14 @@
 <template>
   <div class="profile-recap">
+    <div class="avatar">
+      <div class="fake-avatar"
+      @click="createAvatar($route('web.profile.avatar.create'))"
+      v-if="!user.avatar"></div>
+      <img class="real-avatar"
+      @click="createAvatar($route('web.profile.avatar.create'))"
+      :src="user.avatar_url"
+      v-if="user.avatar" />
+    </div>
     <div class="public">
       <p>Public information</p>
       <div class="single-info">Username: {{user.name}}</div>
@@ -19,6 +28,11 @@ export default {
   components: {
   },
   computed: {
+  },
+  methods: {
+    createAvatar(route) {
+      this.$inertia.visitInModal(route, false, 4)
+    },
   }
 };
 </script>
@@ -27,13 +41,44 @@ export default {
 @use 'sass:math';
 @import '../../../sass/_mixins';
 .profile-recap {
-  @include col(1 of 1);
+  @include col(1 of 1, 0);
   @include r('padding-bottom', 15px);
   border-bottom: 1px solid $black;
   @include r('margin-bottom', 50px);
   display: flex;
+  .avatar {
+    @include col(1 of 10, 0);
+    .fake-avatar {
+      width: 100%;
+      height: 0;
+      padding-top: 100%;
+      position: relative;
+      &:after {
+        content: 'Set Avatar';
+        top: 0;
+        left: 0;
+        width: 80%;
+        height: 80%;
+        border-radius: 100%;
+        background: $black;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $white;
+        cursor: pointer;
+      }
+    }
+    .real-avatar {
+      cursor: pointer;
+      @include transition('opacity');
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
   .public, .private {
-    @include col(5 of 10, 0);
+    @include col(4 of 10);
     p {
       @include r('margin-bottom', 6px);
     }

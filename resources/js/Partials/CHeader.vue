@@ -56,7 +56,15 @@
     <div class="login-wrapper">
       <a class="login" @click="login($route('web.login'))" v-if="!user">Login</a>
       <button class="logout" @click.prevent="logout($route('web.logout'))" v-if="user">Logout</button>
-      <Link :href="$route('web.profile')" v-if="user">{{user.name}}</Link>
+      <Link :href="$route('web.profile')" v-if="user">
+        {{user.name}}
+        <img class="real-avatar"
+         v-if="user.avatar_url"
+         :src="user.avatar_url" />
+        <img class="real-avatar"
+         v-if="!user.avatar_url"
+         src="/images/avatars/1-1.svg" />
+      </Link>
       <div class="night" @click="changeNight">{{nightText}}</div>
     </div>
   </header>
@@ -137,7 +145,7 @@ export default {
     }
     .nav-wrapper {
       flex-grow: 1;
-      @include col(6.5 of 14);
+      @include col(6.2 of 14);
       @include m-font-size(12, 15);
       nav {
         ul {
@@ -156,12 +164,22 @@ export default {
       }
     }
     .login-wrapper {
-      @include col(1.5 of 14);
+      @include col(1.8 of 14);
       @include m-font-size(12, 15);
       text-transform: uppercase;
       text-align: right;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
       .login {
         cursor: pointer;
+      }
+      a, a:visited {
+        display: flex;
+        align-items: flex-end;
+      }
+      .real-avatar {
+        @include r('width', 20px);
       }
       button {
         font-family: 'Neue Montreal';
@@ -172,6 +190,9 @@ export default {
         background: transparent;
         cursor: pointer;
         color: $black;
+      }
+      a, button, img, div {
+        @include r('margin-left', 3px);
       }
     }
   }

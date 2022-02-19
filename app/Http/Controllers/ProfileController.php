@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
 
 class ProfileController extends Controller
@@ -45,5 +46,26 @@ class ProfileController extends Controller
       return inertia('Profile/Comments', compact(
         'user', 'comments'
       ));
+    }
+
+    public function createAvatar()
+    {
+        $user = Auth::user();
+        return inertia('Profile/Avatar', compact('user'));
+    }
+
+    public function storeAvatar(Request $request)
+    {
+        $user = Auth::user();
+        $avatar = $request->input('avatar');
+        $user->avatar = $avatar;
+        if ($avatar) {
+          $user->avatar_url = '/images/avatars/' . $avatar['eyes'] . '-' . $avatar['mouth'] . '.svg';
+        }
+        if ($user->save()) {
+          return Redirect::back()->with('success', 'Avatar updated!');
+        } else {
+          return Redirect::back()->with('error', 'Error saving avatar!');
+        }
     }
 }

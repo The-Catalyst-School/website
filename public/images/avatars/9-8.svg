@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='ASCII' standalone='yes'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="151px" height="151px">
+  <g>
+    <g><metadata xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" id="metadata12">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+        <dc:title/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs id="defs10"/>
+  <sodipodi:namedview xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1" objecttolerance="10" gridtolerance="10" guidetolerance="10" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-width="1920" inkscape:window-height="1046" id="namedview8" showgrid="false" units="cm" inkscape:zoom="2.9686035" inkscape:cx="75.709" inkscape:cy="75.709503" inkscape:window-x="0" inkscape:window-y="489" inkscape:window-maximized="1" inkscape:current-layer="svg6"/>
+  <circle style="fill:#000000;stroke:#ffffff;stroke-width:0.981076;stroke-linecap:square;paint-order:markers stroke fill" id="path839" cx="75.709038" cy="75.709419" r="75.00946"/>
+</g>
+    <g><g id="Raggruppa_654" data-name="Raggruppa 654" transform="translate(-801.614 -2444.114)">
+    <path id="Tracciato_457" data-name="Tracciato 457" d="M797.063,340.533h0a75.709,75.709,0,1,1,75.709-75.709,75.709,75.709,0,0,1-75.709,75.709" transform="translate(80.26 2255)" fill="none"/>
+    <path id="Tracciato_477" data-name="Tracciato 477" d="M756.673,235.576a2.651,2.651,0,0,1-.5-5.252l24.595-4.806a2.65,2.65,0,1,1,1.016,5.2l-24.595,4.806a2.619,2.619,0,0,1-.511.05" transform="translate(80.26 2255)" fill="#fff"/>
+    <path id="Tracciato_478" data-name="Tracciato 478" d="M837.452,235.576a2.626,2.626,0,0,1-.511-.05l-24.595-4.806a2.65,2.65,0,1,1,1.016-5.2l24.595,4.806a2.651,2.651,0,0,1-.5,5.252" transform="translate(80.26 2255)" fill="#fff"/>
+    <path id="Tracciato_487" data-name="Tracciato 487" d="M771.134,247.939v-6.36a5.167,5.167,0,0,1,10.334,0v6.36a5.167,5.167,0,0,1-10.334,0" transform="translate(80.26 2255)" fill="#fff"/>
+    <path id="Tracciato_488" data-name="Tracciato 488" d="M812.657,247.939v-6.36a5.167,5.167,0,0,1,10.334,0v6.36a5.167,5.167,0,0,1-10.334,0" transform="translate(80.26 2255)" fill="#fff"/>
+  </g>
+</g>
+    <g><g id="Raggruppa_643" data-name="Raggruppa 643" transform="translate(-422.177 -1968.114)">
+    <path id="Tracciato_437" data-name="Tracciato 437" d="M436.386,340.533h0a75.709,75.709,0,1,1,75.709-75.709,75.709,75.709,0,0,1-75.709,75.709" transform="translate(61.5 1779)" fill="none"/>
+    <path id="Tracciato_438" data-name="Tracciato 438" d="M422.657,264.824h27.458a2.779,2.779,0,0,1,2.779,2.778v4.13a14.411,14.411,0,0,1-14.41,14.41h-4.2a14.41,14.41,0,0,1-14.409-14.41V267.6a2.778,2.778,0,0,1,2.778-2.778" transform="translate(61.5 1779)" fill="#fff"/>
+  </g>
+</g>
+  </g>
+</svg>

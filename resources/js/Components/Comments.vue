@@ -13,8 +13,18 @@
         v-for="comment in comments">
         <div class="internal-wrapper">
           <div class="info">
-            <div class="user" v-if="comment.user">{{comment.user.name}}</div>
-            <div class="published">{{comment.updated_at | dateFormat('DD.MM.YYYY HH:mm')}}</div>
+            <div class="avatar" v-if="comment.user">
+              <img class="real-avatar"
+               v-if="comment.user.avatar_url"
+               :src="comment.user.avatar_url" />
+              <img class="real-avatar"
+               v-if="!comment.user.avatar_url"
+               src="/images/avatars/1-1.svg" />
+            </div>
+            <div class="text-info-wrapper">
+              <div class="user" v-if="comment.user">{{comment.user.name}}</div>
+              <div class="published">{{comment.updated_at | dateFormat('DD.MM.YYYY HH:mm')}}</div>
+            </div>
           </div>
           <div class="content">
             {{comment.content}}
@@ -129,6 +139,13 @@ export default {
     }
     .info {
       @include r('margin-bottom', 10px);
+      display: flex;
+      align-items: center;
+      .avatar {
+        @include r('width', 44px);
+        @include r('height', 44px);
+        @include r('margin-right', 6px);
+      }
     }
     .content {
       @include m-font-size(20, 26);

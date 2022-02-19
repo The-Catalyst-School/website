@@ -39,6 +39,14 @@ Route::get('/register', [RegisterController::class, 'create'])
     ->name('web.register.create')
     ->middleware('guest');
 
+Route::get('/profile/avatar', [ProfileController::class, 'createAvatar'])
+  ->name('web.profile.avatar.create')
+  ->middleware('auth');
+
+Route::post('/profile/avatar', [ProfileController::class, 'storeAvatar'])
+  ->name('web.profile.avatar.store')
+  ->middleware('auth');
+
 Route::get('/courses', [CourseController::class, 'index'])
   ->name('web.course.index');
 Route::get('/courses/{slug}', [CourseController::class, 'show'])
