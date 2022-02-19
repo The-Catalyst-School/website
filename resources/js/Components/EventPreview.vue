@@ -126,6 +126,12 @@ export default {
     @include r('border-radius', 12px);
     cursor: pointer;
     text-align: center;
+    border: 1px solid $black;
+    &:hover {
+      background: $yellow;
+      color: $black;
+      border: 1px solid $black;
+    }
   }
   .info {
     position: absolute;

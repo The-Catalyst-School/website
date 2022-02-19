@@ -22,6 +22,14 @@
   &:disabled {
     pointer-events: none;
   }
+  &.active:hover {
+    background: $yellow;
+    color: $black;
+    border: 1px solid $black;
+    a, a:visited {
+      color: $black !important;
+    }
+  }
 }
 button.btn {
   background: transparent;

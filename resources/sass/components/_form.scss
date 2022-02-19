@@ -8,6 +8,8 @@
     outline: 0;
     border-radius: 0;
     @include m-font-size(20, 28);
+    color: $black;
+    background: $white;
   }
   button {
     font-family: 'Neue Montreal';
@@ -19,7 +21,7 @@
     button {
       background: $white;
       position: absolute;
-      @include r('bottom', 4px);
+      @include r('bottom', 2px);
       right: 0;
       &:hover {
         background: $black;
