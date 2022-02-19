@@ -10,10 +10,6 @@
         <template v-slot:track>
           <course-preview
             :course="course"
-            :key="`cours-preview-${index}`"
-            v-for="(course, index) in courses" />
-          <course-preview
-            :course="course"
             :key="`course-preview-${index}`"
             v-for="(course, index) in courses" />
         </template>
@@ -37,10 +33,6 @@
       <h4 class="section-title">Our last Workshops</h4>
       <horizontal-slider>
         <template v-slot:track>
-          <workshop-preview
-            :workshop="workshop"
-            :key="`workshops-preview-${index}`"
-            v-for="(workshop, index) in workshops" />
           <workshop-preview
             :workshop="workshop"
             :key="`workshop-preview-${index}`"
