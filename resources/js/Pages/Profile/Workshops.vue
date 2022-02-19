@@ -1,5 +1,8 @@
 <template>
   <div class="profile-overview">
+    <Head>
+      <title>My Workshops - Profile - The Catalyst School</title>
+    </Head>
     <div class="side">
       <side v-sticky sticky-side="both" />
     </div>
@@ -28,7 +31,7 @@
 
 <script>
 
-import { Link } from '@inertiajs/inertia-vue'
+import { Link, Head } from '@inertiajs/inertia-vue'
 import Side from './Side'
 import ProfileRecap from './Info'
 import LightWorkshopPreview from '../../Components/LightWorkshopPreview'
@@ -39,7 +42,8 @@ export default {
     Link,
     LightWorkshopPreview,
     Side,
-    ProfileRecap
+    ProfileRecap,
+    Head
   },
   computed: {
   }

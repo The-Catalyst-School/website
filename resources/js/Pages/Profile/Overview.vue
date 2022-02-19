@@ -1,5 +1,8 @@
 <template>
   <div class="profile-overview">
+    <Head>
+      <title>Profile - The Catalyst School</title>
+    </Head>
     <div class="side">
       <side v-sticky sticky-side="both" />
     </div>
@@ -46,7 +49,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 dayjs.extend(weekday)
 dayjs.extend(weekOfYear)
 
-import { Link } from '@inertiajs/inertia-vue'
+import { Link, Head } from '@inertiajs/inertia-vue'
 import Side from './Side'
 import ProfileRecap from './Info'
 import LightWorkshopPreview from '../../Components/LightWorkshopPreview'
@@ -61,7 +64,8 @@ export default {
     LightCoursePreview,
     RowEventPreview,
     Side,
-    ProfileRecap
+    ProfileRecap,
+    Head
   },
   computed: {
     localWorkshops() {

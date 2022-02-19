@@ -1,5 +1,9 @@
 <template>
   <div class="single-lesson">
+    <Head>
+      <title>{{lesson.title}} - {{lesson.course.title}} - The Catalyst School</title>
+      <meta name="description" :content="lesson.title">
+    </Head>
     <div class="side affix">
       <side :lesson="lesson"
         :related="related"
@@ -76,7 +80,7 @@
 </template>
 
 <script>
-import { Link } from '@inertiajs/inertia-vue'
+import { Link, Head } from '@inertiajs/inertia-vue'
 import Side from './Side'
 import CoursePreview from '../../Components/CoursePreview'
 import Attachments from '../../Components/Attachments'
@@ -88,7 +92,8 @@ export default {
     Side,
     CoursePreview,
     Attachments,
-    Comments
+    Comments,
+    Head
   },
   methods: {
     parseUrlQuery(value) {

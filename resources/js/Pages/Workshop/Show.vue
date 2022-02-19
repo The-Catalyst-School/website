@@ -1,13 +1,17 @@
 <template>
   <div class="single-workshop">
+    <Head>
+      <title>{{workshop.title}} - The Catalyst School</title>
+      <meta name="description" :content="workshop.subtitle">
+    </Head>
     <div class="side">
       <side :workshop="workshop"
         :related="related"
         v-sticky sticky-side="both" />
     </div>
     <div class="main">
-      <h4>{{workshop.title}}</h4>
-      <h1>{{workshop.subtitle}}</h1>
+      <h4>{{workshop.subtitle}}</h4>
+      <h1>{{workshop.title}}</h1>
       <div id="main-embed" class="main-embed" v-if="workshop.embeds.length > 0">
         <video-embed :params="getVideoParams(workshop.embeds[0].url)"
           css="video is-16by9" :src="workshop.embeds[0].url"></video-embed>
@@ -60,7 +64,7 @@
 </template>
 
 <script>
-import { Link } from '@inertiajs/inertia-vue'
+import { Link, Head } from '@inertiajs/inertia-vue'
 import Side from './Side'
 import WorkshopPreview from '../../Components/WorkshopPreview'
 import Attachments from '../../Components/Attachments'
@@ -72,7 +76,8 @@ export default {
     WorkshopPreview,
     Attachments,
     Comments,
-    Link
+    Link,
+    Head
   },
   methods: {
     parseUrlQuery(value) {

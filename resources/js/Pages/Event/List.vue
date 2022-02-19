@@ -1,5 +1,9 @@
 <template>
   <div class="calendar-wrapper">
+    <Head>
+      <title>Events calendar - The Catalyst School</title>
+      <meta name="description" content="The Catalyst School and Project Catalyst events calendar.">
+    </Head>
     <div class="side">
       <div class="view-type">
         <Link class="btn"
@@ -45,14 +49,15 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 dayjs.extend(weekday)
 dayjs.extend(weekOfYear)
 
-import { Link } from '@inertiajs/inertia-vue'
+import { Link, Head } from '@inertiajs/inertia-vue'
 import RowEventPreview from '../../Components/RowEventPreview'
 
 export default {
   props: ['date','events', 'workshops'],
   components: {
     Link,
-    RowEventPreview
+    RowEventPreview,
+    Head
   },
   computed: {
     initialDate() {

@@ -1,5 +1,9 @@
 <template>
   <div class="workshops-list">
+    <Head>
+      <title>Workshops - The Catalyst School</title>
+      <meta name="description" content="Workshops archive of the Catalyst School for Project Catalyst">
+    </Head>
     <div class="list">
       <workshop-preview
         :workshop="workshop"
@@ -17,7 +21,7 @@
 
 <script>
 
-import { Link } from '@inertiajs/inertia-vue'
+import { Link, Head } from '@inertiajs/inertia-vue'
 import WorkshopPreview from '../../Components/WorkshopPreview'
 import CFilter from './Filter'
 
@@ -26,7 +30,8 @@ export default {
   components: {
     Link,
     WorkshopPreview,
-    CFilter
+    CFilter,
+    Head
   }
 };
 </script>

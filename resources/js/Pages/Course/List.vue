@@ -1,5 +1,9 @@
 <template>
   <div class="courses-list">
+    <Head>
+      <title>Courses - The Catalyst School</title>
+      <meta name="description" content="Courses archive of the Catalyst School for Project Catalyst">
+    </Head>
     <div class="list">
       <course-preview
         :course="course"
@@ -15,7 +19,7 @@
 
 <script>
 
-import { Link } from '@inertiajs/inertia-vue'
+import { Link, Head } from '@inertiajs/inertia-vue'
 import CoursePreview from '../../Components/CoursePreview'
 import CFilter from './Filter'
 
@@ -24,7 +28,8 @@ export default {
   components: {
     Link,
     CoursePreview,
-    CFilter
+    CFilter,
+    Head
   }
 };
 </script>

@@ -1,5 +1,9 @@
 <template>
   <div>
+    <Head>
+      <title>{{page.title}} - The Catalyst School</title>
+      <meta name="description" :content="page.title">
+    </Head>
     <home :page="page"
       :courses="courses"
       :workshops="workshops"
@@ -18,6 +22,7 @@
 import Home from './Home';
 import Faq from './Faq';
 import Std from './Std';
+import { Head } from '@inertiajs/inertia-vue'
 export default {
   props: [
     'page', 'courses', 'workshops', 'sentences', 'faqs', 'events', 'e_workshops'
@@ -25,7 +30,8 @@ export default {
   components: {
     Home,
     Faq,
-    Std
+    Std,
+    Head
   }
 };
 </script>
