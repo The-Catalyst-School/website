@@ -43,6 +43,13 @@ trait FromGit
           $content
         );
 
+        // Delete description
+        $content = preg_replace(
+          '/---\ndescription:([\S\s]+)\n---/mU',
+          '',
+          $content
+        );
+
         $content = preg_replace(
           '/<div data-embed alt="(.+)" src=".+[\?\&]v=([^\?\&]+)"><\/div>/mU',
           '<div class="embed-responsive video is-16by9"><iframe src="//www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe><div class="caption">$1</div></div>',

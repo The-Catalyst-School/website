@@ -58,6 +58,7 @@ class PullGitbook extends Command
     }
 
     public function createCourses($tree) {
+      $courses_ids = [];
       foreach ($tree as $entry) {
         $course = new Course;
         $resource = $this->exploreFile($entry['path']);
@@ -66,20 +67,24 @@ class PullGitbook extends Command
         foreach ($entry['children'] as $child) {
           $this->createLesson($child, $course);
         }
+        array_push($courses_ids, $entry['path']);
       }
       // Collect all old courses and lessons and delete them
       // if not present anymore.
+      Course::whereNotIn('github_path', $courses_ids)->delete();
     }
 
     public function createWorkshops($tree) {
+      $workshops_ids = [];
       foreach ($tree as $entry) {
         $workshop = new Workshop;
         $resource = $this->exploreFile($entry['path']);
         $workshop = $workshop->actionFromGit($resource, $entry['title'], false);
-
+        array_push($workshops_ids, $entry['path']);
       }
       // Collect all old courses and lessons and delete them
       // if not present anymore.
+      Workshop::whereNotIn('github_path', $workshops_ids)->delete();
     }
 
     public function createPages($tree) {
