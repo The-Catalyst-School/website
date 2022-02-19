@@ -97,6 +97,8 @@ export default {
     border-bottom: 1px solid $black;
     @include r('padding-bottom', 10px);
     @include r('margin-bottom', 10px);
+    background: $white;
+    color: $black;
   }
   button {
     background: $white;
