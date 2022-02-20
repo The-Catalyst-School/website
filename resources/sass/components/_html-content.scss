@@ -8,13 +8,16 @@
     }
   }
   h2, h3, h4 {
-    @include m-font-size(12, 15);
+    @include m-font-size(14, 17);
     @include col(2 of 10);
     clear: left;
     float: left;
     transform: translateY(#{relative-size(4px)});
     @include mobile-tablet {
-      @include font-size(12, 15);
+      @include font-size(14, 17);
+      @include col(1 of 1);
+      margin-top: 15px;
+      margin-bottom: 5px;
     }
   }
   h2 {
@@ -36,6 +39,7 @@
     float: left;
     @include mobile-tablet {
       @include font-size(18, 23);
+      @include col(1 of 1);
     }
     & + p,
     & + ul,
@@ -47,6 +51,9 @@
     & + .file,
     & + .tabs {
       @include col-before(2 of 10);
+      @include mobile-tablet {
+        margin-left: 0;
+      }
     }
   }
   blockquote, .hint {
@@ -96,17 +103,26 @@
       position: absolute;
       left: 100%;
       top: 0;
-      @include m-font-size(12, 15);
+      @include m-font-size(14, 17);
       @include col(1.5 of 6);
       @include col-before(0.5 of 6);
+      @include mobile-tablet {
+        @include font-size(14, 17);
+        @include col(1 of 1);
+        margin-left: 0;
+      }
     }
   }
   .file {
     a, a:visited {
-      @include m-font-size(12, 15);
+      @include m-font-size(14, 17);
       text-transform: uppercase;
       text-decoration: underline;
       padding-left: math.div(100%, 6);
+      @include mobile-tablet {
+        @include font-size(14, 17);
+        padding-left: 0;
+      }
     }
   }
   table {
@@ -114,10 +130,13 @@
     width: calc(60% - #{relative-size($default-gutter)});
     transform: translateX(math.div(relative-size($default-gutter), 2));
     th, td {
-      @include m-font-size(12, 15);
+      @include m-font-size(14, 17);
       border-bottom: 1px solid $black;
       border-right: 1px solid $black;
-      @include r('padding', 5);
+      @include r('padding', 5px);
+      @include mobile-tablet {
+        @include font-size(14, 17);
+      }
       &:first-child {
         border-left: 1px solid $black;
       }

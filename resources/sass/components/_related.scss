@@ -14,8 +14,14 @@
     flex-wrap: wrap;
     .workshop-preview, .course-preview {
       @include col(4 of 10);
+      @include mobile-tablet {
+        @include col(1 of 1);
+      }
       &.featured {
         @include col(6 of 10);
+        @include mobile-tablet {
+          @include col(1 of 1);
+        }
       }
     }
   }

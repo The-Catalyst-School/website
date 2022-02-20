@@ -140,7 +140,7 @@ export default {
     @include m-font-size(20, 26);
     @include mobile-tablet {
       @include col(1 of 1, 0);
-      @include font-size(12, 15);
+      @include font-size(14, 17);
       order: 4;
     }
   }

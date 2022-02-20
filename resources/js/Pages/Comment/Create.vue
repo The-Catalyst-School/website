@@ -103,7 +103,7 @@ export default {
   button {
     background: $white;
     font-family: 'Neue Montreal';
-    @include m-font-size(12, 15);
+    @include m-font-size(14, 17);
     &:not(:last-child) {
       @include r('margin-right', 8px);
     }

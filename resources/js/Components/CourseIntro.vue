@@ -57,7 +57,7 @@ export default {
         }
       }
       h2 {
-        @include m-font-size(12, 15);
+        @include m-font-size(14, 17);
         @include col(2 of 8, 0);
         text-transform: initial;
       }
@@ -73,7 +73,7 @@ export default {
       @include col(1 of 1, 0);
       @include r('margin-bottom', 70px);
       h3 {
-        @include m-font-size(12, 15);
+        @include m-font-size(14, 17);
         @include r('margin-bottom', 15px);
       }
     }

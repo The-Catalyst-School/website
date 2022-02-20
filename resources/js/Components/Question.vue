@@ -61,7 +61,7 @@ export default {
   .answer {
     @include m-font-size(20, 26);
     @include mobile-tablet {
-      @include font-size(12, 15);
+      @include font-size(14, 17);
     }
     .wrapper {
       @include r('padding-left', 34px);

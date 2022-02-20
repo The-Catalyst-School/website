@@ -52,7 +52,7 @@ export default {
     background: $black;
     color: $yellow;
     @include r('padding', 20px 30px);
-    @include m-font-size(12, 15);
+    @include m-font-size(14, 17);
     display: flex;
     align-items: flex-end;
     a, a:visited {

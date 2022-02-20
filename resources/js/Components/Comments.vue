@@ -166,7 +166,7 @@ export default {
         outline: 0;
         font-family: 'Neue Montreal';
         border: none;
-        @include m-font-size(12, 15);
+        @include m-font-size(14, 17);
       }
     }
   }

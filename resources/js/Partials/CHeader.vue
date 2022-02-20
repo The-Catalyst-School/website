@@ -147,7 +147,7 @@ export default {
       align-items: center;
     }
     .logo {
-      @include col(6 of 14);
+      @include col(5 of 14);
       position: relative;
       @include mobile-tablet {
         @include col(5 of 6, 0);
@@ -228,7 +228,7 @@ export default {
       }
     }
     .nav-login {
-      @include col(8 of 14, 0);
+      @include col(9 of 14, 0);
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -248,8 +248,8 @@ export default {
     }
     .nav-wrapper {
       flex-grow: 1;
-      @include col(6.2 of 8);
-      @include m-font-size(12, 15);
+      @include col(7 of 9, 0);
+      @include m-font-size(14, 17);
       @include mobile-tablet {
         @include font-size(18, 23);
         @include col(1 of 1, 40px);
@@ -260,12 +260,16 @@ export default {
         ul {
           display: flex;
           list-style: none;
+          justify-content: flex-end;
           @include mobile-tablet {
             flex-direction: column;
+            justify-content: flex-start;
           }
           li {
-            @include r('padding', 0px 38px 0 0);
             text-transform: uppercase;
+            &:not(:last-child) {
+              @include r('padding', 0px 38px 0 0);
+            }
             @include mobile-tablet {
               padding: 0 5px 0 0;
               &:before {
@@ -285,8 +289,8 @@ export default {
       }
     }
     .login-wrapper {
-      @include col(1.8 of 8);
-      @include m-font-size(12, 15);
+      @include col(2 of 9);
+      @include m-font-size(14, 17);
       text-transform: uppercase;
       text-align: right;
       display: flex;
@@ -321,7 +325,7 @@ export default {
       }
       button {
         font-family: 'Neue Montreal';
-        @include m-font-size(12, 15);
+        @include m-font-size(14, 17);
         text-transform: uppercase;
         -webkit-appearance: initial;
         border: none;

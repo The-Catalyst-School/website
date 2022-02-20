@@ -145,9 +145,15 @@ export default {
   .single-workshop {
     @include r('padding', 20px 30px);
     display: flex;
+    @include mobile-tablet {
+      padding: 20px 10px;
+    }
     .side {
       @include col(2 of 14);
       @include r('margin-top', -70px);
+      @include mobile-tablet {
+        display: none;
+      }
       &.actions {
         .internal-side {
           width: 100%;
@@ -164,6 +170,9 @@ export default {
     }
     .main {
       @include col(10 of 14, 0);
+      @include mobile-tablet {
+        @include col(1 of 1, 0);
+      }
       & > h4 {
         @include col(1 of 1);
       }
@@ -181,15 +190,29 @@ export default {
         float: left;
         display: flex;
         @include r('margin-bottom', 70);
+        @include mobile-tablet {
+          flex-wrap: wrap;
+        }
         .date {
           @include col(2 of 10);
+          @include mobile-tablet {
+            @include col(1 of 2);
+          }
         }
         .teacher {
           @include col(6 of 10);
+          @include mobile-tablet {
+            @include col(1 of 1);
+            order: 3;
+          }
         }
         .estimated {
           @include col(2 of 10);
           text-align: right;
+          @include mobile-tablet {
+            @include col(1 of 2);
+            order: 2;
+          }
         }
       }
       .html-content, .resources {

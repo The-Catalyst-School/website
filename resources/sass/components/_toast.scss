@@ -1,9 +1,9 @@
 .v-toast__item {
   border-radius: 0 !important;
   font-family: 'Neue Montreal' !important;
-  @include m-font-size(12, 15);
+  @include m-font-size(14, 17);
   @include mobile-tablet {
-    @include font-size(12, 15);
+    @include font-size(14, 17);
   }
 }
 .v-toast__item--success {
