@@ -33,7 +33,7 @@ class PageController extends Controller
           $sentences = $about->sentences;
         }
         if ($faq) {
-          $faqs = $faq->sentences;
+          $faqs = array_slice($faq->sentences, 0, 6);
         }
       }
       return inertia('Page/Show', compact(
