@@ -46,6 +46,11 @@ export default {
   @include col(10 of 14);
   @include col-before(2 of 14);
   @include col-after(2 of 14);
+  @include mobile-tablet {
+    @include col(1 of 1);
+    margin-left: 0;
+    margin-right: 0;
+  }
   .single-faq {
     border-bottom: 1px solid $black;
     @include r('padding-top', 8px);

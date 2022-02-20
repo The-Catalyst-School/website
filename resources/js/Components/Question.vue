@@ -60,9 +60,16 @@ export default {
   }
   .answer {
     @include m-font-size(20, 26);
+    @include mobile-tablet {
+      @include font-size(12, 15);
+    }
     .wrapper {
       @include r('padding-left', 34px);
       @include r('padding-top', 20px);
+      @include mobile-tablet {
+        padding-top: 5px;
+        padding-bottom: 15px;
+      }
     }
   }
 }
