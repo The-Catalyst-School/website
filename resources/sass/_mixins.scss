@@ -39,7 +39,7 @@ $base-measure-size: 1440;
   -moz-osx-font-smoothing: grayscale;
 }
 
-@mixin font-size($size, $line-height, $weight: 400) {
+@mixin font-size($size, $line-height, $weight: 300) {
   font-weight: $weight;
   font-size: $size * 1px;
   line-height: $line-height * 1px;
@@ -49,6 +49,10 @@ $base-measure-size: 1440;
   width: (math.div(100%, nth($args, 3)) * nth($args, 1));
   @include r('padding-left', math.div($gutter, 2));
   @include r('padding-right', math.div($gutter, 2));
+  @include mobile-tablet {
+    padding-left: math.div($gutter, 2);
+    padding-right: math.div($gutter, 2);
+  }
 }
 
 @mixin col-vw($args) {
@@ -172,6 +176,13 @@ $small-desktop: "(min-width: 1024px) and (max-width: 1440px)";
     $mval: #{$mval relative-max-size($size)} #{$important};
   }
   #{$property}: $val;
+  @include mobile-tablet {
+    $val: '';
+    @each $size in $sizes {
+      $val: #{$val} #{$size} #{$important};
+    }
+    #{$property}: $val;
+  }
 }
 
 @mixin column-before($percentage) {

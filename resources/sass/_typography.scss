@@ -19,13 +19,22 @@
 h1 {
   @include m-font-size(30, 35);
   text-transform: uppercase;
+  @include mobile-tablet {
+    @include font-size(25, 30);
+  }
 }
 
 h2 {
   @include m-font-size(20, 26);
   text-transform: uppercase;
+  @include mobile-tablet {
+    @include font-size(18, 23);
+  }
 }
 
 h4 {
   @include m-font-size(12, 15);
+  @include mobile-tablet {
+    @include font-size(12, 15);
+  }
 }
