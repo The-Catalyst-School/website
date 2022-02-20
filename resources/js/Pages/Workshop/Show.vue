@@ -157,7 +157,7 @@ export default {
       &.actions {
         .internal-side {
           width: 100%;
-          @include r('padding-top', 70);
+          @include r('padding-top', 70px);
           .internal-nav {
             display: flex;
             flex-direction: column;
@@ -178,18 +178,18 @@ export default {
       }
       & > h1 {
         @include col(1 of 1);
-        @include r('margin-bottom', 8);
+        @include r('margin-bottom', 8px);
       }
       .main-embed {
         @include col(1 of 1);
         float: left;
-        @include r('margin-bottom', 15);
+        @include r('margin-bottom', 15px);
       }
       .workshop-info {
         width: 100%;
         float: left;
         display: flex;
-        @include r('margin-bottom', 70);
+        @include r('margin-bottom', 70px);
         @include mobile-tablet {
           flex-wrap: wrap;
         }
@@ -219,7 +219,7 @@ export default {
         width: 100%;
         float: left;
         &:not(:last-child) {
-          @include r('margin-bottom', 120);
+          @include r('margin-bottom', 120px);
         }
       }
     }

@@ -9,9 +9,7 @@
     </div>
     <slide-up-down
       class="answer" :active="active" :duration="500">
-      <div class="wrapper">
-        {{faq.answer}}
-      </div>
+      <div class="wrapper" v-html="faq.answer"></div>
     </slide-up-down>
   </div>
 </template>

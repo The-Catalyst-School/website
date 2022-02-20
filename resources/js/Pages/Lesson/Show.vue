@@ -139,11 +139,17 @@ export default {
   .single-lesson {
     @include r('padding', 20px 30px);
     display: flex;
+    @include mobile-tablet {
+      padding: 20px 10px;
+    }
     .side {
       @include col(2 of 14);
+      @include mobile-tablet {
+        display: none;
+      }
       &.next-prev {
         .internal-side {
-          @include r('padding-top', 70);
+          @include r('padding-top', 70px);
           display: flex;
           flex-direction: column;
           align-items: flex-end;
@@ -159,23 +165,26 @@ export default {
     }
     .main {
       @include col(10 of 14, 0);
+      @include mobile-tablet {
+        @include col(1 of 1, 0);
+      }
       & > h4 {
         @include col(1 of 1);
       }
       & > h1 {
         @include col(1 of 1);
-        @include r('margin-bottom', 8);
+        @include r('margin-bottom', 8px);
       }
       .main-embed {
         @include col(1 of 1);
         float: left;
-        @include r('margin-bottom', 15);
+        @include r('margin-bottom', 15px);
       }
       .workshop-info {
         width: 100%;
         float: left;
         display: flex;
-        @include r('margin-bottom', 70);
+        @include r('margin-bottom', 70px);
         .date {
           @include col(2 of 10);
         }
@@ -191,7 +200,7 @@ export default {
         width: 100%;
         float: left;
         &:not(:last-child) {
-          @include r('margin-bottom', 120);
+          @include r('margin-bottom', 120px);
         }
       }
     }
