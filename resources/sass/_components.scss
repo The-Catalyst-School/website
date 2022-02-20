@@ -49,6 +49,9 @@ button.btn {
   outline: 0;
   font-family: 'Neue Montreal';
   @include m-font-size(12, 15);
+  @include mobile-tablet {
+    @include font-size(12, 15);
+  }
 }
 
 .link {

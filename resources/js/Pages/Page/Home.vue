@@ -106,6 +106,10 @@ export default {
 section {
   @include r('padding', 20px 30px);
   @include r('margin-bottom', 130px);
+  @include mobile-tablet {
+    padding: 10px 10px;
+    margin-bottom: 70px;
+  }
   .section-title {
     @include col(12 of 14);
     @include r('margin-bottom', 20px);
@@ -114,15 +118,26 @@ section {
     .section-title {
       @include col-before(2 of 14);
       transform: translateX(#{relative-size(-25px)});
+      @include mobile-tablet {
+        margin-left: 0;
+        transform: initial;
+      }
     }
     .slider {
       width: calc(100% + #{relative-size(60px)});
       @include r('margin-left', -30px);
+      @include mobile-tablet {
+        width: calc(100% + 20px);
+        margin-left: -10px;
+      }
     }
   }
   &.faqs, &.next-events {
     .section-title {
       @include col-before(2 of 14);
+      @include mobile-tablet {
+        margin-left: 0;
+      }
     }
     .see-more {
       @include col(10 of 14);
@@ -130,10 +145,19 @@ section {
       text-align: right;
       text-transform: uppercase;
       @include r('margin-top', 18px);
+      @include mobile-tablet {
+        @include col(1 of 1);
+        margin-left: 0;
+        margin-top: 15px;
+      }
     }
     .events-list {
       @include col(10 of 14);
       @include col-before(2 of 14);
+      @include mobile-tablet {
+        @include col(1 of 1);
+        margin-left: 0;
+      }
     }
   }
 }

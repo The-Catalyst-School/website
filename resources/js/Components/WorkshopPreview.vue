@@ -127,6 +127,9 @@ export default {
       }
       .about-intro {
         @include m-font-size(20, 26);
+        @include mobile-tablet {
+          @include font-size(18, 23);
+        }
       }
     }
     &:hover {

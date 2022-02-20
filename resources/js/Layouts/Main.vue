@@ -31,5 +31,9 @@ export default {
   min-height: 100vh;
   @include r('padding-top', 110px);
   @include r('padding-bottom', 220px);
+  @include mobile-tablet {
+    padding-top: 70px;
+    padding-bottom: 100px;
+  }
 }
 </style>

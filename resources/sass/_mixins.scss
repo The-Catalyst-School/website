@@ -61,13 +61,13 @@ $base-measure-size: 1440;
   @include r('padding-right', 7);
   @include tablet {
     width: (math.div(100, nth($args, 3)) * nth($args, 1)) * 1vw;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   @include mobile {
     width: (math.div(100, nth($args, 3)) * nth($args, 1)) * 1vw;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 

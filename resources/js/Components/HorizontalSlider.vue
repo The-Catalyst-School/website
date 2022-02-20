@@ -55,8 +55,14 @@ export default {
       display: flex;
       & > div {
         @include col-vw(4 of 14);
+        @include mobile-tablet {
+          @include col-vw(0.90 of 1);
+        }
         &.featured {
           @include col-vw(6 of 14);
+          @include mobile-tablet {
+            @include col-vw(0.90 of 1);
+          }
         }
       }
     }

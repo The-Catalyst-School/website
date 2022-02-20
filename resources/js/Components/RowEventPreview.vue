@@ -106,6 +106,10 @@ export default {
   border-bottom: 1px solid $black;
   align-items: center;
   @include r('padding', 6px 0);
+  @include mobile-tablet {
+    padding: 6px 0;
+    flex-wrap: wrap;
+  }
   .label {
   }
   .label {
@@ -118,20 +122,37 @@ export default {
     @include r('padding', 4.5px 0);
     cursor: pointer;
     text-align: center;
+    @include mobile-tablet {
+      order: 1;
+    }
   }
   .date {
     @include col(3 of 10);
     @include m-font-size(20, 26);
+    @include mobile-tablet {
+      @include font-size(18, 23);
+      order: 2;
+      @include col(6 of 10);
+    }
   }
   .title {
     @include col(6 of 10);
     @include m-font-size(20, 26);
+    @include mobile-tablet {
+      @include col(1 of 1, 0);
+      @include font-size(12, 15);
+      order: 4;
+    }
   }
   .actions {
     @include col(1 of 10);
     padding-right: 0;
     display: flex;
     justify-content: flex-end;
+    @include mobile-tablet {
+      order: 3;
+      @include col(3 of 10, 0);
+    }
   }
 }
 </style>

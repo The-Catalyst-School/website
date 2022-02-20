@@ -82,6 +82,12 @@ export default {
         position: absolute;
         bottom: 0;
         right: 0;
+        @include mobile-tablet {
+          position: initial;
+          bottom: initial;
+          left: initial;
+          margin-top: 15px;
+        }
       }
     }
     &.placeholder {

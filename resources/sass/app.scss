@@ -19,6 +19,9 @@ body {
   overflow-x: hidden;
   @include m-font-size(12, 15);
   @include transition('background, color');
+  @include mobile-tablet {
+    @include font-size(12, 15);
+  }
   &.is-night {
     background: linear-gradient(180deg, $color-black 0%, $color-dark-blue 49%, $color-light-blue 100%);
     background-repeat: no-repeat;
