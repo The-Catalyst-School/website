@@ -3,7 +3,9 @@
     <div class="question">
       <div class="counter">{{faq.idx}}</div>
       <div class="q"><h2>{{faq.question}}</h2></div>
-      <div v-if="closable" class="btn" @click="$emit('toggle', faq.idx)">{{msg}}</div>
+      <div class="btn-wrapper">
+        <div v-if="closable" class="btn" @click="$emit('toggle', faq.idx)">{{msg}}</div>
+      </div>
     </div>
     <slide-up-down
       class="answer" :active="active" :duration="500">
@@ -39,7 +41,7 @@ export default {
   .question {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     .counter {
       @include r('width', 24px);
       @include r('height', 24px);
@@ -53,9 +55,15 @@ export default {
     .q {
       flex-grow: 1;
       @include r('padding-left', 10px);
+      width: calc(80% - #{relative-size(24px)});
       h2 {
         text-transform: initial;
       }
+    }
+    .btn-wrapper {
+      @include col(2 of 10, 0);
+      display: flex;
+      justify-content: flex-end;
     }
   }
   .answer {
