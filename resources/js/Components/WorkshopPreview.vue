@@ -59,11 +59,17 @@ export default {
 @import '../../sass/_variables';
 .workshop-preview {
   @include col(4 of 14);
-  @include r('margin-bottom', 20);
+  @include r('margin-bottom', 20px);
   display: flex;
   flex-direction: column;
+  @include mobile-tablet {
+    @include col(1 of 1);
+  }
   &.featured {
     @include col(6 of 14);
+    @include mobile-tablet {
+      @include col(1 of 1);
+    }
   }
   .main-body {
     flex-grow: 1;
@@ -72,9 +78,9 @@ export default {
     .topics-wrapper {
       display: flex;
       flex-wrap: wrap;
-      @include r('margin-bottom', 6px);
       .tag {
         @include transition('background, color');
+        @include r('margin-bottom', 6px);
       }
     }
     .preview-body {

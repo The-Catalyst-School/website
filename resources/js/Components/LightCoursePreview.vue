@@ -75,9 +75,9 @@ export default {
     .topics-wrapper {
       display: flex;
       flex-wrap: wrap;
-      @include r('margin-bottom', 6px);
       .tag {
         @include transition('background, color');
+        @include r('margin-bottom', 6px);
       }
     }
     .preview-body {

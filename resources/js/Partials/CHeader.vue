@@ -130,6 +130,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @use 'sass:math';
   @import '../../sass/_mixins';
   header.site-header {
     position: fixed;
@@ -166,7 +167,7 @@ export default {
         &.logo-white {
           position: absolute;
           top: 0;
-          left: relative-size($default-gutter/2);
+          left: relative-size(math.div($default-gutter, 2));
           @include mobile-tablet {
             left: 0px;
           }

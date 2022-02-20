@@ -43,6 +43,11 @@ export default {
   @include r('padding-right', 30px);
   @include r('padding-left', 30px);
   width: 100%;
+  @include mobile-tablet {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 70px;
+  }
   .list {
     width: 100%;
     display: flex;
