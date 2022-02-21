@@ -76,6 +76,34 @@
         </div>
       </div>
     </div>
+    <div class="mobile-side">
+      <div class="on-left">
+        <div class="next" v-if="next">
+          <Link class="btn active" :href="$route('web.lesson.show', [lesson.course.slug, next.slug])">
+            Next
+          </Link>
+        </div>
+        <div class="prev" v-if="prev">
+          <Link class="btn active" :href="$route('web.lesson.show', [lesson.course.slug, prev.slug])">
+            Previous
+          </Link>
+        </div>
+      </div>
+      <div class="on-right">
+        <div
+          class="btn active"
+          v-if="$page.props.auth.user && lesson.course.current_lesson < lesson.id"
+          @click="subscribe"
+          >
+          Mark as completed
+        </div>
+        <div class="btn active"
+          v-if="$page.props.auth.user && lesson.course.current_lesson >= lesson.id"
+          >
+          Completed!
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -161,6 +189,31 @@ export default {
 
           }
         }
+      }
+    }
+    .mobile-side {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      padding: 20px;
+      justify-content: flex-end;
+      width: 100%;
+      .on-left, .on-right {
+        width: 50%;
+        display: flex;
+        &.on-right {
+          justify-content: flex-end;
+        }
+        .next, .prev {
+          display: flex;
+          &:not(:last-child) {
+            margin-bottom: 6px;
+          }
+        }
+      }
+      @include mobile-tablet {
+        display: flex;
       }
     }
     .main {
