@@ -58,6 +58,66 @@
         </Link>
       </div>
     </div>
+    <div class="mobile-side">
+      <div class="on-left">
+        <div class="btn active"
+          v-if="!viewListOpen && $page.component.startsWith('Event/Calendar')"
+          @click="viewListOpen = !viewListOpen">
+          Month view
+        </div>
+        <div class="btn active"
+          v-if="!viewListOpen && $page.component.startsWith('Event/List')"
+          @click="viewListOpen = !viewListOpen">
+          Day view
+        </div>
+        <div class="btn active plus"
+          v-if="!viewListOpen"
+          @click="viewListOpen = !viewListOpen">+</div>
+        <div class="view-list">
+          <slide-up-down :active="viewListOpen" :duration="500">
+            <div class="real-list">
+              <div class="view-type">
+                <Link class="btn"
+                  :class="{'active': $page.component.startsWith('Event/Calendar')}"
+                  :href="$route('web.event.index', [initialDate.format('YYYY-MM')])">
+                  Month view
+                </Link>
+              </div>
+              <div class="view-type">
+                <Link class="btn"
+                  :class="{'active': $page.component.startsWith('Event/List')}"
+                  :href="$route('web.event.list', [initialDate.format('YYYY-MM')])">
+                  Day view
+                </Link>
+              </div>
+            </div>
+          </slide-up-down>
+        </div>
+      </div>
+      <div class="on-right">
+        <div class="btn active"
+          v-if="!monthListOpen"
+          @click="monthListOpen = !monthListOpen">
+          {{initialDate | dateFormat('MMMM YYYY')}}
+        </div>
+        <div class="btn active plus"
+          v-if="!monthListOpen"
+          @click="monthListOpen = !monthListOpen">+</div>
+        <div class="month-list">
+          <slide-up-down :active="monthListOpen" :duration="500">
+            <div class="real-list">
+              <div class="single-month" v-for="month in months">
+                <Link class="btn"
+                  :class="{'active': (month.format('MMYYYY')) === initialDate.format('MMYYYY')}"
+                  :href="$route('web.event.index', [month.format('YYYY-MM')])">
+                  {{month | dateFormat('MMMM YYYY')}}
+                </Link>
+              </div>
+            </div>
+          </slide-up-down>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -84,6 +144,8 @@ export default {
   data() {
     return {
       weekdays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      monthListOpen: false,
+      viewListOpen: false
     }
   },
   computed: {
@@ -235,6 +297,60 @@ export default {
     }
     @include mobile-tablet {
       display: none;
+    }
+  }
+  .mobile-side {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    justify-content: flex-end;
+    width: 100%;
+    .on-left, .on-right {
+      width: 50%;
+      display: flex;
+      &.on-right {
+        justify-content: flex-end;
+      }
+      .plus {
+        margin-left: 6px;
+      }
+      .month-list, .view-list {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+        background: linear-gradient(180deg, transparent 0%, $yellow 80%);
+        & > div {
+          .real-list {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+            padding-bottom: 14px;
+            a, a:visited {
+              display: block;
+              margin-bottom: 6px;
+              &:not(.active) {
+                background: $yellow;
+              }
+            }
+          }
+        }
+        &.view-list {
+          & > div {
+            .real-list {
+              align-items: flex-start;
+            }
+          }
+        }
+      }
+    }
+    @include mobile-tablet {
+      display: flex;
     }
   }
   .month {

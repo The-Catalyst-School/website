@@ -25,7 +25,7 @@
         <row-event-preview :event="event" />
       </div>
       <div class="no-events" v-if="allEvents.length === 0">
-        <h2>No events</h2>
+        <h2>No events for {{initialDate | dateFormat('MMMM YYYY')}}</h2>
       </div>
     </div>
     <div class="side months">
@@ -35,6 +35,66 @@
           :href="$route('web.event.list', [month.format('YYYY-MM')])">
           {{month | dateFormat('MMMM YYYY')}}
         </Link>
+      </div>
+    </div>
+    <div class="mobile-side">
+      <div class="on-left">
+        <div class="btn active"
+          v-if="!viewListOpen && $page.component.startsWith('Event/Calendar')"
+          @click="viewListOpen = !viewListOpen">
+          Month view
+        </div>
+        <div class="btn active"
+          v-if="!viewListOpen && $page.component.startsWith('Event/List')"
+          @click="viewListOpen = !viewListOpen">
+          Day view
+        </div>
+        <div class="btn active plus"
+          v-if="!viewListOpen"
+          @click="viewListOpen = !viewListOpen">+</div>
+        <div class="view-list">
+          <slide-up-down :active="viewListOpen" :duration="500">
+            <div class="real-list">
+              <div class="view-type">
+                <Link class="btn"
+                  :class="{'active': $page.component.startsWith('Event/Calendar')}"
+                  :href="$route('web.event.index', [initialDate.format('YYYY-MM')])">
+                  Month view
+                </Link>
+              </div>
+              <div class="view-type">
+                <Link class="btn"
+                  :class="{'active': $page.component.startsWith('Event/List')}"
+                  :href="$route('web.event.list', [initialDate.format('YYYY-MM')])">
+                  Day view
+                </Link>
+              </div>
+            </div>
+          </slide-up-down>
+        </div>
+      </div>
+      <div class="on-right">
+        <div class="btn active"
+          v-if="!monthListOpen"
+          @click="monthListOpen = !monthListOpen">
+          {{initialDate | dateFormat('MMMM YYYY')}}
+        </div>
+        <div class="btn active plus"
+          v-if="!monthListOpen"
+          @click="monthListOpen = !monthListOpen">+</div>
+        <div class="month-list">
+          <slide-up-down :active="monthListOpen" :duration="500">
+            <div class="real-list">
+              <div class="single-month" v-for="month in months">
+                <Link class="btn"
+                  :class="{'active': (month.format('MMYYYY')) === initialDate.format('MMYYYY')}"
+                  :href="$route('web.event.list', [month.format('YYYY-MM')])">
+                  {{month | dateFormat('MMMM YYYY')}}
+                </Link>
+              </div>
+            </div>
+          </slide-up-down>
+        </div>
       </div>
     </div>
   </div>
@@ -58,6 +118,12 @@ export default {
     Link,
     RowEventPreview,
     Head
+  },
+  data() {
+    return {
+      monthListOpen: false,
+      viewListOpen: false
+    }
   },
   computed: {
     initialDate() {
@@ -108,6 +174,10 @@ export default {
   @include r('padding-right', 30px);
   @include r('padding-left', 30px);
   display: flex;
+  @include mobile-tablet {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
   .side {
     @include col(2 of 14);
     display: flex;
@@ -123,11 +193,71 @@ export default {
     &.months {
       align-items: flex-end;
     }
+    @include mobile-tablet {
+      display: none;
+    }
+  }
+  .mobile-side {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+    justify-content: flex-end;
+    width: 100%;
+    .on-left, .on-right {
+      width: 50%;
+      display: flex;
+      &.on-right {
+        justify-content: flex-end;
+      }
+      .plus {
+        margin-left: 6px;
+      }
+      .month-list, .view-list {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+        background: linear-gradient(180deg, transparent 0%, $yellow 80%);
+        & > div {
+          .real-list {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+            padding-bottom: 14px;
+            a, a:visited {
+              display: block;
+              margin-bottom: 6px;
+              &:not(.active) {
+                background: $yellow;
+              }
+            }
+          }
+        }
+        &.view-list {
+          & > div {
+            .real-list {
+              align-items: flex-start;
+            }
+          }
+        }
+      }
+    }
+    @include mobile-tablet {
+      display: flex;
+    }
   }
   .events-list {
     @include col(10 of 14, 0);
     display: flex;
     flex-direction: column;
+    @include mobile-tablet {
+      @include col(1 of 1, 0);
+    }
   }
   .no-events {
     text-align: center;
