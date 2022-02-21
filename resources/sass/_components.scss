@@ -42,6 +42,11 @@
     align-items: center;
     justify-content: center;
     border-radius: 100%;
+    @include mobile-tablet {
+      padding: 0;
+      width: 28px;
+      height: 28px;
+    }
     &:hover {
       img {
         filter: invert(1);
@@ -62,6 +67,19 @@ button.btn {
 
 .link {
   cursor: pointer;
+}
+
+.on-desktop {
+  @include mobile-tablet {
+    display: none;
+  }
+}
+
+.on-mobile {
+  display: none;
+  @include mobile-tablet {
+    display: inline-block;
+  }
 }
 
 @import 'components/form';

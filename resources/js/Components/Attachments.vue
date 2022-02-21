@@ -7,8 +7,14 @@
         v-for="attachment in attachments">
         <div class="attachment-title">{{attachment.title}}</div>
         <div class="actions">
-          <a :href="attachment.file" class="btn" target="_blank">Open</a>
-          <a :href="attachment.file" class="btn" target="_blank" download>Download</a>
+          <a :href="attachment.file" class="btn on-desktop" target="_blank">Open</a>
+          <a :href="attachment.file" class="btn on-desktop" target="_blank" download>Download</a>
+          <a :href="attachment.file" class="btn on-mobile with-image" target="_blank">
+            +
+          </a>
+          <a :href="attachment.file" class="btn on-mobile with-image" target="_blank" download>
+            <img src="/images/down.svg" />
+          </a>
         </div>
       </div>
     </div>
@@ -53,6 +59,18 @@ export default {
       .attachment-title {
         flex-grow: 1;
         @include m-font-size(20, 26);
+        @include mobile-tablet {
+          width: calc(100% - 54px);
+          @include font-size(14, 17);
+        }
+      }
+      .actions {
+        @include mobile-tablet {
+          display: flex;
+          & > *:not(:last-child) {
+            margin-right: 6px;
+          }
+        }
       }
       &:first-child {
         border-top: 1px solid $black;
