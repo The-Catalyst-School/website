@@ -40,6 +40,9 @@ export default {
 section {
   @include r('padding', 20px 30px);
   @include r('margin-bottom', 130px);
+  @include mobile-tablet {
+    padding: 20px 10px;
+  }
   .section-title {
     @include col(10 of 14);
     @include col-before(2 of 14);

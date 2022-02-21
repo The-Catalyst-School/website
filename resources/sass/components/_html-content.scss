@@ -16,7 +16,7 @@
     @include mobile-tablet {
       @include font-size(14, 17);
       @include col(1 of 1);
-      margin-top: 15px;
+      margin-top: 65px;
       margin-bottom: 5px;
     }
   }
@@ -40,6 +40,7 @@
     @include mobile-tablet {
       @include font-size(18, 23);
       @include col(1 of 1);
+      margin-bottom: 15px;
     }
     & + p,
     & + ul,

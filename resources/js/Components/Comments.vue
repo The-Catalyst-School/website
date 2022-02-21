@@ -101,12 +101,18 @@ export default {
   float: left;
   &:not(:last-child) {
     @include r('margin-bottom', 120);
+    @include mobile-tablet {
+      margin-bottom: 70px;
+    }
   }
   .heading {
     @include col(1 of 1);
     display: flex;
     justify-content: space-between;
     @include r('margin-bottom', 10px);
+    @include mobile-tablet {
+      margin-bottom: 15px;
+    }
     h4 {
       flex-grow: 1;
     }
@@ -128,6 +134,10 @@ export default {
     border-bottom: 1px solid $black;
     @include r('padding-top', 20px);
     @include r('padding-bottom', 20px);
+    @include mobile-tablet {
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
     &:first-child {
       border-top: 1px solid $black;
     }
@@ -136,6 +146,10 @@ export default {
       @include col-before(2 of 14);
       display: flex;
       flex-direction: column;
+      @include mobile-tablet {
+        @include col(1 of 1, 0);
+        margin-left: 0;
+      }
     }
     .info {
       @include r('margin-bottom', 10px);
@@ -145,10 +159,17 @@ export default {
         @include r('width', 44px);
         @include r('height', 44px);
         @include r('margin-right', 6px);
+        @include mobile-tablet {
+          width: 34px;
+          height: 24px;
+        }
       }
     }
     .content {
       @include m-font-size(20, 26);
+      @include mobile-tablet {
+        @include font-size(14, 17);
+      }
     }
     .actions {
       display: flex;

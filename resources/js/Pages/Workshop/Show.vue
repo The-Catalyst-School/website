@@ -60,6 +60,14 @@
         </div>
       </div>
     </div>
+    <div class="mobile-side">
+      <a
+        class="btn active"
+        v-if="$page.props.auth.user"
+        @click.prevent="subscribe($route(actionRoute, workshop.id))">
+        {{actionText}}
+      </a>
+    </div>
   </div>
 </template>
 
@@ -168,6 +176,18 @@ export default {
         }
       }
     }
+    .mobile-side {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      padding: 20px;
+      justify-content: flex-end;
+      width: 100%;
+      @include mobile-tablet {
+        display: flex;
+      }
+    }
     .main {
       @include col(10 of 14, 0);
       @include mobile-tablet {
@@ -192,6 +212,7 @@ export default {
         @include r('margin-bottom', 70px);
         @include mobile-tablet {
           flex-wrap: wrap;
+          margin-bottom: 0;
         }
         .date {
           @include col(2 of 10);
@@ -220,6 +241,9 @@ export default {
         float: left;
         &:not(:last-child) {
           @include r('margin-bottom', 120px);
+          @include mobile-tablet {
+            margin-bottom: 70px;
+          }
         }
       }
     }
