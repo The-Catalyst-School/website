@@ -55,6 +55,11 @@ export default {
     @include m-font-size(14, 17);
     display: flex;
     align-items: flex-end;
+    @include mobile-tablet {
+      @include font-size(14, 17);
+      padding: 20px 10px;
+      flex-wrap: wrap;
+    }
     a, a:visited {
       color: $yellow;
       &:hover {
@@ -63,6 +68,9 @@ export default {
     }
     .basic-info, .social, nav {
       @include col(2 of 14);
+      @include mobile-tablet {
+        @include col(1 of 2);
+      }
       ul {
         list-style: none;
         li:before {
@@ -70,11 +78,21 @@ export default {
         }
       }
     }
+    nav {
+      @include mobile-tablet {
+        margin-top: 15px;
+      }
+    }
     .counter {
       flex-grow: 1;
       align-self: flex-start;
       display: flex;
       justify-content: flex-end;
+      @include mobile-tablet {
+        @include col(1 of 1);
+        justify-content: flex-start;
+        margin-top: 15px;
+      }
     }
   }
 </style>
