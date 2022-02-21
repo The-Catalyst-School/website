@@ -98,11 +98,12 @@ export default {
   .current {
     @include col(1 of 1);
     display: flex;
-    @include r('margin-bottom', 7px);
+    flex-wrap: wrap;
     @include r('padding-right', 40px);
     @include r('padding-left', 40px);
     & > * {
       @include r('margin-right', 7px);
+      @include r('margin-bottom', 7px);
     }
     a, a:visited {
       color: $yellow;
@@ -119,19 +120,23 @@ export default {
       color: $yellow;
     }
     .topics {
-      @include col(4 of 14);
-      .list {
-        column-count: 4;
-        @include r('column-gap', $default-gutter);
-      }
-    }
-    .topics {
+      @include col(1 of 1, 0);
+      display: flex;
+      align-items: flex-start;
       .label {
         width: 100%;
+        @include col(2 of 14);
         @include r('margin-bottom', 7px);
       }
       .list {
-        width: 100%;
+        @include col(12 of 14, 0);
+        display: flex;
+        flex-wrap: wrap;
+        & > div:not(:last-child):after {
+          content: '•';
+          @include r('margin-left', 5px);
+          @include r('margin-right', 5px);
+        }
       }
     }
   }
