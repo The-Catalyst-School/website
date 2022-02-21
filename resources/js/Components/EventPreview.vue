@@ -116,6 +116,10 @@ export default {
     @include r('height', 24px);
     .label {
       @include r('padding', 4.5px 0);
+      @include mobile-tablet {
+        padding: 2.5px 0;
+        @include font-size(14, 17);
+      }
     }
   }
   .label {
@@ -127,6 +131,10 @@ export default {
     cursor: pointer;
     text-align: center;
     border: 1px solid $black;
+    @include mobile-tablet {
+      padding: 2.5px 5px;
+      @include font-size(12, 15);
+    }
     &:hover {
       background: $yellow;
       color: $black;
@@ -146,15 +154,25 @@ export default {
     opacity: 0;
     z-index: 2;
     @include transition('width, opacity');
+    @include mobile-tablet {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      width: calc(100% - 40px);
+    }
     .internal {
       @include col-vw(2.5 of 14);
       @include r('padding', 9px 15px);
+      @include mobile-tablet {
+        width: 100%;
+      }
     }
     a, a:visited {
       color: $yellow;
     }
     .heading {
-      @include r('margin-bottom', 5);
+      @include r('margin-bottom', 5px);
       display: flex;
       justify-content: space-between;
     }
@@ -165,6 +183,9 @@ export default {
       @include r('margin-bottom', 30);
       .text {
         @include m-font-size(20, 27);
+        @include mobile-tablet {
+          @include font-size(14, 17);
+        }
       }
     }
     .actions {
@@ -180,6 +201,11 @@ export default {
       padding-left: 0;
       padding-right: 0;
       pointer-events: initial;
+      @include mobile-tablet {
+        width: calc(100% - 40px);
+        padding-left: 0;
+        padding-right: 0;
+      }
     }
   }
 }

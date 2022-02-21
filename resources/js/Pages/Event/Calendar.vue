@@ -214,6 +214,10 @@ export default {
   @include r('padding-right', 30px);
   @include r('padding-left', 30px);
   display: flex;
+  @include mobile-tablet {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
   .side {
     @include col(2 of 14);
     display: flex;
@@ -229,11 +233,24 @@ export default {
     &.months {
       align-items: flex-end;
     }
+    @include mobile-tablet {
+      display: none;
+    }
   }
   .month {
     @include col(10 of 14, 0);
     display: flex;
     flex-direction: column;
+    @include mobile-tablet {
+      @include col(5 of 5, 0);
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    .header {
+      @include mobile-tablet {
+        @include col(8 of 4, 0);
+      }
+    }
     .weekdays, .days {
       width: 100%;
       display: flex;
@@ -243,12 +260,18 @@ export default {
         width: math.div(100%, 7);
         border-bottom: 1px solid $black;
         @include r('padding', 10);
+        @include mobile-tablet {
+          padding: 5px;
+        }
       }
       .single-day {
         border-right: 1px solid $black;
         border-bottom: 1px solid $black;
         padding-top: 9%;
         position: relative;
+        @include mobile-tablet {
+          padding-top: 14%;
+        }
         &.current-month {
           .content {
             opacity: 1;
@@ -267,6 +290,9 @@ export default {
           opacity: 0.5;
           display: flex;
           flex-direction: column;
+          @include mobile-tablet {
+            padding: 5px;
+          }
           .events {
             flex-grow: 1;
             display: flex;
@@ -287,6 +313,10 @@ export default {
     .events .event-preview .info {
       right: calc(100% + #{relative-size(6)}) !important;
       left: auto;
+      @include mobile-tablet {
+        right: auto !important;
+        left: 50% !important;
+      }
     }
   }
 }
