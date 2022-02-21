@@ -125,6 +125,9 @@ export default {
     toggleNav() {
       this.isNavOpen = !this.isNavOpen
     }
+  },
+  mounted() {
+    this.$inertia.on('start', () => { this.isNavOpen = false }) 
   }
 }
 </script>
