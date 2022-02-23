@@ -11,7 +11,7 @@ class ProfileController extends Controller
 {
     public function overview()
     {
-      $user = Auth::user();
+      $user = Auth::user()->makeVisible('email');
       $courses = $user->courses()->with('topics')->limit(1)->get();
       $workshops = $user->workshops()->with('topics')->limit(1)->get();
       $events = $user->events()->where('scheduled_at', '>=', Carbon::now())->get();

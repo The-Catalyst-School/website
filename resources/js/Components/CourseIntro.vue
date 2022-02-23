@@ -7,11 +7,14 @@
       <section class="lessons-list" v-if="course.lessons">
         <lessons :course="course" :lessons="course.lessons"></lessons>
       </section>
-      <section class="students-list" v-if="course.students">
-        <h3 class="section">Students of this course</h3>
+      <section class="students-list" v-if="course.users.length > 0">
+        <subscribers :users="course.users"></subscribers>
       </section>
-      <section class="comments-list" v-if="course.comments">
-        <h3 class="section">Some comments about</h3>
+      <section class="comments-list">
+        <comments
+          :comments="course.comments"
+          :entity="{'type': 'Course', 'id': course.id}"
+          />
       </section>
     </div>
   </div>
@@ -21,12 +24,16 @@
 
 import { Link } from '@inertiajs/inertia-vue'
 import Lessons from './Lessons';
+import Subscribers from './Subscribers';
+import Comments from './Comments';
 
 export default {
   props: ['course'],
   components: {
     Link,
-    Lessons
+    Lessons,
+    Subscribers,
+    Comments
   }
 };
 </script>
@@ -109,11 +116,17 @@ export default {
       }
     }
     section {
-      @include col(1 of 1, 0);
+      @include col(1 of 1);
       @include r('margin-bottom', 70px);
       h3 {
         @include m-font-size(14, 17);
         @include r('margin-bottom', 15px);
+      }
+      &.comments-list {
+        @include col(1 of 1, 0);
+        .comments {
+          float: initial;
+        }
       }
     }
   }
