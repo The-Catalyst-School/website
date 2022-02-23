@@ -181,16 +181,6 @@ export default {
         @include col(1 of 1);
         margin-left: 0;
       }
-      .heading {
-        display: flex;
-        justify-content: space-between;
-        .date {
-          @include col(2 of 8, 0);
-        }
-        .teacher {
-          @include col(4 of 8);
-        }
-      }
     }
     .scrollable {
       .intro-heading {

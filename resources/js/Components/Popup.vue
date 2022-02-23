@@ -43,7 +43,7 @@
     border: 1px solid $black;
     z-index: 1;
     @include mobile-tablet {
-      width: 100% !important;
+      width: calc(100% - 40px) !important;
     }
     .scrollable {
       max-height: 80vh;

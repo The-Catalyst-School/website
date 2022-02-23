@@ -34,6 +34,24 @@ export default {
 @import '../../sass/_mixins';
 @import '../../sass/_variables';
 .intro-heading {
+  .heading {
+    display: flex;
+    justify-content: space-between;
+    @include mobile-tablet {
+      flex-wrap: wrap;
+    }
+    .date {
+      @include col(2 of 8, 0);
+    }
+    .teacher {
+      @include col(4 of 8);
+    }
+    .date, .teacher, .estimated {
+      @include mobile-tablet {
+        @include col(1 of 1, 0);
+      }
+    }
+  }
   @include mobile-tablet {
     display: flex;
     flex-direction: column;
@@ -44,10 +62,14 @@ export default {
     }
   }
   .heading {
-    order: 2;
+    @include mobile-tablet {
+      order: 2;
+    }
   }
   .title {
-    order: 1;
+    @include mobile-tablet {
+      order: 1;
+    }
   }
 }
 </style>
