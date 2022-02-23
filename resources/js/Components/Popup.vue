@@ -42,6 +42,9 @@
     background: $white;
     border: 1px solid $black;
     z-index: 1;
+    @include mobile-tablet {
+      width: 100% !important;
+    }
     .scrollable {
       max-height: 80vh;
       overflow: auto;

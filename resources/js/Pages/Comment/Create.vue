@@ -99,11 +99,17 @@ export default {
     @include r('margin-bottom', 10px);
     background: $white;
     color: $black;
+    @include mobile-tablet {
+      @include font-size(18, 23);
+    }
   }
   button {
     background: $white;
     font-family: 'Neue Montreal';
     @include m-font-size(14, 17);
+    @include mobile-tablet {
+      @include font-size(14, 17);
+    }
     &:not(:last-child) {
       @include r('margin-right', 8px);
     }

@@ -10,6 +10,9 @@
     @include m-font-size(20, 28);
     color: $black;
     background: $white;
+    @include mobile-tablet {
+      @include font-size(18, 27);
+    }
   }
   button {
     font-family: 'Neue Montreal';

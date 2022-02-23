@@ -130,6 +130,9 @@ export default {
         @include col($i of 14, 0);
       }
     }
+    @include mobile-tablet {
+      width: calc(100% - 40px) !important;
+    }
   }
 }
 </style>

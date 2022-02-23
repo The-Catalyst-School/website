@@ -71,12 +71,12 @@ button.btn {
 
 .on-desktop {
   @include mobile-tablet {
-    display: none;
+    display: none !important;
   }
 }
 
 .on-mobile {
-  display: none;
+  display: none !important;
   @include mobile-tablet {
     display: inline-block;
   }
