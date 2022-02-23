@@ -23,7 +23,7 @@ class PageController extends Controller
       if ($page->template === 'home') {
         $about = Page::findBySlugOrFail('about');
         $faq = Page::findBySlugOrFail('faq');
-        $courses = Course::with('topics', 'lessons')->get();
+        $courses = Course::with('topics', 'lessons', 'comments.user', 'users:avatar_url')->get();
         $workshops = Workshop::with('topics')->get();
         $start = Carbon::now()->format('Y-m-d H:i:s');
         $end = Carbon::now()->addMonths(1)->format('Y-m-d H:i:s');

@@ -50,6 +50,11 @@ export default {
     @include col-before(1 of 10);
     @include r('padding-top', 70px);
     @include r('padding-bottom', 120px);
+    @include mobile-tablet {
+      @include col(1 of 1);
+      margin-left: 0;
+      padding-top: 0;
+    }
     .html-content {
       display: flex;
       flex-wrap: wrap;
@@ -121,6 +126,9 @@ export default {
       h3 {
         @include m-font-size(14, 17);
         @include r('margin-bottom', 15px);
+        @include mobile-tablet {
+          @include font-size(14, 17);
+        }
       }
       &.comments-list {
         @include col(1 of 1, 0);

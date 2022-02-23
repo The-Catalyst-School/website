@@ -41,24 +41,10 @@
             {{topic.title}}
           </div>
         </div>
-        <div class="intro-heading">
-          <div class="heading">
-            <div class="date">{{ course.updated_at | dateFormat('DD.MM.YYYY') }}</div>
-            <div class="teacher" v-if="course.teacher">With {{course.teacher}}</div>
-            <div class="estimated" v-if="course.estimated_time">
-              Estimated time: {{course.estimated_time}}
-            </div>
-          </div>
-          <div class="title">
-            <h1>
-              <Link :href="$route('web.course.show', course.slug)">
-                {{course.title}}
-              </Link>
-            </h1>
-          </div>
-        </div>
+        <course-preview-header :course="course" />
       </template>
       <template v-slot:scrollable>
+        <course-preview-header :course="course" />
         <course-intro :course="course" />
       </template>
     </popup>
@@ -70,13 +56,15 @@
 import { Link } from '@inertiajs/inertia-vue'
 import Popup from './Popup';
 import CourseIntro from './CourseIntro';
+import CoursePreviewHeader from './CoursePreviewHeader';
 
 export default {
   props: ['course'],
   components: {
     Link,
     Popup,
-    CourseIntro
+    CourseIntro,
+    CoursePreviewHeader
   },
   data() {
     return {
@@ -189,6 +177,10 @@ export default {
     .intro-heading {
       @include col(8 of 10);
       @include col-before(1 of 10);
+      @include mobile-tablet {
+        @include col(1 of 1);
+        margin-left: 0;
+      }
       .heading {
         display: flex;
         justify-content: space-between;
@@ -197,6 +189,22 @@ export default {
         }
         .teacher {
           @include col(4 of 8);
+        }
+      }
+    }
+    .scrollable {
+      .intro-heading {
+        display: none;
+        @include r('padding-top', 15px);
+        @include mobile-tablet {
+          display: flex;
+        }
+      }
+    }
+    .fixed-header {
+      & > .intro-heading {
+        @include mobile-tablet {
+          display: none;
         }
       }
     }
