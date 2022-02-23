@@ -11,6 +11,7 @@ import Layout from './Layouts/Main'
 import Sticky from 'vue-sticky-directive/src/sticky'
 import VueDragscroll from 'vue-dragscroll'
 import VueToast from 'vue-toast-notification'
+import VueMobileDetection from "vue-mobile-detection";
 import vClickOutside from 'v-click-outside'
 
 import 'vue-toast-notification/dist/theme-default.css';
@@ -27,6 +28,7 @@ Vue.use(VueToast);
 Vue.use(VueScrollTo, {
   offset: -70,
 })
+Vue.use(VueMobileDetection);
 Vue.use(VueDragscroll)
 Vue.use(vClickOutside)
 Vue.directive('Sticky', Sticky);

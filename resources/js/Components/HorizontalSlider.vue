@@ -1,7 +1,7 @@
 <template>
   <div class="slider">
     <div class="track"
-      v-dragscroll
+      v-dragscroll="!$isMobile()"
       @dragscrollstart="onDragStart"
       @click.capture="onDragClick">
       <div class="track-content">
@@ -10,7 +10,6 @@
       <div class="more">
         <slot name="more"></slot>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -36,6 +35,9 @@ export default {
       this.dragged = false;
     },
   },
+  mounted() {
+    console.log(this.$isMobile())
+  }
 };
 </script>
 
@@ -51,6 +53,9 @@ export default {
     overflow: hidden;
     display: flex;
     align-items: stretch;
+    @include mobile-tablet {
+      overflow: auto;
+    }
     .track-content {
       display: flex;
       & > div {
