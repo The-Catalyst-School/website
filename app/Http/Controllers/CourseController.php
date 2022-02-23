@@ -12,7 +12,7 @@ class CourseController extends Controller
 {
     public function index(Request $request)
     {
-      $courses = Course::with('lessons', 'topics', 'comments.user', 'users:avatar_url');
+      $courses = Course::with('lessons:title,slug,id,course_id', 'topics', 'comments.user', 'users:avatar_url');
       $filter_topics = $request->input('topics');
       if ($filter_topics) {
         $courses = $courses->whereHas('topics', function($query) use ($filter_topics) {
