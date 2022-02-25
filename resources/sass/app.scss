@@ -8,25 +8,34 @@ html {
 }
 body {
   font-family: 'Neue Montreal';
-  background: rgb(255,251,237);
-  background: linear-gradient(180deg, $light-gray 0%, $yellow 100%);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-  min-height: 100vh;
   width: 100%;
   color: $black;
   overflow-x: hidden;
   @include m-font-size(14, 17);
-  @include transition('background, color');
+  &.is-night {
+    #background {
+      background: linear-gradient(180deg, $color-black 0%, $color-dark-blue 49%, $color-light-blue 100%);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+    }
+  }
   @include mobile-tablet {
     @include font-size(14, 17);
   }
-  &.is-night {
-    background: linear-gradient(180deg, $color-black 0%, $color-dark-blue 49%, $color-light-blue 100%);
+  #background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(255,251,237);
+    background: linear-gradient(180deg, $light-gray 0%, $yellow 100%);
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
+    z-index: -1;
+    @include transition('background, color');
   }
 }
 

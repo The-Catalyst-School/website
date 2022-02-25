@@ -10,5 +10,6 @@
     @routes
     @inertia
     <script src="{{ mix('/js/app.js') }}" defer></script>
+    <div id="background"></div>
 </body>
 </html>

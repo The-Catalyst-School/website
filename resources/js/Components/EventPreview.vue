@@ -112,10 +112,14 @@ export default {
   position: relative;
   @include r('margin-right', 6px);
   &.workshop, &.special {
-    @include r('width', 24px);
-    @include r('height', 24px);
+    @include r('width', 28px);
+    @include r('height', 28px);
+    @include mobile-tablet {
+      width: 24px;
+      height: 24px;
+    }
     .label {
-      @include r('padding', 4.5px 0);
+      @include r('padding', 5px 0);
       @include mobile-tablet {
         padding: 2.5px 0;
         @include font-size(14, 17);
@@ -127,7 +131,7 @@ export default {
     color: $yellow;
     text-transform: uppercase;
     @include r('padding', 4.5px 9px);
-    @include r('border-radius', 12px);
+    @include r('border-radius', 15px);
     cursor: pointer;
     text-align: center;
     border: 1px solid $black;
