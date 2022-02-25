@@ -3,8 +3,18 @@
     <div class="question">
       <div class="counter">{{faq.idx}}</div>
       <div class="q"><h2>{{faq.question}}</h2></div>
-      <div class="btn-wrapper">
-        <div v-if="closable" class="btn" @click="$emit('toggle', faq.idx)">{{msg}}</div>
+      <div class="btn-wrapper on-desktop">
+        <div v-if="closable"
+          class="btn"
+          @click="$emit('toggle', faq.idx)">{{msg}}</div>
+      </div>
+      <div class="btn-wrapper on-mobile">
+        <div class="btn active with-image"
+          v-if="closable"
+          @click="$emit('toggle', faq.idx)">
+          <img src="/images/plus.svg" v-if="!active" />
+          <img src="/images/minus.svg" v-if="active" />
+        </div>
       </div>
     </div>
     <slide-up-down
@@ -49,6 +59,10 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      @include mobile-tablet {
+        width: 28px;
+        height: 28px;
+      }
     }
     .q {
       flex-grow: 1;
@@ -62,6 +76,12 @@ export default {
       @include col(2 of 10, 0);
       display: flex;
       justify-content: flex-end;
+      @include mobile-tablet {
+        &.on-mobile {
+          @include r('width', 28px);
+          display: flex !important;
+        }
+      }
     }
   }
   .answer {

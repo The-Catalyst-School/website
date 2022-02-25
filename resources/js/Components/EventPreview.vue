@@ -196,6 +196,11 @@ export default {
       position: absolute;
       left: calc(100% + #{relative-size(6)});
       bottom: 0;
+      @include mobile-tablet {
+        top: calc(100% + 6px);
+        left: 0;
+        bottom: initial;
+      }
     }
   }
   &.active {

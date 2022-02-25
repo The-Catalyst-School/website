@@ -42,16 +42,18 @@
         <div class="btn active"
           v-if="!viewListOpen && $page.component.startsWith('Event/Calendar')"
           @click="viewListOpen = !viewListOpen">
-          Month view
+          By Month
         </div>
         <div class="btn active"
           v-if="!viewListOpen && $page.component.startsWith('Event/List')"
           @click="viewListOpen = !viewListOpen">
-          Day view
+          By Day
         </div>
-        <div class="btn active plus"
+        <div class="btn active plus with-image"
           v-if="!viewListOpen"
-          @click="viewListOpen = !viewListOpen">+</div>
+          @click="viewListOpen = !viewListOpen">
+          <img src="/images/plus.svg" />
+        </div>
         <div class="view-list">
           <slide-up-down :active="viewListOpen" :duration="500">
             <div class="real-list">
@@ -77,11 +79,13 @@
         <div class="btn active"
           v-if="!monthListOpen"
           @click="monthListOpen = !monthListOpen">
-          {{initialDate | dateFormat('MMMM YYYY')}}
+          {{initialDate | dateFormat('MMM YYYY')}}
         </div>
-        <div class="btn active plus"
+        <div class="btn active plus with-image"
           v-if="!monthListOpen"
-          @click="monthListOpen = !monthListOpen">+</div>
+          @click="monthListOpen = !monthListOpen">
+            <img src="/images/plus.svg" />
+          </div>
         <div class="month-list">
           <slide-up-down :active="monthListOpen" :duration="500">
             <div class="real-list">

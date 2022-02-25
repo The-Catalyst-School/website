@@ -17,9 +17,16 @@
     <div class="actions">
       <button
         v-if="$page.props.auth.user"
-        class="btn"
+        class="btn on-desktop"
         @click.prevent="subscribe($route(actionRoute, event.id))">
         {{actionText}}
+      </button>
+      <button
+        v-if="$page.props.auth.user"
+        class="btn on-mobile active with-image"
+        @click.prevent="subscribe($route(actionRoute, event.id))">
+        <img src="/images/plus.svg" v-if="!event.subscribed" />
+        <img src="/images/minus.svg" v-if="event.subscribed" />
       </button>
     </div>
   </div>
@@ -124,6 +131,9 @@ export default {
     text-align: center;
     @include mobile-tablet {
       order: 1;
+      width: 28px;
+      height: 28px;
+      border-radius: 100%;
     }
   }
   .date {
@@ -152,6 +162,13 @@ export default {
     @include mobile-tablet {
       order: 3;
       @include col(3 of 10, 0);
+    }
+    .btn {
+      @include mobile-tablet {
+        &.on-mobile {
+          display: flex !important;
+        }
+      }
     }
   }
 }

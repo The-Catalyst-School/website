@@ -197,10 +197,9 @@ export default {
       bottom: 0;
       left: 0;
       padding: 20px;
-      justify-content: flex-end;
+      justify-content: space-between;
       width: 100%;
       .on-left, .on-right {
-        width: 50%;
         display: flex;
         &.on-right {
           justify-content: flex-end;

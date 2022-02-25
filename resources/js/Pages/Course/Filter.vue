@@ -13,7 +13,9 @@
           {{t.title}}
         </Link>
       </div>
-      <div class="btn active" @click="active = true">+</div>
+      <div class="btn active with-image" @click="active = true">
+        <img src="/images/plus.svg" />
+      </div>
     </div>
     <slide-up-down
       class="internal-wrapper" :active="active" :duration="500">
