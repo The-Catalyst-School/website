@@ -101,6 +101,10 @@ export default {
     flex-wrap: wrap;
     @include r('padding-right', 40px);
     @include r('padding-left', 40px);
+    @include mobile-tablet {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
     & > * {
       @include r('margin-right', 7px);
       @include r('margin-bottom', 7px);
@@ -116,6 +120,9 @@ export default {
     @include r('padding', 9px 30px);
     display: flex;
     text-transform: uppercase;
+    @include mobile-tablet {
+      padding: 10px 10px;
+    }
     a, a:visited {
       color: $yellow;
     }
@@ -123,15 +130,25 @@ export default {
       @include col(1 of 1, 0);
       display: flex;
       align-items: flex-start;
+      @include mobile-tablet {
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+      }
       .label {
         width: 100%;
         @include col(2 of 14);
         @include r('margin-bottom', 7px);
+        @include mobile-tablet {
+          @include col(1 of 1);
+        }
       }
       .list {
         @include col(12 of 14, 0);
         display: flex;
         flex-wrap: wrap;
+        @include mobile-tablet {
+          @include col(1 of 1);
+        }
         & > div:not(:last-child):after {
           content: '•';
           @include r('margin-left', 5px);
