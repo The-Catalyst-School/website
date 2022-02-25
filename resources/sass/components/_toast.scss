@@ -15,3 +15,10 @@
   background: $black !important;
   color: $yellow !important;
 }
+
+.v-toast {
+  @include mobile-tablet {
+    right: 20px !important;
+    bottom: 20px !important;
+  }
+}

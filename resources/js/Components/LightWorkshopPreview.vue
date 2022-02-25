@@ -58,10 +58,14 @@ export default {
 @import '../../sass/_variables';
 .workshop-preview {
   @include col(10 of 10);
-  @include r('margin-bottom', 20);
+  @include r('margin-bottom', 20px);
   display: flex;
   flex-direction: column;
   height: 100%;
+  @include mobile-tablet {
+    @include col(1 of 1, 0);
+    height: auto;
+  }
   .main-body {
     flex-grow: 1;
     display: flex;

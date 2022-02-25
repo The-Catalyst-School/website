@@ -37,6 +37,7 @@
     </div>
     <div class="side">
     </div>
+    <mobile-side />
   </div>
 </template>
 
@@ -50,6 +51,7 @@ dayjs.extend(weekday)
 dayjs.extend(weekOfYear)
 
 import { Link, Head } from '@inertiajs/inertia-vue'
+import MobileSide from './MobileSide'
 import Side from './Side'
 import ProfileRecap from './Info'
 import LightWorkshopPreview from '../../Components/LightWorkshopPreview'
@@ -65,7 +67,13 @@ export default {
     RowEventPreview,
     Side,
     ProfileRecap,
-    Head
+    Head,
+    MobileSide
+  },
+  data() {
+    return {
+      listOpen: false
+    }
   },
   computed: {
     localWorkshops() {
@@ -90,25 +98,47 @@ export default {
   @include r('padding-right', 30px);
   @include r('padding-left', 30px);
   display: flex;
+  @include mobile-tablet {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
   .side {
     @include col(2 of 14);
+    @include mobile-tablet {
+      display: none;
+    }
   }
   .content {
     @include col(10 of 14, 0);
     display: flex;
     flex-direction: column;
+    @include mobile-tablet {
+      @include col(1 of 1, 0);
+    }
     .last-courses-workshops {
       @include col(8 of 10, 0);
       @include col-before(1 of 10);
       display: flex;
       align-items: stretch;
       @include r('margin-bottom', 75px);
+      @include mobile-tablet {
+        @include col(1 of 1, 0);
+        margin-left: 0;
+        flex-wrap: wrap;
+      }
       .last-workshop, .last-course {
         @include col(4 of 8, 0);
         height: 100%;
+        @include mobile-tablet {
+          @include col(1 of 1, 0);
+          height: auto;
+        }
         p {
           @include col(1 of 1);
           @include r('margin-bottom', 15px);
+          @include mobile-tablet {
+            @include col(1 of 1, 0);
+          }
         }
       }
     }
@@ -118,6 +148,10 @@ export default {
         @include col(8 of 10);
         @include col-before(1 of 10);
         @include r('margin-bottom', 15px);
+        @include mobile-tablet {
+          @include col(1 of 1, 0);
+          margin-left: 0;
+        }
       }
       .events-list {
         @include col(10 of 10, 0);

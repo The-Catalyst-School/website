@@ -43,13 +43,21 @@ export default {
 @import '../../../sass/_mixins';
 @import '../../../sass/_variables';
 .internal-side {
-  @include r('padding-top', 70);
+  @include r('padding-top', 70px);
+  @include mobile-tablet {
+    width: 100%;
+    background: linear-gradient(180deg, transparent 0%, $yellow 80%);
+    padding-bottom: 20px;
+  }
   ul.internal-nav {
     list-style: none;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     height: 80vh;
+    @include mobile-tablet {
+      height: initial;
+    }
     li {
       @include r('margin-top', 6px);
       &:before {
@@ -63,6 +71,9 @@ export default {
     }
     .spacer {
       flex-grow: 1;
+      @include mobile-tablet {
+        display: none;
+      }
     }
   }
 }

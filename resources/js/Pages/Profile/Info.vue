@@ -46,13 +46,26 @@ export default {
   border-bottom: 1px solid $black;
   @include r('margin-bottom', 50px);
   display: flex;
+  @include mobile-tablet {
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+  }
   .avatar {
     @include col(1 of 10, 0);
+    @include mobile-tablet {
+      @include col(1 of 1, 0);
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+    }
     .fake-avatar {
       width: 100%;
       height: 0;
       padding-top: 100%;
       position: relative;
+      @include mobile-tablet {
+        width: 40%;
+      }
       &:after {
         content: 'Set Avatar';
         top: 0;
@@ -72,6 +85,9 @@ export default {
     .real-avatar {
       cursor: pointer;
       @include transition('opacity');
+      @include mobile-tablet {
+        width: 40%;
+      }
       &:hover {
         opacity: 0.8;
       }
@@ -79,11 +95,18 @@ export default {
   }
   .public, .private {
     @include col(4 of 10);
+    @include mobile-tablet {
+      @include col(1 of 1, 0);
+      margin-bottom: 20px;
+    }
     p {
       @include r('margin-bottom', 6px);
     }
     .single-info {
       @include m-font-size(20, 26);
+      @include mobile-tablet {
+        @include font-size(18, 23);
+      }
     }
   }
 }

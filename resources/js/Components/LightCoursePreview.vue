@@ -64,10 +64,14 @@ export default {
 @import '../../sass/_variables';
 .course-preview {
   @include col(1 of 1);
-  @include r('margin-bottom', 20);
+  @include r('margin-bottom', 20px);
   display: flex;
   flex-direction: column;
   height: 100%;
+  @include mobile-tablet {
+    height: auto;
+    @include col(1 of 1, 0);
+  }
   .main-body {
     flex-grow: 1;
     display: flex;
