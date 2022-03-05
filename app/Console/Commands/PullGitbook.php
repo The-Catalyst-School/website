@@ -21,7 +21,7 @@ class PullGitbook extends Command
      *
      * @var string
      */
-    protected $signature = 'pull-gitbook';
+    protected $signature = 'gitbook:pull';
 
     /**
      * The console command description.
