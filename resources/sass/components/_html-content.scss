@@ -93,7 +93,11 @@
       }
     }
   }
+  a, a:visited {
+    text-decoration: underline;
+  }
   .embed-responsive {
+    position: relative;
     &.is-16by9 {
       padding-top: 37.25%;
       @include mobile-tablet {
@@ -101,6 +105,10 @@
       }
     }
     iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
       width: calc(100% - #{relative-size($default-gutter)});
       margin-left: math.div(relative-size($default-gutter), 2);
       @include mobile-tablet {

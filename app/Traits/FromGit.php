@@ -11,15 +11,38 @@ use Illuminate\Support\HtmlString;
 use voku\helper\HtmlDomParser;
 use Erusev\Parsedown\Parsedown;
 use Carbon\Carbon;
+use Embed\Embed as ServiceEmbed;
 
 trait FromGit
 {
+    function __construct() {
+      $this->embeds_counter = 0;
+    }
 
     public function parseParentPath($path) {
         $elements = explode('/', $path);
         array_pop($elements);
         $merged =implode('/', $elements);
         return $merged;
+    }
+
+    public function replace_embeds($matches) {
+      if ($this->embeds_counter == 0) {
+        return '';
+      } else {
+        $localEmbed = new ServiceEmbed();
+        $info = $localEmbed->get($matches[1]);
+        if ($info->code) {
+          return "<div class='embed-responsive is-16by9'>{$info->code->html}</div>";
+        } else {
+          $url = $info->url;
+          if ($info->providerName == 'Google Docs') {
+            $url = str_replace('/edit', '/embed', $url);
+          }
+          return "<div class='embed-responsive is-16by9'><iframe src='{$url}'></iframe></div>";
+        }
+        $this->embeds_counter = $this->embeds_counter + 1;
+      }
     }
 
     public function parseGitbookAdvSyntax($content) {
@@ -37,9 +60,18 @@ trait FromGit
           $embeds,
           PREG_SET_ORDER
         );
+        /* substitute with preg_replace_callback
         $content = preg_replace(
           '/{% embed url="(.+)" %}\n([\S\s]+)\n{% endembed %}/mU',
           '<div data-embed alt="$2" src="$1"></div>',
+          $content
+        );
+
+        */
+
+        $content = preg_replace_callback(
+          '/{% embed url="(.+)" %}\n([\S\s]+)\n{% endembed %}/mU',
+          array($this, 'replace_embeds'),
           $content
         );
 
@@ -50,11 +82,14 @@ trait FromGit
           $content
         );
 
+        /*
+        temp disable
         $content = preg_replace(
           '/<div data-embed alt="(.+)" src=".+[\?\&]v=([^\?\&]+)"><\/div>/mU',
           '<div class="embed-responsive video is-16by9"><iframe src="//www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe><div class="caption">$1</div></div>',
           $content
         );
+        */
         $lightEmbeds = [];
         /*
         // Light embed detection

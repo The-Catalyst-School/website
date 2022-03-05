@@ -143,6 +143,9 @@ export default {
       }
       return route
     },
+  },
+  mounted() {
+    console.log(this.$refs['embed']);
   }
 };
 </script>
