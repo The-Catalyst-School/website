@@ -23,7 +23,10 @@ class Lesson extends Model
     use \App\Traits\Seo;
     use \App\Traits\FromGit;
 
-    protected $fillable = ['title', 'content', 'sha', 'github_path', 'course_id'];
+    protected $fillable = [
+      'title', 'content', 'sha', 'github_path', 'course_id',
+      'seo_description'
+    ];
     // Relationships
     public function course()
     {

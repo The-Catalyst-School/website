@@ -16,7 +16,7 @@ class Page extends Model
     use \App\Traits\FromGit;
 
     protected $fillable = [
-      'title', 'content', 'sha', 'github_path', 'sentences'
+      'title', 'content', 'sha', 'github_path', 'sentences', 'seo_description'
     ];
 
     protected $casts = [

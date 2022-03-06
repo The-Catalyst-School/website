@@ -26,7 +26,7 @@ class Workshop extends Model
     protected $fillable = [
       'title', 'content', 'sha', 'github_path', 'teacher',
       'estimated_time', 'difficulty', 'featured', 'subtitle', 'intro',
-      'scheduled_at'
+      'scheduled_at', 'seo_description', 'embeds_counter'
     ];
 
     protected $appends = ['subscribed'];

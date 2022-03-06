@@ -26,7 +26,8 @@ class Course extends Model
 
     protected $fillable = [
       'title', 'content', 'sha', 'github_path', 'teacher',
-      'estimated_time', 'difficulty', 'featured', 'subtitle'
+      'estimated_time', 'difficulty', 'featured', 'subtitle',
+      'seo_description'
     ];
 
     protected $appends = ['current_lesson', 'countLessons', 'tot_lessons'];

@@ -15,10 +15,6 @@ use Embed\Embed as ServiceEmbed;
 
 trait FromGit
 {
-    public $embeds_counter;
-    function __construct() {
-      $this->embeds_counter = 0;
-    }
 
     public function parseParentPath($path) {
         $elements = explode('/', $path);
@@ -29,6 +25,7 @@ trait FromGit
 
     public function replace_embeds($matches) {
       if ($this->embeds_counter == 0) {
+        $this->embeds_counter = $this->embeds_counter + 1;
         return '';
       } else {
         $localEmbed = new ServiceEmbed();
@@ -40,13 +37,14 @@ trait FromGit
           if ($info->providerName == 'Google Docs') {
             $url = str_replace('/edit', '/embed', $url);
           }
+          $this->embeds_counter = $this->embeds_counter + 1;
           return "<div class='embed-responsive is-16by9'><iframe src='{$url}'></iframe></div>";
         }
-        $this->embeds_counter = $this->embeds_counter + 1;
       }
     }
 
     public function parseGitbookAdvSyntax($content) {
+        $this->embeds_counter = 0;
         // Hint detection
         $content = preg_replace(
           '/{% hint( style="(.*)")? %}([\S\s]+){% endhint %}/mU',
@@ -74,6 +72,15 @@ trait FromGit
           '/{% embed url="(.+)" %}\n([\S\s]+)\n{% endembed %}/mU',
           array($this, 'replace_embeds'),
           $content
+        );
+
+
+        $descriptions = [];
+        preg_match_all(
+          '/---\ndescription:([\S\s]+)\n---/mU',
+          $content,
+          $descriptions,
+          PREG_SET_ORDER
         );
 
         // Delete description
@@ -152,7 +159,8 @@ trait FromGit
         return [
           'content' => $content,
           'embeds' => array_merge($embeds, $lightEmbeds),
-          'files' => $files
+          'files' => $files,
+          'descriptions' => $descriptions
         ];
     }
 
@@ -210,9 +218,13 @@ trait FromGit
       $params = [];
       $files = [];
       $embeds = [];
+      $seo_description = false;
       $custom_fields = false;
       $decoded = base64_decode($content['content']);
       $parsed = $this->parseGitbookAdvSyntax($decoded);
+      if (count($parsed['descriptions']) > 0) {
+        $seo_description = $parsed['descriptions'][0][1];
+      }
       foreach($parsed['embeds'] as $embed) {
         $e_args = [
           'url' => $embed[1]
@@ -308,6 +320,7 @@ trait FromGit
       $params['html'] = $html;
       $params['files'] = $files;
       $params['embeds'] = $embeds;
+      $params['seo_description'] = $seo_description;
       return $params;
     }
 
@@ -319,6 +332,10 @@ trait FromGit
         'sha' => $content['sha'],
         'content' => $parsed['html']
       ];
+
+      if ($parsed['seo_description']) {
+        $args['seo_description'] = $parsed['seo_description'];
+      }
 
       $args = $this->setCustomFieldsAsArgs($args, $parsed);
 
@@ -342,6 +359,10 @@ trait FromGit
         'sha' => $content['sha'],
         'content' => $parsed['html'],
       ];
+
+      if ($parsed['seo_description']) {
+        $args['seo_description'] = $parsed['seo_description'];
+      }
 
       $args = $this->setCustomFieldsAsArgs($args, $parsed);
 
