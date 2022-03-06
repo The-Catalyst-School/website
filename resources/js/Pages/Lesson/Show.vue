@@ -36,7 +36,7 @@
           :entity="{'type': 'Lesson', 'id': lesson.id}"
           />
       </div>
-      <div id="related" class="related" v-if="related">
+      <div id="related" class="related" v-if="related.length">
         <h4>Related courses</h4>
         <div class="list">
           <course-preview

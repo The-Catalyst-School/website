@@ -87,7 +87,8 @@ export default {
   },
   data() {
     return {
-      isNavOpen: false
+      isNavOpen: false,
+      refreshNight: false
     }
   },
   computed: {
@@ -95,10 +96,11 @@ export default {
       return this.$page.props.auth.user
     },
     nightText() {
+      let local = this.refreshNight
       if (JSON.parse(window.localStorage.getItem('night'))) {
-        return 'Day'
+        return 'Day version'
       }
-      return 'Night'
+      return 'Night version'
     }
   },
   methods: {
@@ -121,13 +123,14 @@ export default {
     },
     changeNight() {
       this.$root.$emit('toggle-night')
+      this.refreshNight = !this.refreshNight
     },
     toggleNav() {
       this.isNavOpen = !this.isNavOpen
     }
   },
   mounted() {
-    this.$inertia.on('start', () => { this.isNavOpen = false }) 
+    this.$inertia.on('start', () => { this.isNavOpen = false })
   }
 }
 </script>
@@ -299,6 +302,7 @@ export default {
       display: flex;
       justify-content: flex-end;
       align-items: flex-end;
+      position: relative;
       @include mobile-tablet {
         @include font-size(18, 13);
         @include col(1 of 1, 40px);
@@ -347,6 +351,20 @@ export default {
           &:not(img) {
             margin-bottom: 6px;
           }
+        }
+      }
+      .night {
+        position: absolute;
+        top: 100%;
+        right: 15px;
+        text-transform: initial;
+        cursor: pointer;
+        @include m-font-size(10, 14);
+        @include mobile-tablet {
+          position: initial;
+          top: initial;
+          right: initial;
+          @include font-size(18, 13);
         }
       }
     }

@@ -1,13 +1,13 @@
 <template>
   <div class="internal-side">
     <ul class="internal-nav">
-      <li v-if="workshop.embeds">
+      <li v-if="workshop.embeds.length">
         <a class="btn" href="#" v-scroll-to="'#main-embed'">Video</a>
       </li>
       <li>
-        <a class="btn" href="#" v-scroll-to="'#content'">Introduction</a>
+        <a class="btn" href="#" v-scroll-to="'#content'">Content</a>
       </li>
-      <li v-if="workshop.attachments">
+      <li v-if="workshop.attachments.length">
         <a class="btn" href="#" v-scroll-to="'#resources'">Resources</a>
       </li>
       <li v-if="workshop.quiz">
@@ -17,7 +17,7 @@
       <li v-if="workshop.comments">
         <a class="btn" href="#" v-scroll-to="'#comments'">Comments</a>
       </li>
-      <li v-if="related">
+      <li v-if="related.length">
         <a class="btn" href="#" v-scroll-to="'#related'">Related Workshops</a>
       </li>
     </ul>
