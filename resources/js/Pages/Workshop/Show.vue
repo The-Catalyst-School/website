@@ -2,7 +2,7 @@
   <div class="single-workshop">
     <Head>
       <title>{{workshop.title}} - The Catalyst School</title>
-      <meta name="description" :content="workshop.subtitle">
+      <meta name="description" :content="workshop.seo_description">
     </Head>
     <div class="side">
       <side :workshop="workshop"

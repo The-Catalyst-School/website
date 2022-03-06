@@ -2,7 +2,7 @@
   <div class="single-lesson">
     <Head>
       <title>{{lesson.title}} - {{lesson.course.title}} - The Catalyst School</title>
-      <meta name="description" :content="lesson.title">
+      <meta name="description" :content="lesson.seo_description">
     </Head>
     <div class="side affix">
       <side :lesson="lesson"

@@ -2,7 +2,7 @@
   <div>
     <Head>
       <title>{{page.title}} - The Catalyst School</title>
-      <meta name="description" :content="page.title">
+      <meta name="description" :content="page.seo_description">
     </Head>
     <home :page="page"
       :courses="courses"
