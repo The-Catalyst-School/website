@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
 class ProfileController extends Controller
@@ -66,6 +67,32 @@ class ProfileController extends Controller
           return Redirect::back()->with('success', 'Avatar updated!');
         } else {
           return Redirect::back()->with('error', 'Error saving avatar!');
+        }
+    }
+
+    public function updateProfile()
+    {
+        $user = Auth::user();
+        return inertia('Profile/Update', compact('user'));
+    }
+
+    public function update(Request $request)
+    {
+
+        $request->validate([
+          'name' => ['required', 'string', 'max:255'],
+          'password' => ['required', 'string', 'min:8', 'confirmed']
+        ]);
+
+        $user = Auth::user();
+        $name = $request->input('name');
+        $password = Hash::make($request->input('password'));
+        $user->name = $name;
+        $user->password = $password;
+        if ($user->save()) {
+          return Redirect::back()->with('success', 'Profile updated!');
+        } else {
+          return Redirect::back()->with('error', 'Error updating profile!');
         }
     }
 }

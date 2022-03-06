@@ -16,7 +16,9 @@
     <div class="private">
       <p>Private information</p>
       <div class="single-info">Email: {{user.email}}</div>
-      <div class="single-info">Reset password</div>
+      <div class="single-info update-profile"
+        @click="createAvatar($route('web.profile.update.create'))"
+      >Update info</div>
     </div>
   </div>
 </template>
@@ -33,6 +35,9 @@ export default {
     createAvatar(route) {
       this.$inertia.visitInModal(route, false, 4)
     },
+    updateProfile(route) {
+      this.$inertia.visitInModal(route, false, 4)
+    }
   }
 };
 </script>
@@ -106,6 +111,10 @@ export default {
       @include m-font-size(20, 26);
       @include mobile-tablet {
         @include font-size(18, 23);
+      }
+      &.update-profile {
+        cursor: pointer;
+        text-decoration: underline;
       }
     }
   }

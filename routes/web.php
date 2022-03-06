@@ -47,6 +47,14 @@ Route::post('/profile/avatar', [ProfileController::class, 'storeAvatar'])
   ->name('web.profile.avatar.store')
   ->middleware('auth');
 
+Route::get('/profile/update', [ProfileController::class, 'updateProfile'])
+  ->name('web.profile.update.create')
+  ->middleware('auth');
+
+Route::post('/profile/update', [ProfileController::class, 'update'])
+  ->name('web.profile.update.store')
+  ->middleware('auth');
+
 Route::get('/courses', [CourseController::class, 'index'])
   ->name('web.course.index');
 Route::get('/courses/{slug}', [CourseController::class, 'show'])
