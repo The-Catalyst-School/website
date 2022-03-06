@@ -175,13 +175,18 @@ class PullGitbook extends Command
           foreach($sections as $section) {
             $parsedSection = $this->baseParseEntry($section);
             if ($parsedSection) {
+              if ($parsedSection['title'] == 'Home') {
+                $this->info('Parsing Home page...');
+                $parsedAbout = $this->parseEntry($section);
+                array_push($parsedPages, $parsedAbout);
+              }
               if ($parsedSection['title'] == 'About') {
-                echo 'About';
+                $this->info('Parsing About page...');
                 $parsedAbout = $this->parseEntry($section);
                 array_push($parsedPages, $parsedAbout);
               }
               if ($parsedSection['title'] == 'Workshops') {
-                echo 'Workshops';
+                $this->info('Parsing Workshops...');
                 $childrenList = $section->findOneOrFalse('ul');
                 if ($childrenList) {
                   $children = $childrenList->find('li');
@@ -196,7 +201,7 @@ class PullGitbook extends Command
                 }
               }
               if ($parsedSection['title'] == 'Courses') {
-                echo 'Courses';
+                $this->info('Parsing Courses...');
                 $childrenList = $section->findOneOrFalse('ul');
                 if ($childrenList) {
                   $children = $childrenList->find('li');
@@ -211,12 +216,12 @@ class PullGitbook extends Command
                 }
               }
               if ($parsedSection['title'] == 'FAQ') {
-                echo 'FAQ';
+                $this->info('Parsing FAQ...');
                 $parsedFaq = $this->parseEntry($section);
                 array_push($parsedPages, $parsedFaq);
               }
               if ($parsedSection['title'] == 'Events') {
-                echo 'Events';
+                $this->info('Parsing Events...');
                 $parsedEvents = $this->parseEntry($section);
                 array_push($parsedPages, $parsedEvents);
               }

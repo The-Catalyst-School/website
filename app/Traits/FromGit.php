@@ -15,6 +15,7 @@ use Embed\Embed as ServiceEmbed;
 
 trait FromGit
 {
+    public $embeds_counter;
     function __construct() {
       $this->embeds_counter = 0;
     }
@@ -193,7 +194,7 @@ trait FromGit
               $tmp = [];
               $tmp['idx'] = $row_idx;
               foreach($keys as $idx => $key) {
-                $tmp[$key] = $row->find('td', $idx)->text();
+                $tmp[$key] = $row->find('td', $idx)->innerHtml();
               }
               $custom_fields[] = $tmp;
             }
@@ -243,12 +244,19 @@ trait FromGit
       // Save and link Images
       $draft_html = $parsedown->toHtml($parsed['content']);
       $dom = HtmlDomParser::str_get_html($draft_html);
-      if ($title == 'About') {
+      if ($title == 'Home') {
         $sentences = $this->parseJsonCustomFields(
           $dom->findOneOrFalse('table')
         );
         if ($sentences) {
           $custom_fields['sentences'] = $sentences;
+        }
+      } elseif ($title == 'About') {
+        $team = $this->parseJsonCustomFields(
+          $dom->findOneOrFalse('table')
+        );
+        if ($team) {
+          $custom_fields['sentences'] = $team;
         }
       } elseif ($title == 'FAQ') {
         $faqs = $this->parseJsonCustomFields(
@@ -327,7 +335,6 @@ trait FromGit
     }
 
     public function updateFromGit($content, $entity, $title, $parent) {
-      echo 'Update';
       $parsed = $this->parseContent($content, $title);
       $args = [
         'title' => $title,

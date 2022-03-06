@@ -14,6 +14,7 @@
       v-if="page.template === 'home'" />
     <faq :page="page" v-if="page.template === 'faq'" />
     <std :page="page" v-if="page.template === 'std'" />
+    <about :page="page" v-if="page.template === 'about'" />
   </div>
 </template>
 
@@ -22,6 +23,7 @@
 import Home from './Home';
 import Faq from './Faq';
 import Std from './Std';
+import About from './About';
 import { Head } from '@inertiajs/inertia-vue'
 export default {
   props: [
@@ -31,7 +33,8 @@ export default {
     Home,
     Faq,
     Std,
-    Head
+    Head,
+    About
   }
 };
 </script>

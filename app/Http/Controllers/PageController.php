@@ -29,9 +29,7 @@ class PageController extends Controller
         $end = Carbon::now()->addMonths(1)->format('Y-m-d H:i:s');
         $events = Event::whereBetween('scheduled_at', [$start, $end])->get();
         $e_workshops = Workshop::whereBetween('scheduled_at', [$start, $end])->get();
-        if ($about) {
-          $sentences = $about->sentences;
-        }
+        $sentences = $page->sentences;
         if ($faq) {
           $faqs = array_slice($faq->sentences, 0, 6);
         }
