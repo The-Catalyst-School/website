@@ -14,10 +14,14 @@
         </div>
         <div class="description">
           <p>About</p>
-          <p class="text">{{event.description}}</p>
+          <p v-if="eventType === 'generic'" class="text">{{event.description}}</p>
+          <p v-if="eventType === 'workshop'" class="text" v-html="event.intro"></p>
         </div>
         <div class="link">
-          <a :href="event.link" target="_blank">Link to event</a>
+          <a :href="event.link" target="_blank" v-if="eventType === 'generic'">Link to event</a>
+          <Link v-if="eventType === 'workshop'" :href="$route('web.workshop.show', event.slug)">
+            Link to workshop
+          </Link>
         </div>
       </div>
       <div class="actions">
@@ -33,12 +37,16 @@
 </template>
 
 <script>
+import { Link } from '@inertiajs/inertia-vue'
 export default {
   props: ['event'],
   data() {
     return {
       active: false
     }
+  },
+  components: {
+    Link
   },
   computed: {
     label() {
