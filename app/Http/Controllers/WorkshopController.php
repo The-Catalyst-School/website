@@ -28,7 +28,7 @@ class WorkshopController extends Controller
           $query->whereIn('topics.id', $filter_topics);
         });
       }
-      $workshops = $workshops->get();
+      $workshops = $workshops->orderBy('scheduled_at', 'desc')->get();
       $all_workshops = Workshop::all();
       $topics = Topic::whereHas('workshops', function($query) use ($all_workshops) {
         $query->whereIn('workshops.id', $all_workshops->pluck('id')->unique());
