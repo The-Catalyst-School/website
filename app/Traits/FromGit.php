@@ -202,7 +202,11 @@ trait FromGit
               $tmp = [];
               $tmp['idx'] = $row_idx;
               foreach($keys as $idx => $key) {
-                $tmp[$key] = $row->find('td', $idx)->innerHtml();
+                if ($key == 'link') {
+                  $tmp[$key] = $row->find('td', $idx)->text();
+                } else {
+                  $tmp[$key] = $row->find('td', $idx)->innerHtml();
+                }
               }
               $custom_fields[] = $tmp;
             }
