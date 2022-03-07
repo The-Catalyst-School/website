@@ -18,7 +18,9 @@
           <p v-if="eventType === 'workshop'" class="text" v-html="event.intro"></p>
         </div>
         <div class="link">
-          <a :href="event.link" target="_blank" v-if="eventType === 'generic'">Link to event</a>
+          <a :href="event.link"
+            target="_blank"
+            v-if="eventType === 'generic' && event.link !== ''">Link to event</a>
           <Link v-if="eventType === 'workshop'" :href="$route('web.workshop.show', event.slug)">
             Link to workshop
           </Link>
