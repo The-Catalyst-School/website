@@ -1,13 +1,12 @@
 <template>
   <footer>
     <div class="basic-info">
-      The Catalyst School<br />
-      is a project by:<br /></br />
-      Member<br />
-      Member<br />
-      Member<br />
-      Member<br />
-      Member<br />
+      The Catalyst School
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
     <div class="social">
       Follow us:<br /><br />
@@ -29,8 +28,7 @@
       </ul>
     </nav>
     <div class="counter">
-      The next Project Catalyst fund will be in:<br />
-      45d 20h 50m 13s
+      Stake with&nbsp;<a href="https://pool.pm/47cb5e8b0e65d199cdfbe035d3c26d0260614f922460ff2b51c45e10" target="_blank">[LEARN] pool.</a>
     </div>
   </footer>
 </template>
