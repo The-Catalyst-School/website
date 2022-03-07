@@ -2,7 +2,7 @@
   <div class="internal-faq">
     <div class="question">
       <div class="counter">{{faq.idx}}</div>
-      <div class="q"><h2>{{faq.question}}</h2></div>
+      <div class="q"><h2 v-html="faq.question"></h2></div>
       <div class="btn-wrapper on-desktop">
         <div v-if="closable"
           class="btn"
