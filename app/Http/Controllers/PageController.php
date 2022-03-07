@@ -24,7 +24,7 @@ class PageController extends Controller
         $about = Page::findBySlugOrFail('about');
         $faq = Page::findBySlugOrFail('faq');
         $courses = Course::with('topics', 'lessons', 'comments.user', 'users:avatar_url')->get();
-        $workshops = Workshop::with('topics')->get();
+        $workshops = Workshop::with('topics')->orderBy('scheduled_at', 'desc')->get();
         $start = Carbon::now()->format('Y-m-d H:i:s');
         $end = Carbon::now()->addMonths(1)->format('Y-m-d H:i:s');
         $events = Event::whereBetween('scheduled_at', [$start, $end])->get();
