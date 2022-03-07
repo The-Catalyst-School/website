@@ -10,7 +10,7 @@
         <Link :href="$route('web.workshop.show', workshop.slug)">
           <div class="half">
             <div class="heading">
-              <div class="date">{{ workshop.updated_at | dateFormat('DD.MM.YYYY') }}</div>
+              <div class="date">{{ workshop.scheduled_at | dateFormat('DD.MM.YYYY') }}</div>
               <div class="estimated" v-if="workshop.estimated_time">
                 Estimated time: {{workshop.estimated_time}}
               </div>
