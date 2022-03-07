@@ -70,6 +70,10 @@ export default {
       width: calc(80% - #{relative-size(24px)});
       h2 {
         text-transform: initial;
+        font-weight: normal;
+        strong {
+          font-weight: normal;
+        }
       }
     }
     .btn-wrapper {
