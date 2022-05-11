@@ -369,7 +369,6 @@ trait FromGit
       }
 
       $args = $this->setCustomFieldsAsArgs($args, $parsed);
-
       if ($parent) {
         $args['course_id'] = $parent->id;
       }
@@ -448,6 +447,8 @@ trait FromGit
         return $this->createFromGit($content, $title, $parent);
       } else if ($content['sha'] != $entity->sha) {
         return $this->updateFromGit($content, $entity, $title, $parent);
+      } else {
+        return $entity;
       }
     }
 
