@@ -18,7 +18,7 @@
         </template>
       </horizontal-slider>
     </section>
-    <section class="next-events">
+    <section class="next-events" v-if="allEvents.length > 0">
       <h4 class="section-title">Next appointments</h4>
       <div class="events-list">
         <div class="event-row" v-for="event in allEvents">

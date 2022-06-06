@@ -51,10 +51,10 @@ class PullGitbook extends Command
       return $html;
     }
 
-    public function createLesson($entry, $parent) {
+    public function createLesson($entry, $parent, $idx) {
       $lesson = new Lesson;
       $resource = $this->exploreFile($entry['path']);
-      $lesson = $lesson->actionFromGit($resource, $entry['title'], $parent);
+      $lesson = $lesson->actionFromGit($resource, $entry['title'], $parent, $idx);
     }
 
     public function createCourses($tree) {
@@ -62,10 +62,10 @@ class PullGitbook extends Command
       foreach ($tree as $entry) {
         $course = new Course;
         $resource = $this->exploreFile($entry['path']);
-        $course = $course->actionFromGit($resource, $entry['title'], false);
+        $course = $course->actionFromGit($resource, $entry['title'], false, false);
 
-        foreach ($entry['children'] as $child) {
-          $this->createLesson($child, $course);
+        foreach ($entry['children'] as $idx => $child) {
+          $this->createLesson($child, $course, $idx);
         }
         array_push($courses_ids, $entry['path']);
       }
@@ -79,7 +79,7 @@ class PullGitbook extends Command
       foreach ($tree as $entry) {
         $workshop = new Workshop;
         $resource = $this->exploreFile($entry['path']);
-        $workshop = $workshop->actionFromGit($resource, $entry['title'], false);
+        $workshop = $workshop->actionFromGit($resource, $entry['title'], false, false);
         array_push($workshops_ids, $entry['path']);
       }
       // Collect all old courses and lessons and delete them
@@ -91,7 +91,7 @@ class PullGitbook extends Command
       foreach ($tree as $entry) {
         $page = new Page;
         $resource = $this->exploreFile($entry['path']);
-        $page = $page->actionFromGit($resource, $entry['title'], false);
+        $page = $page->actionFromGit($resource, $entry['title'], false, false);
 
       }
       // Collect all old courses and lessons and delete them

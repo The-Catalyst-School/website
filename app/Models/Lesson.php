@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
@@ -25,8 +26,16 @@ class Lesson extends Model
 
     protected $fillable = [
       'title', 'content', 'sha', 'github_path', 'course_id',
-      'seo_description'
+      'seo_description', 'order'
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('order', 'asc');
+        });
+    }
+
     // Relationships
     public function course()
     {

@@ -328,7 +328,7 @@ trait FromGit
       return $params;
     }
 
-    public function createFromGit($content, $title, $parent) {
+    public function createFromGit($content, $title, $parent, $idx) {
       $parsed = $this->parseContent($content, $title);
       $args = [
         'title' => $title,
@@ -336,6 +336,10 @@ trait FromGit
         'sha' => $content['sha'],
         'content' => $parsed['html']
       ];
+
+      if ($idx) {
+        $args['order'] = $idx;
+      }
 
       if ($parsed['seo_description']) {
         $args['seo_description'] = $parsed['seo_description'];
@@ -355,7 +359,7 @@ trait FromGit
       return $entity;
     }
 
-    public function updateFromGit($content, $entity, $title, $parent) {
+    public function updateFromGit($content, $entity, $title, $parent, $idx) {
       $parsed = $this->parseContent($content, $title);
       $args = [
         'title' => $title,
@@ -363,6 +367,10 @@ trait FromGit
         'sha' => $content['sha'],
         'content' => $parsed['html'],
       ];
+
+      if ($idx) {
+        $args['order'] = $idx;
+      }
 
       if ($parsed['seo_description']) {
         $args['seo_description'] = $parsed['seo_description'];
@@ -441,12 +449,12 @@ trait FromGit
 
     }
 
-    public function actionFromGit($content, $title, $parent) {
+    public function actionFromGit($content, $title, $parent, $idx) {
       $entity = $this->where('github_path', $content['path'])->first();
       if (is_null($entity)) {
-        return $this->createFromGit($content, $title, $parent);
+        return $this->createFromGit($content, $title, $parent, $idx);
       } else if ($content['sha'] != $entity->sha) {
-        return $this->updateFromGit($content, $entity, $title, $parent);
+        return $this->updateFromGit($content, $entity, $title, $parent, $idx);
       } else {
         return $entity;
       }
