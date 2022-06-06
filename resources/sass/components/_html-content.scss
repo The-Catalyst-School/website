@@ -95,6 +95,10 @@
   }
   a, a:visited {
     text-decoration: underline;
+    color: $blue;
+    &:hover {
+      text-decoration: none;
+    }
   }
   .embed-responsive {
     position: relative;

@@ -16,13 +16,16 @@ body {
   --text-color: #{$color-black};
   --color-yellow: #{$color-yellow};
   --color-white: #{$color-white};
+  --color-blue: #{$color-light-blue};
   &.is-night {
     --text-color: #{$color-white};
     --color-yellow: #{$color-dark-blue};
     --color-white: #{$color-black};
+    --color-blue: #{$color-yellow};
   }
 }
 
 $black: var(--text-color);
 $yellow: var(--color-yellow);
 $white: var(--color-white);
+$blue: var(--color-blue);
