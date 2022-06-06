@@ -5,7 +5,7 @@
       <div class="single-lesson"
         :key="`lesson-el-${lesson.id}`"
         v-for="lesson in lessons">
-        <h2 class="title">{{lesson.title}}</h2>
+        <h2 class="title" v-html="lesson.title"></h2>
         <Link class="btn" :href="$route('web.lesson.show', [course.slug, lesson.slug])">
           Go to Lesson
         </Link>

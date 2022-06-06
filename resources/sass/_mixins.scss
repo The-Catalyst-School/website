@@ -222,3 +222,10 @@ $small-desktop: "(min-width: 1024px) and (max-width: 1440px)";
     clear: both;
   }
 }
+
+@mixin ellipsis($w) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: $w;
+}

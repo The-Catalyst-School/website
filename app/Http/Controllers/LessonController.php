@@ -18,11 +18,14 @@ class LessonController extends Controller
         ->where('id', '>', $lesson->id)->first();
       $prev = Course::whereSlug($c_slug)
         ->firstOrFail()->lessons()
+        ->orderBy('id', 'desc')
         ->where('slug', '!=', $l_slug)
         ->where('id', '<', $lesson->id)->first();
+      $lessons = Course::whereSlug($c_slug)
+        ->firstOrFail()->lessons()->get(['id', 'slug', 'title']);
       $related = Course::where('slug', '!=', $c_slug)
         ->with('lessons:title,slug,id,course_id', 'topics', 'comments.user', 'users:avatar_url')
         ->take(3)->get();
-      return inertia('Lesson/Show', compact('lesson', 'next', 'prev', 'related'));
+      return inertia('Lesson/Show', compact('lesson', 'next', 'prev', 'related', 'lessons'));
     }
 }

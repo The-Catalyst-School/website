@@ -11,7 +11,7 @@
     </div>
     <div class="main">
       <h4>{{lesson.course.title}}</h4>
-      <h1>{{lesson.title}}</h1>
+      <h1 v-html="lesson.title"></h1>
       <div id="main-embed" class="main-embed" v-if="lesson.embeds.length > 0">
         <video-embed :params="getVideoParams(lesson.embeds[0].url)"
           css="video is-16by9" :src="lesson.embeds[0].url"></video-embed>
@@ -59,6 +59,14 @@
               Previous Lesson
             </Link>
           </div>
+          <ol class="other-prev-wrapper">
+            <li class="prev other-prev" v-for="other_lesson in lessons" :key="`other-lesson-${other_lesson.id}`">
+              <Link
+                :class="{'is-current-lesson': other_lesson.id === lesson.id}"
+                :href="$route('web.lesson.show', [lesson.course.slug, other_lesson.slug])"
+                v-html="other_lesson.title"></Link>
+            </li>
+          </ol>
           <div class="prev">
             <div
               class="btn"
@@ -114,7 +122,7 @@ import CoursePreview from '../../Components/CoursePreview'
 import Attachments from '../../Components/Attachments'
 import Comments from '../../Components/Comments'
 export default {
-  props: ['lesson', 'next', 'prev', 'related', 'comments'],
+  props: ['lesson', 'next', 'prev', 'related', 'comments', 'lessons'],
   components: {
     Link,
     Side,
@@ -186,7 +194,19 @@ export default {
           }
           a, a:visited {
             display: block;
-
+          }
+          .other-prev-wrapper {
+            @include r('margin-bottom', 18px);
+            @include r('margin-top', 12px);
+          }
+          .other-prev {
+            text-align: right;
+            a, a:visited {
+              display: inline;
+              &.is-current-lesson, &:hover {
+                text-decoration: underline;
+              }
+            }
           }
         }
       }
