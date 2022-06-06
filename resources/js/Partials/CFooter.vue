@@ -24,7 +24,12 @@
         <li><Link :href="$route('web.workshop.index')">Workshops</Link></li>
         <li><Link href="/about">About</Link></li>
         <li><Link href="/calendar">Calendar</Link></li>
-        <li><Link href="/1-to-1">1-to-1 / Group Support</Link></li>
+        <li><a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSd9zvxtLtXKEcYEJas6Idj1YmA2kGyK27mIR-38eWITPUhHZw/viewform"
+          target="_blank">
+            1-to-1 / Group Support
+          </a>
+        </li>
       </ul>
     </nav>
     <div class="counter">

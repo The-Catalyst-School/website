@@ -53,11 +53,11 @@
               </Link>
             </li>
             <li>
-              <Link
-                :class="{'active': $page.url === '/1-to-1'}"
-                :href="$route('web.page.show', '1-to-1')">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSd9zvxtLtXKEcYEJas6Idj1YmA2kGyK27mIR-38eWITPUhHZw/viewform"
+                target="_blank">
                 1-to-1 / Group Support
-              </Link>
+              </a>
             </li>
           </ul>
         </nav>
