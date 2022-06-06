@@ -13,8 +13,12 @@
       <h4>{{lesson.course.title}}</h4>
       <h1 v-html="lesson.title"></h1>
       <div id="main-embed" class="main-embed" v-if="lesson.embeds.length > 0">
-        <video-embed :params="getVideoParams(lesson.embeds[0].url)"
+        <video-embed
+          :params="getVideoParams(lesson.embeds[0].url)"
           css="video is-16by9" :src="lesson.embeds[0].url"></video-embed>
+        <div class="embed-responsive video is-16by9" v-if="mainEmbedType == 'embed'">
+          <iframe :src="lesson.embeds[0].url.replace('/edit', '/embed')"></iframe>
+        </div>
       </div>
       <div class="workshop-info">
         <div class="date">{{ lesson.updated_at | dateFormat('DD.MM.YYYY') }}</div>
@@ -116,6 +120,7 @@
 </template>
 
 <script>
+import checkIfValidVideo from '../../utils/checkEmbeds'
 import { Link, Head } from '@inertiajs/inertia-vue'
 import Side from './Side'
 import CoursePreview from '../../Components/CoursePreview'
@@ -164,6 +169,18 @@ export default {
           preserveScroll: true
         }
       )
+    }
+  },
+  computed: {
+    mainEmbedType() {
+      if (this.lesson.embeds.length > 0) {
+        if (checkIfValidVideo(this.lesson.embeds[0].url)) {
+          return true
+        } else {
+          return 'embed'
+        }
+      }
+      return false
     }
   }
 };
