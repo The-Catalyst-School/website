@@ -23,6 +23,8 @@ $max-width: 1280px;
 
 $base-font-size: 1440;
 $base-measure-size: 1440;
+$max-font-size: 1920;
+$base-measure-size: 1440;
 
 @mixin transition($property, $time: 0.3s) {
   transition: all ease-in-out #{$time};
@@ -37,6 +39,10 @@ $base-measure-size: 1440;
   font-weight: $weight;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @include big-desktop {
+    font-size: $font-size * (($max-font-size * 1px) / 100);
+    line-height: $l-height * (($max-font-size * 1px) / 100);
+  }
 }
 
 @mixin font-size($size, $line-height, $weight: 300) {
