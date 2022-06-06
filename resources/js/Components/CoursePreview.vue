@@ -6,8 +6,7 @@
           {{topic.title}}
         </div>
       </div>
-      <div class="preview-body">
-        <Link :href="$route('web.course.show', course.slug)">
+      <div class="preview-body" @click="popupVisible = true">
           <div class="heading">
             <div class="date">{{ course.updated_at | dateFormat('DD.MM.YYYY') }}</div>
             <div class="estimated" v-if="course.estimated_time">
@@ -28,7 +27,6 @@
               With {{course.teacher}}
             </span>
           </div>
-        </Link>
       </div>
     </div>
     <div class="read-more" @click="popupVisible = true">
@@ -109,6 +107,7 @@ export default {
       flex-grow: 1;
       @include default-spacing;
       @include transition('background');
+      cursor: pointer;
       a, a:visited {
         display: flex;
         flex-direction: column;
@@ -133,6 +132,7 @@ export default {
       }
     }
     &:hover {
+      color: $yellow;
       .preview-body {
         background: $black;
       }
