@@ -5,7 +5,7 @@
       <sentence-slider v-if="sentences" :sentences="sentences" />
     </section>
     <section class="courses">
-      <h4 class="section-title">Our last Courses</h4>
+      <h4 class="section-title">Our latest Courses</h4>
       <horizontal-slider>
         <template v-slot:track>
           <course-preview
@@ -30,7 +30,7 @@
       </div>
     </section>
     <section class="courses">
-      <h4 class="section-title">Our last Workshops</h4>
+      <h4 class="section-title">Our latest Workshops</h4>
       <horizontal-slider>
         <template v-slot:track>
           <workshop-preview
