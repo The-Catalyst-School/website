@@ -19,6 +19,13 @@ body {
       background-position: center;
       background-attachment: fixed;
     }
+    header.site-header {
+      .header-background-wrapper {
+        .header-background {
+          background: linear-gradient(180deg, $color-black 0%, $color-dark-blue 40.833%, $color-light-blue 83.333%);
+        }
+      }
+    }
   }
   @include mobile-tablet {
     @include font-size(14, 17);

@@ -1,5 +1,8 @@
 <template>
   <header class="site-header">
+    <div class="header-background-wrapper">
+      <div class="header-background"></div>
+    </div>
     <div class="logo" :class="{'nav-open': isNavOpen}">
       <Link :href="$route('web.index')">
         <img class="logo-black" src="/images/logo.svg" />
@@ -148,9 +151,37 @@ export default {
     align-items: flex-end;
     z-index: 1000;
     @include r('padding', 20px 30px);
+    overflow: hidden;
     @include mobile-tablet {
       padding: 14px 20px;
       align-items: center;
+    }
+    .header-background-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      @include mobile-tablet {
+        display: none;
+      }
+    }
+    .header-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120vh;
+      background: rgb(255,251,237);
+      background: linear-gradient(180deg, $light-gray 0%, $yellow 83.333%);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      z-index: -1;
+      @include transition('background, color');
+      pointer-events: none;
     }
     .logo {
       @include col(5 of 14);
